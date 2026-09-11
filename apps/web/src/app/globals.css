@@ -1,0 +1,73 @@
+@import "tailwindcss";
+@import "../../../../packages/ui/src/styles/theme.css";
+
+/* Workspace packages live outside this app, so Tailwind needs them declared. */
+@source "../../../../packages/ui/src";
+
+/* Presentation flourishes used only by the public site. */
+@theme inline {
+  --animate-marquee: marquee 40s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+@layer utilities {
+  .container-site {
+    @apply mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.04) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  .bg-grid-dark {
+    background-image:
+      linear-gradient(to right, rgb(11 31 58 / 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(11 31 58 / 0.04) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  .mask-fade-b {
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+
+  .prose-brand {
+    @apply text-muted-foreground leading-relaxed;
+  }
+
+  .prose-brand p + p {
+    margin-top: 1rem;
+  }
+
+  .prose-brand strong {
+    @apply text-foreground font-semibold;
+  }
+}
+

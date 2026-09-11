@@ -1,0 +1,22 @@
+@import "tailwindcss";
+@import "../../../../packages/ui/src/styles/theme.css";
+
+/* Workspace packages live outside this app, so Tailwind needs them declared. */
+@source "../../../../packages/ui/src";
+@source "../../../../packages/identity/src";
+
+@layer utilities {
+  /* Dense tabular readouts: audit entries, permission matrices, grant lists. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

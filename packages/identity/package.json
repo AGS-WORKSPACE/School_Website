@@ -1,0 +1,30 @@
+{
+  "name": "@tau/identity",
+  "version": "0.1.0",
+  "private": true,
+  "description": "EP-01 identity, access and delegated authority: domain contracts, policy engine and demo data shared by every TAU module.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./domain": "./src/domain/index.ts",
+    "./policy": "./src/policy/index.ts",
+    "./mock": "./src/mock/index.ts",
+    "./react": "./src/react/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test \"src/**/*.test.ts\""
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.101.4"
+  },
+  "peerDependencies": {
+    "react": "^19"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "tsx": "^4.20.6",
+    "typescript": "^5"
+  }
+}

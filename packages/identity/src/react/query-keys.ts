@@ -1,0 +1,18 @@
+export const identityKeys = {
+  overview: ["identity", "overview"] as const,
+  units: ["identity", "units"] as const,
+  persons: ["identity", "persons"] as const,
+  person: (id: string) => ["identity", "persons", id] as const,
+  roles: ["identity", "roles"] as const,
+  permissions: ["identity", "permissions"] as const,
+  sodRules: ["identity", "sod-rules"] as const,
+  assignments: ["identity", "assignments"] as const,
+  delegations: ["identity", "delegations"] as const,
+  conflicts: ["identity", "conflicts"] as const,
+  exceptions: ["identity", "exceptions"] as const,
+  breakGlass: ["identity", "break-glass"] as const,
+  sessions: ["identity", "sessions"] as const,
+  audit: (filter: unknown) => ["identity", "audit", filter] as const,
+  auditVerification: ["identity", "audit", "verification"] as const,
+  demoAccounts: ["identity", "demo-accounts"] as const,
+};
