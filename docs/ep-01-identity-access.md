@@ -16,13 +16,55 @@ npm run dev:admin     # http://localhost:3001
 Sign in as one of the seeded accounts. Passwords are not checked; the account you
 pick decides what the console lets you do.
 
-| Sign in as | Shows you |
+### The accounts
+
+Sixteen people are seeded. State is per-browser and held in memory, so two
+developers never see each other's changes and a page reload resets everything.
+
+**Start here**
+
+| Username | Role | Why you'd use it |
+|---|---|---|
+| `t.alabi` | Identity administrator | The usual starting point. Prepares access, disables accounts, enrols MFA — but cannot approve its own preparations |
+| `g.eze` | Access approver | The other half of maker–checker. Approves grants, duties exceptions and emergency access |
+| `z.mohammed` | Auditor | Read-only across the institution; holds nothing that changes a record |
+| `e.obi` | ICT service desk | Signs in with a live break-glass grant running, so the emergency banner and countdown are visible |
+
+**Accounts that demonstrate a refusal**
+
+| Username | What happens |
 |---|---|
-| `t.alabi` | Identity administrator — prepares access but cannot approve it |
-| `g.eze` | Access approver — approves grants, duties exceptions and emergency access |
-| `n.okafor` | Privileged with no MFA enrolled: sign-in stops before a session starts |
-| `l.danjuma` | Disabled account: refused before roles are even considered |
-| `c.nwankwo` | Admissions officer scoped to one faculty; no second factor required |
+| `n.okafor` | Privileged with no MFA enrolled — sign-in stops before a session starts |
+| `l.danjuma` | Disabled account — refused before roles are even considered |
+| `k.balogun` | Signs in, but holds a blocking duties conflict: enters *and* approves results |
+| `i.sani` | Blocking conflict created by a **delegation** rather than a role — the clearest case for detecting over effective access |
+| `d.ojo` | Drafts *and* publishes content: a reviewable conflict, not a blocking one |
+
+**Scope isolation**
+
+| Username | Role | Scope |
+|---|---|---|
+| `c.nwankwo` | Admissions officer | Health Sciences, plus JUPEB cover |
+| `f.yusuf` | Admissions officer | Engineering |
+
+Same role, different faculties, and neither sees the other's work. Sign in as
+either and use **My access → Check a specific action** against the other's
+faculty to see the refusal and its explanation.
+
+**The rest**
+
+| Username | Role | Notes |
+|---|---|---|
+| `o.adeyemi` | Access approver | Vice-Chancellor; second approval authority |
+| `a.bello` | Lecturer, Exams officer | One identity across applicant → student → alumna → staff |
+| `s.okonkwo` | Head of department | Has delegated cover out while on research leave |
+| `h.abdullahi` | Lecturer | Holds that delegated authority |
+| `b.adeyinka` | Bursar | Delegated refund authorisation to `i.sani` |
+
+One timing note: `e.obi`'s emergency grant expires about 16 minutes after the
+data is seeded, then moves to *awaiting review*. That is deliberate — it lets
+both states be seen in one session — but it does mean dashboard counts change
+while a tab is open.
 
 ## Story by story
 

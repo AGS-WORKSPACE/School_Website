@@ -41,7 +41,7 @@ export default function AccessPositionPage() {
   return (
     <>
       <PageHeader
-        eyebrow="EP-01"
+        eyebrow="Overview"
         title="Access position"
         description="Who holds what, where it came from and what needs a decision today. Every number here is the live result of the policy engine, not a stored counter."
         actions={

@@ -58,7 +58,7 @@ export default function AccessReviewPage() {
   return (
     <>
       <PageHeader
-        eyebrow="IAM-02"
+        eyebrow="Assurance"
         title="Access review"
         description="Standing access is the access nobody remembers granting. Confirming keeps it and stamps who checked; withdrawing ends it immediately and records why."
         actions={

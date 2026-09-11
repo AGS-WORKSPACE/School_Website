@@ -51,7 +51,7 @@ export default function RolesPage() {
   return (
     <>
       <PageHeader
-        eyebrow="IAM-02"
+        eyebrow="Access model"
         title="Roles and permissions"
         description="Roles are bundles of permissions belonging to one workspace. None of them carries a scope: that is decided when the role is assigned, which is how the same role stays separate between faculties."
       />

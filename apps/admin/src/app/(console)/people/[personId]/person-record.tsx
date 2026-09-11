@@ -90,7 +90,7 @@ export function PersonRecord({ personId }: { personId: string }) {
   return (
     <>
       <PageHeader
-        eyebrow="IAM-01"
+        eyebrow="Person record"
         title={detail.displayName}
         description={`${detail.person.email} · ${detail.unitLabel}`}
         actions={

@@ -67,7 +67,7 @@ export default function MyAccessPage() {
   return (
     <>
       <PageHeader
-        eyebrow="IAM-02"
+        eyebrow="Your account"
         title="My access"
         description="Everything you can do right now, where it applies, and which grant it came from."
         actions={

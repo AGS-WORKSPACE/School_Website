@@ -32,21 +32,17 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
                 key={item.href}
                 href={item.href}
                 onClick={onNavigate}
+                title={item.description}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "flex items-start gap-3 rounded-lg px-3 py-2 text-sm transition-colors",
+                  "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors",
                   active
                     ? "bg-primary/10 text-primary font-semibold"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground",
                 )}
               >
-                <Icon className="mt-0.5 size-4 shrink-0" aria-hidden />
-                <span className="min-w-0">
-                  <span className="block truncate">{item.label}</span>
-                  <span className="text-muted-foreground/80 block text-xs font-normal">
-                    {item.story}
-                  </span>
-                </span>
+                <Icon className="size-4 shrink-0" aria-hidden />
+                <span className="truncate">{item.label}</span>
               </Link>
             );
           })}

@@ -131,7 +131,7 @@ export default function DelegationsPage() {
   return (
     <>
       <PageHeader
-        eyebrow="IAM-04"
+        eyebrow="Controls"
         title="Delegated authority"
         description={`Cover during absence, with both ends of the window fixed. A delegation draws on one assignment the delegator already holds and can never exceed it — not in actions, not in scope, and not beyond ${maxDelegationDays} days.`}
         actions={

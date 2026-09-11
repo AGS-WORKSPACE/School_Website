@@ -38,7 +38,7 @@ export default function PeoplePage() {
   return (
     <>
       <PageHeader
-        eyebrow="IAM-01"
+        eyebrow="Directory"
         title="People and accounts"
         description="One person, one identity, however many relationships they have with the university. Changing a role links it to the same record instead of creating a second one."
       />

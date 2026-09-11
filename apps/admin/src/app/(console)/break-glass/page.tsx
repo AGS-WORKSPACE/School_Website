@@ -73,7 +73,7 @@ export default function BreakGlassPage() {
   return (
     <>
       <PageHeader
-        eyebrow="IAM-06"
+        eyebrow="Controls"
         title="Emergency access"
         description={`Break-glass is not a hidden super-user. It is tied to an incident, approved by somebody other than the requester, capped at ${maxBreakGlassMinutes} minutes, alerted on activation, and not closed until a reviewer has read what was done with it.`}
       />

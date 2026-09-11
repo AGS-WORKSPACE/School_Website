@@ -40,7 +40,7 @@ function AuditTrail() {
   return (
     <>
       <PageHeader
-        eyebrow="OPS-05"
+        eyebrow="Evidence"
         title="Audit trail"
         description="Every entry is sealed with the hash of its own content and the hash of the entry before it. Editing or removing one breaks every hash after it, which is what makes the trail tamper-evident rather than merely long."
       />

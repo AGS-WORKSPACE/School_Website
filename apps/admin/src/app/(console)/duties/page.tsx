@@ -139,7 +139,7 @@ export default function DutiesPage() {
   return (
     <>
       <PageHeader
-        eyebrow="IAM-05"
+        eyebrow="Controls"
         title="Segregation of duties"
         description="No one person should prepare and approve the same high-risk item. Conflicts are detected against effective access, so cover arranged last week counts the same as a role granted last year."
       />
