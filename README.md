@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TAU University Platform
 
-## Getting Started
+A monorepo for the university digital platform described in
+[UNIVERSITY_PLATFORM_PRODUCT_BACKLOG.md](./UNIVERSITY_PLATFORM_PRODUCT_BACKLOG.md).
 
-First, run the development server:
+Each product module is its own workspace over a shared set of domain packages, so
+that adding the LMS, bursary or admissions module later means adding an app — not
+copying an identity model into a second codebase.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+apps/
+  web/        Public website: programme discovery, news, events, enquiries (EP-04)
+  admin/      Identity, access and delegated authority console (EP-01)
+packages/
+  identity/   EP-01 domain contracts, policy engine, demo data and React bindings
+  ui/         Shared design system: TAU theme tokens and component primitives
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Getting started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install          # installs every workspace
+npm run dev          # public website on http://localhost:3000
+npm run dev:admin    # identity console on http://localhost:3001
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Checks
 
-## Learn More
+```bash
+npm run build        # builds every app
+npm run lint         # eslint across every workspace
+npm run typecheck    # tsc --noEmit across every workspace
+npm test             # EP-01 policy and flow suites
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Where the rules live
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`@tau/identity` is deliberately layered so that the parts that decide who may do
+what are pure functions, testable without a browser or a database:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Layer | Contains | Depends on |
+|---|---|---|
+| `domain/` | Types and small state helpers — person, account, role, scope, delegation, duties, break-glass, audit | nothing |
+| `policy/` | The permission and role catalogues, scope containment, access evaluation, duties detection, delegation validation | `domain/` |
+| `mock/` | Demonstration store, seeded data, the service surface the UI calls | `domain/`, `policy/` |
+| `react/` | React Query bindings | `mock/` |
 
-## Deploy on Vercel
+Screens call `mock/` and never reimplement a rule. Swapping the demonstration
+store for a real database is a change inside `mock/` alone.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## What is real, and what is not
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This branch was built to the scope agreed for EP-01: **flows and contracts, not
+credential handling**. That distinction matters when reading the code.
+
+Real:
+
+- The access model — scoped RBAC, effective-grant resolution, MFA gating,
+  delegation ceilings, segregation-of-duties detection, break-glass lifecycle.
+- The audit trail — a SHA-256 hash chain that detects edited or removed entries.
+- Every rule is enforced in the service layer, not only in the forms, and is
+  covered by [tests](./packages/identity/src/).
+
+Not real, and clearly marked in the code:
+
+- **Passwords are not verified.** Any value is accepted at sign-in.
+- **MFA codes are not verified.** Any six-digit code passes.
+- Sessions are held in `sessionStorage` rather than an httpOnly cookie.
+- The store is in memory, so a full page reload resets the demonstration data.
+
+See [docs/ep-01-identity-access.md](./docs/ep-01-identity-access.md) for how each
+EP-01 user story is implemented and where to see it working.
