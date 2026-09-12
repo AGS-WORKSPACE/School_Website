@@ -10,6 +10,7 @@ export const metadata: Metadata = generatePageMetadata({
   description:
     "Sign in to the TAU Student Portal to manage enrolments, results, tuition fees, library services, and your academic timetable.",
   path: "/student-portal",
+  noIndex: true,
 });
 
 export default function StudentPortalPage() {

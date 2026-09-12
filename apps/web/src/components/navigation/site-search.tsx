@@ -9,12 +9,16 @@ import { Input } from "@tau/ui/input";
 import { Badge } from "@tau/ui/badge";
 import { staticResults, searchResults } from "@/lib/search";
 import type { SearchResult } from "@/types";
+import { trackEvent } from "@/lib/analytics";
 
 const typeIcons: Record<string, React.ElementType> = {
   Faculty: GraduationCap,
   Programme: GraduationCap,
   News: Newspaper,
   Event: FileText,
+  Announcement: FileText,
+  Campus: FileText,
+  Facility: FileText,
   Page: FileText,
 };
 
@@ -34,6 +38,7 @@ export function SiteSearchDialog({ open, onOpenChange }: { open: boolean; onOpen
   };
 
   const handleSelect = (href: string) => {
+    trackEvent("search", { queryLength: query.trim().length, resultCount: results.length, hasResults: results.length > 0, surface: "header", resultType: results[activeIndex]?.type });
     onOpenChange(false);
     setQuery("");
     setActiveIndex(0);
@@ -77,7 +82,7 @@ export function SiteSearchDialog({ open, onOpenChange }: { open: boolean; onOpen
               <circle cx="11" cy="11" r="7" />
               <path d="m21 21-4.35-4.35" strokeLinecap="round" />
             </svg>
-            <Input
+          <Input
               id="site-search"
               autoFocus
               value={query}
@@ -86,7 +91,7 @@ export function SiteSearchDialog({ open, onOpenChange }: { open: boolean; onOpen
                 setActiveIndex(0);
               }}
               onKeyDown={onKeyDown}
-              placeholder="Search programmes, news, faculties, events…"
+              placeholder="Search programmes, news, announcements, events…"
               className="h-13 pl-12 text-base"
             />
           </div>
@@ -177,6 +182,7 @@ function SearchItem({
           </Badge>
         </span>
         <span className="mt-0.5 line-clamp-1 text-xs text-muted-foreground">{result.description}</span>
+        {result.metadata ? <span className="mt-0.5 block text-[11px] font-medium text-medical">{result.metadata}</span> : null}
       </span>
     </Link>
   );

@@ -10,6 +10,7 @@ export const metadata: Metadata = generatePageMetadata({
   description:
     "Download official TAU forms and documents — application forms, tuition and fee schedules, library guides, and the campus map.",
   path: "/downloads",
+  noIndex: true,
 });
 
 export default function DownloadsPage() {

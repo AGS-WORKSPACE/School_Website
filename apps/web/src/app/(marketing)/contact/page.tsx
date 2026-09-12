@@ -5,8 +5,10 @@ import { Section, Container } from "@/components/common/container";
 import { Reveal, StaggerContainer, StaggerItem } from "@/components/common/motion";
 import { Card, CardContent } from "@tau/ui/card";
 import { ContactForm } from "@/components/sections/contact-form";
+import { CTASection } from "@/components/common/cta-section";
 import { siteConfig } from "@/constants/site";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { publishedPrograms } from "@/data/programs";
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Contact Us",
@@ -36,7 +38,13 @@ const offices = [
   },
 ];
 
-export default function ContactPage() {
+interface Props {
+  searchParams?: Promise<{ programme?: string }>;
+}
+
+export default async function ContactPage({ searchParams }: Props) {
+  const programme = (await searchParams)?.programme;
+  const initialProgramme = publishedPrograms.some((item) => item.slug === programme) ? programme : undefined;
   return (
     <>
       <PageHero image="/images/placeholders/hero-campus.jpg"
@@ -56,7 +64,7 @@ export default function ContactPage() {
                   Fill in the form and we&apos;ll route your enquiry to the right team.
                 </p>
                 <div className="mt-8">
-                  <ContactForm />
+                  <ContactForm initialProgramme={initialProgramme} />
                 </div>
               </div>
             </Reveal>
@@ -130,6 +138,13 @@ export default function ContactPage() {
           </div>
         </Container>
       </Section>
+
+      <CTASection
+        title="Ready to Begin Your Application?"
+        description="If you already know your next step, go straight to the application portal. Our admissions team is available if you need guidance."
+        primary={{ label: "Apply Now", href: "/admissions/apply" }}
+        secondary={{ label: "Explore Programmes", href: "/undergraduate-programs" }}
+      />
     </>
   );
 }

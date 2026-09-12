@@ -4,7 +4,10 @@ import { news } from "@/data/news";
 import { events } from "@/data/events";
 import { faculties } from "@/data/faculties";
 import { departments } from "@/data/departments";
-import { programs } from "@/data/programs";
+import { publishedPrograms } from "@/data/programs";
+import { campuses } from "@/data/campuses";
+import { campusFacilities } from "@/data/campus";
+import { publicAnnouncements } from "@/data/announcements";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: string[] = [
@@ -15,6 +18,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/about/governance",
     "/about/accreditations",
     "/about/campus-map",
+    "/campuses",
+    "/facilities",
     "/about/diversity",
     "/about/sustainability",
     "/leadership",
@@ -35,6 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/research/innovation",
     "/research/ethics",
     "/news",
+    "/announcements",
     "/events",
     "/alumni",
     "/careers",
@@ -66,6 +72,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
+  const announcementEntries: MetadataRoute.Sitemap = publicAnnouncements.map((announcement) => ({
+    url: `${siteConfig.url}/announcements/${announcement.slug}`,
+    lastModified: new Date(announcement.publishedAt),
+    changeFrequency: "weekly" as const,
+    priority: 0.6,
+  }));
+
   const facultyEntries: MetadataRoute.Sitemap = faculties.map((faculty) => ({
     url: `${siteConfig.url}/faculties/${faculty.slug}`,
     lastModified: new Date(),
@@ -80,19 +93,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  const programEntries: MetadataRoute.Sitemap = programs.map((program) => ({
+  const programEntries: MetadataRoute.Sitemap = publishedPrograms.map((program) => ({
     url: `${siteConfig.url}/programs/${program.slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
 
+  const campusEntries: MetadataRoute.Sitemap = campuses.map((campus) => ({
+    url: `${siteConfig.url}/campuses/${campus.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  const facilityEntries: MetadataRoute.Sitemap = campusFacilities.map((facility) => ({
+    url: `${siteConfig.url}/facilities/${facility.id}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
   return [
     ...staticEntries,
     ...newsEntries,
     ...eventEntries,
+    ...announcementEntries,
     ...facultyEntries,
     ...departmentEntries,
     ...programEntries,
+    ...campusEntries,
+    ...facilityEntries,
   ];
 }

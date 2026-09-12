@@ -68,6 +68,8 @@ export const mainNav: NavGroup[] = [
       { label: "Governance & Policies", href: "/about/governance", icon: "shield-check", description: "Our governance framework and policies." },
       { label: "Accreditations & Rankings", href: "/about/accreditations", icon: "badge-check", description: "Recognition by national and global bodies." },
       { label: "Campus Map & Facilities", href: "/about/campus-map", icon: "map", description: "Explore our Umuchukwu campus." },
+      { label: "Campuses", href: "/campuses", icon: "map", description: "Find locations, facilities, and visitor information." },
+      { label: "Facilities Directory", href: "/facilities", icon: "building", description: "Explore spaces for learning, research, and student life." },
       { label: "Diversity & Inclusion", href: "/about/diversity", icon: "users-round", description: "A community that belongs to everyone." },
       { label: "Sustainability", href: "/about/sustainability", icon: "leaf", description: "Our commitment to a greener campus." },
       { label: "Contact", href: "/contact", icon: "phone", description: "Get in touch with the University." },
@@ -110,6 +112,7 @@ export const mainNav: NavGroup[] = [
     icon: "users",
     children: [
       { label: "News", href: "/news", icon: "newspaper", description: "Stories and updates from TAU." },
+      { label: "Announcements", href: "/announcements", icon: "newspaper", description: "Official notices and time-sensitive updates." },
       { label: "Events", href: "/events", icon: "calendar", description: "Conferences, talks, and gatherings." },
       { label: "Alumni", href: "/alumni", icon: "users-round", description: "A lifelong network of TAU graduates." },
       { label: "Careers", href: "/careers", icon: "briefcase", description: "Join the TAU team." },

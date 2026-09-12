@@ -21,6 +21,32 @@ export interface NewsArticle {
   tags: string[];
 }
 
+export interface Announcement {
+  id: string;
+  slug: string;
+  title: string;
+  summary: string;
+  content: string[];
+  category: string;
+  publishedAt: string;
+  expiresAt?: string;
+  owner: string;
+}
+
+export type EmergencySeverity = "info" | "warning" | "critical";
+
+export interface EmergencyBannerMessage {
+  id: string;
+  severity: EmergencySeverity;
+  title: string;
+  message: string;
+  cta?: { label: string; href: string };
+  startsAt: string;
+  expiresAt?: string;
+  approvalState: "approved" | "pending" | "rejected";
+  dismissible?: boolean;
+}
+
 export interface UniversityEvent {
   id: string;
   slug: string;
@@ -81,6 +107,10 @@ export interface Program {
   slug: string;
   title: string;
   type: "Undergraduate" | "Postgraduate" | "Residency" | "Doctoral";
+  publicationStatus: "published" | "draft";
+  subject: string;
+  entryRoutes: string[];
+  accreditationStatus: string;
   degree: string;
   facultyId: string;
   departmentId?: string;
@@ -89,6 +119,8 @@ export interface Program {
   description: string;
   highlights: string[];
   entryRequirements: string[];
+  applicationRequirements?: string[];
+  importantDates?: { label: string; date: string }[];
   careerOutcomes: string[];
   tuition: string;
   image: string;
@@ -165,6 +197,23 @@ export interface CampusFacility {
   description: string;
   image: string;
   hours?: string;
+  campusId?: string;
+  accessibility?: string;
+  highlights?: string[];
+}
+
+export interface Campus {
+  id: string;
+  slug: string;
+  name: string;
+  location: string;
+  description: string;
+  image: string;
+  facilities: string[];
+  highlights: string[];
+  contactEmail: string;
+  contactPhone: string;
+  accessibility: string;
 }
 
 export interface GalleryImage {
@@ -195,4 +244,21 @@ export interface SearchResult {
   href: string;
   type: string;
   description: string;
+  metadata?: string;
+}
+
+export interface EnquiryPayload {
+  name: string;
+  email: string;
+  phone?: string;
+  enquiryType: string;
+  programme?: string;
+  message: string;
+  consent: boolean;
+  spamToken?: string;
+}
+
+export interface EnquiryReceipt {
+  reference: string;
+  receivedAt: string;
 }

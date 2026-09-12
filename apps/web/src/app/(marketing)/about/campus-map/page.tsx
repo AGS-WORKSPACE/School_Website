@@ -8,6 +8,7 @@ import { Reveal, StaggerContainer, StaggerItem } from "@/components/common/motio
 import { PlaceholderImage } from "@/components/common/placeholder-image";
 import { CTASection } from "@/components/common/cta-section";
 import { campusFacilities } from "@/data/campus";
+import Link from "next/link";
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Campus Map & Facilities",
@@ -90,7 +91,9 @@ export default function CampusMapPage() {
                       />
                       <div className="p-5">
                         <h3 className="font-display text-base font-bold transition-colors group-hover:text-primary">
-                          {facility.name}
+                          <Link href={`/facilities/${facility.id}`} className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                            {facility.name}
+                          </Link>
                         </h3>
                         <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-muted-foreground">
                           {facility.description}
@@ -101,6 +104,9 @@ export default function CampusMapPage() {
                             {facility.hours}
                           </p>
                         ) : null}
+                        <Link href={`/facilities/${facility.id}`} className="mt-4 inline-flex rounded text-xs font-semibold text-medical focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                          View facility details
+                        </Link>
                       </div>
                     </div>
                   </StaggerItem>

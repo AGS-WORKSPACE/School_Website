@@ -8,6 +8,7 @@ import { Badge } from "@tau/ui/badge";
 import { CalendarDays, Clock, MapPin } from "lucide-react";
 import { EventCard } from "@/components/cards/event-card";
 import { events, eventCategories } from "@/data/events";
+import Link from "next/link";
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Events",
@@ -16,10 +17,20 @@ export const metadata: Metadata = generatePageMetadata({
   path: "/events",
 });
 
-export default function EventsPage() {
-  const upcoming = [...events].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-  const featured = events.find((event) => event.featured);
-  const others = (featured ? events.filter((event) => event.id !== featured.id) : events).sort(
+interface Props {
+  searchParams?: Promise<{ category?: string }>;
+}
+
+export default async function EventsPage({ searchParams }: Props) {
+  const category = (await searchParams)?.category ?? "All";
+  const activeCategory = eventCategories.includes(category) ? category : "All";
+  const now = new Date();
+  const upcoming = events
+    .filter((event) => new Date(`${event.date}T23:59:59`).getTime() >= now.getTime())
+    .filter((event) => activeCategory === "All" || event.category === activeCategory)
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  const featured = upcoming.find((event) => event.featured);
+  const others = (featured ? upcoming.filter((event) => event.id !== featured.id) : upcoming).sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
   );
 
@@ -36,14 +47,14 @@ export default function EventsPage() {
         <Container>
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex flex-wrap gap-2">
-              {eventCategories.map((category) => (
-                <Badge key={category} variant={category === "All" ? "accent" : "muted"}>
-                  {category}
-                </Badge>
+              {eventCategories.map((item) => (
+                <Link key={item} href={item === "All" ? "/events" : `/events?category=${encodeURIComponent(item)}`} className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                  <Badge variant={item === activeCategory ? "accent" : "muted"}>{item}</Badge>
+                </Link>
               ))}
             </div>
             <p className="text-sm font-semibold text-muted-foreground">
-              {upcoming.length} upcoming events
+              <span aria-live="polite">{upcoming.length} upcoming events</span>
             </p>
           </div>
 
@@ -96,13 +107,11 @@ export default function EventsPage() {
             </div>
           ) : null}
 
-          <StaggerContainer className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {others.map((event) => (
-              <StaggerItem key={event.id}>
-                <EventCard event={event} />
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
+          {others.length > 0 ? (
+            <StaggerContainer className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {others.map((event) => <StaggerItem key={event.id}><EventCard event={event} /></StaggerItem>)}
+            </StaggerContainer>
+          ) : <p className="mt-12 rounded-2xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">No upcoming events are available in this category.</p>}
         </Container>
       </Section>
 

@@ -6,6 +6,9 @@ import { events, testimonials } from "@/data/events";
 import { leadership, governanceBodies, accreditationBodies } from "@/data/leadership";
 import { staff, publications, jobs, partners } from "@/data/people";
 import { campusFacilities, gallery, faqs, scholarships, tuitionFees } from "@/data/campus";
+import { campuses } from "@/data/campuses";
+import { announcements } from "@/data/announcements";
+import { emergencyBanners } from "@/data/emergency-banners";
 
 export const data = {
   faculties,
@@ -22,6 +25,9 @@ export const data = {
   jobs,
   partners,
   campusFacilities,
+  campuses,
+  announcements,
+  emergencyBanners,
   gallery,
   faqs,
   scholarships,
@@ -36,3 +42,6 @@ export * from "@/data/events";
 export * from "@/data/leadership";
 export * from "@/data/people";
 export * from "@/data/campus";
+export * from "@/data/campuses";
+export * from "@/data/announcements";
+export * from "@/data/emergency-banners";

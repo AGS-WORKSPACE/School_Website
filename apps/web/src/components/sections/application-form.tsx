@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -12,8 +12,9 @@ import { Label } from "@tau/ui/label";
 import { Textarea } from "@tau/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@tau/ui/card";
 import { cn } from "@/lib/utils";
-import { programs } from "@/data/programs";
+import { publishedPrograms } from "@/data/programs";
 import { faculties } from "@/data/faculties";
+import { trackEvent } from "@/lib/analytics";
 
 const contactSchema = z.object({
   firstName: z.string().min(2, "First name is required"),
@@ -35,14 +36,24 @@ type EducationValues = z.infer<typeof educationSchema>;
 
 const steps = ["Contact Details", "Programme Choice", "Review"] as const;
 
-export function ApplicationForm() {
+export function ApplicationForm({ initialProgramme }: { initialProgramme?: string }) {
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [snapshot, setSnapshot] = useState<{ contact: ContactValues; education: EducationValues } | null>(null);
 
-  const contact = useForm<ContactValues>({ resolver: zodResolver(contactSchema), mode: "onBlur" });
-  const education = useForm<EducationValues>({ resolver: zodResolver(educationSchema), mode: "onBlur" });
+  const contact = useForm<ContactValues>({ resolver: zodResolver(contactSchema), mode: "onBlur", shouldFocusError: true });
+  const selectedProgramme = publishedPrograms.find((program) => program.id === initialProgramme || program.slug === initialProgramme);
+  const education = useForm<EducationValues>({
+    resolver: zodResolver(educationSchema),
+    mode: "onBlur",
+    shouldFocusError: true,
+    defaultValues: { programme: selectedProgramme?.id },
+  });
+
+  useEffect(() => {
+    trackEvent("application_started", { surface: "application", programmeSlug: initialProgramme ?? "none" });
+  }, [initialProgramme]);
 
   const handleNext = async () => {
     if (step === 0) {
@@ -121,37 +132,37 @@ export function ApplicationForm() {
             <div className="grid gap-5 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="firstName">First Name *</Label>
-                <Input id="firstName" placeholder="Ada" {...contact.register("firstName")} aria-invalid={!!contact.formState.errors.firstName} />
+                <Input id="firstName" placeholder="Ada" {...contact.register("firstName")} aria-invalid={!!contact.formState.errors.firstName} aria-describedby={contact.formState.errors.firstName ? "first-name-error" : undefined} />
                 {contact.formState.errors.firstName ? (
-                  <p className="text-xs font-medium text-destructive" role="alert">{contact.formState.errors.firstName.message}</p>
+                  <p id="first-name-error" className="text-xs font-medium text-destructive" role="alert">{contact.formState.errors.firstName.message}</p>
                 ) : null}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="lastName">Last Name *</Label>
-                <Input id="lastName" placeholder="Okafor" {...contact.register("lastName")} aria-invalid={!!contact.formState.errors.lastName} />
+                <Input id="lastName" placeholder="Okafor" {...contact.register("lastName")} aria-invalid={!!contact.formState.errors.lastName} aria-describedby={contact.formState.errors.lastName ? "last-name-error" : undefined} />
                 {contact.formState.errors.lastName ? (
-                  <p className="text-xs font-medium text-destructive" role="alert">{contact.formState.errors.lastName.message}</p>
+                  <p id="last-name-error" className="text-xs font-medium text-destructive" role="alert">{contact.formState.errors.lastName.message}</p>
                 ) : null}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email Address *</Label>
-                <Input id="email" type="email" placeholder="you@example.com" {...contact.register("email")} aria-invalid={!!contact.formState.errors.email} />
+                <Input id="email" type="email" placeholder="you@example.com" {...contact.register("email")} aria-invalid={!!contact.formState.errors.email} aria-describedby={contact.formState.errors.email ? "application-email-error" : undefined} />
                 {contact.formState.errors.email ? (
-                  <p className="text-xs font-medium text-destructive" role="alert">{contact.formState.errors.email.message}</p>
+                  <p id="application-email-error" className="text-xs font-medium text-destructive" role="alert">{contact.formState.errors.email.message}</p>
                 ) : null}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="phone">Phone Number *</Label>
-                <Input id="phone" type="tel" placeholder="+234 800 000 0000" {...contact.register("phone")} aria-invalid={!!contact.formState.errors.phone} />
+                <Input id="phone" type="tel" placeholder="+234 800 000 0000" {...contact.register("phone")} aria-invalid={!!contact.formState.errors.phone} aria-describedby={contact.formState.errors.phone ? "application-phone-error" : undefined} />
                 {contact.formState.errors.phone ? (
-                  <p className="text-xs font-medium text-destructive" role="alert">{contact.formState.errors.phone.message}</p>
+                  <p id="application-phone-error" className="text-xs font-medium text-destructive" role="alert">{contact.formState.errors.phone.message}</p>
                 ) : null}
               </div>
               <div className="space-y-2 sm:col-span-2">
                 <Label htmlFor="country">Country of Residence *</Label>
-                <Input id="country" placeholder="Nigeria" {...contact.register("country")} aria-invalid={!!contact.formState.errors.country} />
+                <Input id="country" placeholder="Nigeria" {...contact.register("country")} aria-invalid={!!contact.formState.errors.country} aria-describedby={contact.formState.errors.country ? "country-error" : undefined} />
                 {contact.formState.errors.country ? (
-                  <p className="text-xs font-medium text-destructive" role="alert">{contact.formState.errors.country.message}</p>
+                  <p id="country-error" className="text-xs font-medium text-destructive" role="alert">{contact.formState.errors.country.message}</p>
                 ) : null}
               </div>
             </div>
@@ -167,17 +178,17 @@ export function ApplicationForm() {
                   id="programme"
                   className="h-11 w-full rounded-xl border border-input bg-background px-4 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   {...education.register("programme")}
-                  aria-invalid={!!education.formState.errors.programme}
+                  aria-invalid={!!education.formState.errors.programme} aria-describedby={education.formState.errors.programme ? "application-programme-error" : undefined}
                 >
                   <option value="">Select a programme…</option>
-                  {programs.map((program) => (
+                  {publishedPrograms.map((program) => (
                     <option key={program.id} value={program.id}>
                       {program.degree} — {program.title}
                     </option>
                   ))}
                 </select>
                 {education.formState.errors.programme ? (
-                  <p className="text-xs font-medium text-destructive" role="alert">{education.formState.errors.programme.message}</p>
+                  <p id="application-programme-error" className="text-xs font-medium text-destructive" role="alert">{education.formState.errors.programme.message}</p>
                 ) : null}
               </div>
               <div className="space-y-2">
@@ -186,7 +197,7 @@ export function ApplicationForm() {
                   id="faculty"
                   className="h-11 w-full rounded-xl border border-input bg-background px-4 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   {...education.register("faculty")}
-                  aria-invalid={!!education.formState.errors.faculty}
+                  aria-invalid={!!education.formState.errors.faculty} aria-describedby={education.formState.errors.faculty ? "application-faculty-error" : undefined}
                 >
                   <option value="">Select a faculty…</option>
                   {faculties.map((faculty) => (
@@ -194,21 +205,21 @@ export function ApplicationForm() {
                   ))}
                 </select>
                 {education.formState.errors.faculty ? (
-                  <p className="text-xs font-medium text-destructive" role="alert">{education.formState.errors.faculty.message}</p>
+                  <p id="application-faculty-error" className="text-xs font-medium text-destructive" role="alert">{education.formState.errors.faculty.message}</p>
                 ) : null}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="qualification">Highest Qualification *</Label>
-                <Input id="qualification" placeholder="e.g. WAEC, NECO, Bachelor's degree" {...education.register("qualification")} aria-invalid={!!education.formState.errors.qualification} />
+                <Input id="qualification" placeholder="e.g. WAEC, NECO, Bachelor's degree" {...education.register("qualification")} aria-invalid={!!education.formState.errors.qualification} aria-describedby={education.formState.errors.qualification ? "qualification-error" : undefined} />
                 {education.formState.errors.qualification ? (
-                  <p className="text-xs font-medium text-destructive" role="alert">{education.formState.errors.qualification.message}</p>
+                  <p id="qualification-error" className="text-xs font-medium text-destructive" role="alert">{education.formState.errors.qualification.message}</p>
                 ) : null}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="grades">Grades / Academic Summary *</Label>
-                <Textarea id="grades" placeholder="Briefly summarise your results, e.g. 5 distinctions in…" {...education.register("grades")} aria-invalid={!!education.formState.errors.grades} />
+                <Textarea id="grades" placeholder="Briefly summarise your results, e.g. 5 distinctions in…" {...education.register("grades")} aria-invalid={!!education.formState.errors.grades} aria-describedby={education.formState.errors.grades ? "grades-error" : undefined} />
                 {education.formState.errors.grades ? (
-                  <p className="text-xs font-medium text-destructive" role="alert">{education.formState.errors.grades.message}</p>
+                  <p id="grades-error" className="text-xs font-medium text-destructive" role="alert">{education.formState.errors.grades.message}</p>
                 ) : null}
               </div>
             </div>
@@ -239,7 +250,7 @@ export function ApplicationForm() {
                 <div>
                   <dt className="font-semibold text-muted-foreground">Programme</dt>
                   <dd className="mt-0.5 font-medium">
-                    {programs.find((p) => p.id === snapshot?.education.programme)?.degree ?? "—"}
+                    {publishedPrograms.find((p) => p.id === snapshot?.education.programme)?.degree ?? "—"}
                   </dd>
                 </div>
                 <div>

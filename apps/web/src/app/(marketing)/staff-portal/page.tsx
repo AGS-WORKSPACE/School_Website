@@ -10,6 +10,7 @@ export const metadata: Metadata = generatePageMetadata({
   description:
     "Sign in to the TAU Staff Portal for HR records, payroll and payslips, leave management, and professional development.",
   path: "/staff-portal",
+  noIndex: true,
 });
 
 export default function StaffPortalPage() {

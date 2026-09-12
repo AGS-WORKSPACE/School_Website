@@ -13,6 +13,8 @@ export const queryKeys = {
   newsByCategory: (category: string) => ["news", category] as const,
   events: ["events"] as const,
   eventsByCategory: (category: string) => ["events", category] as const,
+  announcements: ["announcements"] as const,
+  announcementsByCategory: (category: string) => ["announcements", category] as const,
   leadership: ["leadership"] as const,
   staff: ["staff"] as const,
   publications: ["publications"] as const,
@@ -20,6 +22,8 @@ export const queryKeys = {
   jobsByType: (type: string) => ["jobs", type] as const,
   partners: ["partners"] as const,
   facilities: ["facilities"] as const,
+  campuses: ["campuses"] as const,
+  campus: (slug: string) => ["campuses", slug] as const,
   testimonials: ["testimonials"] as const,
   scholarships: ["scholarships"] as const,
 };
@@ -69,6 +73,17 @@ export function useEventsByCategory(category: string) {
   });
 }
 
+export function useAnnouncements() {
+  return useQuery({ queryKey: queryKeys.announcements, queryFn: mockApi.getAnnouncements });
+}
+
+export function useAnnouncementsByCategory(category: string) {
+  return useQuery({
+    queryKey: queryKeys.announcementsByCategory(category),
+    queryFn: () => mockApi.getAnnouncementsByCategory(category),
+  });
+}
+
 export function useLeadership() {
   return useQuery({ queryKey: queryKeys.leadership, queryFn: mockApi.getLeadership });
 }
@@ -91,6 +106,10 @@ export function usePartners() {
 
 export function useFacilities() {
   return useQuery({ queryKey: queryKeys.facilities, queryFn: mockApi.getFacilities });
+}
+
+export function useCampuses() {
+  return useQuery({ queryKey: queryKeys.campuses, queryFn: mockApi.getCampuses });
 }
 
 export function useTestimonials() {

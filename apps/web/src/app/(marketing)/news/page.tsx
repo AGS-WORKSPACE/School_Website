@@ -20,9 +20,16 @@ export const metadata: Metadata = generatePageMetadata({
   path: "/news",
 });
 
-export default function NewsPage() {
-  const featured = news.find((article) => article.featured) ?? news[0];
-  const rest = news.filter((article) => article.id !== featured.id);
+interface Props {
+  searchParams?: Promise<{ category?: string }>;
+}
+
+export default async function NewsPage({ searchParams }: Props) {
+  const category = (await searchParams)?.category ?? "All";
+  const activeCategory = newsCategories.includes(category) ? category : "All";
+  const filteredNews = activeCategory === "All" ? news : news.filter((article) => article.category === activeCategory);
+  const featured = filteredNews.find((article) => article.featured) ?? filteredNews[0];
+  const rest = featured ? filteredNews.filter((article) => article.id !== featured.id) : [];
 
   return (
     <>
@@ -88,12 +95,13 @@ export default function NewsPage() {
               <div className="rounded-3xl border border-border bg-card p-7">
                 <h2 className="font-display text-lg font-extrabold">Categories</h2>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {newsCategories.map((category) => (
-                    <Badge key={category} variant={category === "All" ? "accent" : "muted"}>
-                      {category}
-                    </Badge>
+                  {newsCategories.map((item) => (
+                    <Link key={item} href={item === "All" ? "/news" : `/news?category=${encodeURIComponent(item)}`} className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                      <Badge variant={item === activeCategory ? "accent" : "muted"}>{item}</Badge>
+                    </Link>
                   ))}
                 </div>
+                <p className="mt-3 text-xs text-muted-foreground" aria-live="polite">Showing {filteredNews.length} {activeCategory === "All" ? "stories" : `${activeCategory} stories`}</p>
                 <h2 className="mt-8 font-display text-lg font-extrabold">Latest Headlines</h2>
                 <ul className="mt-4 space-y-4">
                   {rest.slice(0, 4).map((article) => (
@@ -119,11 +127,11 @@ export default function NewsPage() {
 
           <div className="mt-14">
             <h2 className="font-display text-2xl font-extrabold tracking-tight">More Stories</h2>
-            <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {rest.map((article) => (
-                <NewsCard key={article.id} article={article} />
-              ))}
-            </div>
+            {rest.length > 0 ? (
+              <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {rest.map((article) => <NewsCard key={article.id} article={article} />)}
+              </div>
+            ) : <p className="mt-6 rounded-2xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">No stories are available in this category.</p>}
           </div>
         </Container>
       </Section>

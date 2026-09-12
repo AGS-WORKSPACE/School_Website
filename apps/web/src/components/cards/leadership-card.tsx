@@ -33,6 +33,7 @@ export function LeadershipCard({ member }: { member: LeadershipMember }) {
         <div className="mt-3">
           <Badge variant="muted" className="whitespace-normal">{member.credentials}</Badge>
         </div>
+        <p className="mt-4 line-clamp-4 text-left text-sm leading-relaxed text-muted-foreground">{member.bio}</p>
         <a
           href={`mailto:${member.email}`}
           className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"

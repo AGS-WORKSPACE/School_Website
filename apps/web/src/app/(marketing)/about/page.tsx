@@ -10,6 +10,7 @@ import { PlaceholderImage } from "@/components/common/placeholder-image";
 import { Button } from "@tau/ui/button";
 import { CTASection } from "@/components/common/cta-section";
 import { siteConfig } from "@/constants/site";
+import { StatCard } from "@/components/common/stat-card";
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Overview & History",
@@ -112,6 +113,22 @@ export default function AboutPage() {
                 </Button>
               </div>
             </Reveal>
+          </div>
+        </Container>
+      </Section>
+
+      <Section className="bg-navy py-16 sm:py-20">
+        <Container>
+          <SectionHeader
+            eyebrow="TAU At a Glance"
+            title="A Growing Health Sciences Community"
+            description="The scale of our university reflects the community we are building for students, researchers, and partners."
+            light
+          />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {siteConfig.stats.map((stat, index) => (
+              <StatCard key={stat.label} {...stat} index={index} light />
+            ))}
           </div>
         </Container>
       </Section>

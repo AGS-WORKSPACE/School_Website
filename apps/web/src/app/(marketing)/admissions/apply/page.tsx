@@ -6,6 +6,7 @@ import { Reveal } from "@/components/common/motion";
 import { ApplicationForm } from "@/components/sections/application-form";
 import { Clock3, FileCheck2, MessageCircle, Phone } from "lucide-react";
 import { siteConfig } from "@/constants/site";
+import { publishedPrograms } from "@/data/programs";
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Apply Now",
@@ -21,7 +22,13 @@ const support = [
   { Icon: FileCheck2, title: "Application Fee", value: "₦15,000 – ₦25,000 (non-refundable)" },
 ];
 
-export default function ApplyPage() {
+interface Props {
+  searchParams?: Promise<{ programme?: string }>;
+}
+
+export default async function ApplyPage({ searchParams }: Props) {
+  const requestedProgramme = (await searchParams)?.programme;
+  const initialProgramme = publishedPrograms.some((item) => item.slug === requestedProgramme || item.id === requestedProgramme) ? requestedProgramme : undefined;
   return (
     <>
       <PageHero image="/images/placeholders/hero-campus.jpg"
@@ -34,7 +41,7 @@ export default function ApplyPage() {
       <Section>
         <Container>
           <div className="grid gap-10 lg:grid-cols-[1.6fr_1fr]">
-            <ApplicationForm />
+            <ApplicationForm initialProgramme={initialProgramme} />
 
             <aside className="space-y-4 lg:sticky lg:top-28 lg:self-start">
               <Reveal>
