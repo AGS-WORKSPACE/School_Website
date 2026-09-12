@@ -18,10 +18,10 @@ export function Section({
   contentClassName?: string;
 }) {
   return (
-    <Card className={className}>
+    <Card className={cn("border-border bg-card shadow-card", className)}>
       <CardHeader className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="space-y-1">
-          <CardTitle className="text-base">{title}</CardTitle>
+          <CardTitle className="text-base tracking-[-0.018em]">{title}</CardTitle>
           {description ? <CardDescription>{description}</CardDescription> : null}
         </div>
         {actions ? <div className="flex shrink-0 flex-wrap gap-2">{actions}</div> : null}

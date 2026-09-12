@@ -39,6 +39,7 @@ export function StatusBadge({ status, className }: { status: string; className?:
   const style = statusStyles[status] ?? { variant: "muted" as Variant };
   return (
     <Badge variant={style.variant} className={className}>
+      <span className="size-1.5 rounded-full bg-current" aria-hidden />
       {style.label ?? humanise(status)}
     </Badge>
   );
