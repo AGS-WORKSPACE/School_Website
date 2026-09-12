@@ -21,7 +21,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       suppressHydrationWarning
       className={`${fontSans.variable} ${fontDisplay.variable} ${fontMono.variable} h-full antialiased`}
     >
-      <body className="bg-muted/40 flex min-h-full flex-col">
+      <body className="flex min-h-full flex-col bg-[#f1f5f9]">
         <QueryProvider>
           {children}
           <Toaster position="bottom-right" richColors closeButton />
