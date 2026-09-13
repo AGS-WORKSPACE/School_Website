@@ -1,14 +1,21 @@
 import type { LucideIcon } from "lucide-react";
 import {
   Activity,
+  ArrowLeftRight,
+  Award,
+  BookOpen,
   Building2,
   CalendarDays,
   ClipboardCheck,
   Database,
+  FileCheck2,
   FileClock,
   Flag,
   GaugeCircle,
+  GitPullRequest,
+  GraduationCap,
   KeyRound,
+  Layers,
   Settings2,
   ScaleIcon,
   ShieldAlert,
@@ -29,6 +36,101 @@ export interface NavGroup {
 }
 
 export const navigation: NavGroup[] = [
+  {
+    label: "Overview",
+    items: [
+      {
+        href: "/",
+        label: "Access position",
+        description: "Where access stands across the institution right now.",
+        icon: GaugeCircle,
+      },
+      {
+        href: "/my-access",
+        label: "My access",
+        description: "Everything you can do, and exactly where it came from.",
+        icon: UserRoundCheck,
+      },
+    ],
+  },
+  {
+    label: "People",
+    items: [
+      {
+        href: "/people",
+        label: "People and accounts",
+        description: "One identity per person, with every linked role.",
+        icon: Users,
+      },
+      {
+        href: "/roles",
+        label: "Roles and permissions",
+        description:
+          "The permission matrix and what each role may be scoped to.",
+        icon: KeyRound,
+      },
+      {
+        href: "/access-review",
+        label: "Access review",
+        description: "Confirm or withdraw standing access.",
+        icon: ClipboardCheck,
+      },
+    ],
+  },
+  {
+    label: "Academic Planning",
+    items: [
+      {
+        href: "/curriculum",
+        label: "Curriculum overview",
+        description:
+          "Programmes, courses, accreditation timeline and governance readiness.",
+        icon: GraduationCap,
+      },
+      {
+        href: "/curriculum/programmes",
+        label: "Programmes & accreditation",
+        description:
+          "Degrees, admission routes, versions and NUC accreditation history.",
+        icon: Award,
+      },
+      {
+        href: "/curriculum/courses",
+        label: "Course catalogue",
+        description:
+          "Course definitions, credits, prerequisites and Bloom's learning outcomes.",
+        icon: BookOpen,
+      },
+      {
+        href: "/curriculum/ccmas",
+        label: "CCMAS & QA compliance",
+        description:
+          "NUC 70% core vs 30% local analysis, gap detection and audit evidence.",
+        icon: FileCheck2,
+      },
+      {
+        href: "/curriculum/proposals",
+        label: "Change proposals",
+        description:
+          "Department, Faculty and Senate change pipeline with impact analysis.",
+        icon: GitPullRequest,
+      },
+      {
+        href: "/curriculum/capacity",
+        label: "Capacity & demand",
+        description:
+          "NUC staff-student ratios, quota modeling and intake variance.",
+        icon: Layers,
+      },
+      {
+        href: "/curriculum/equivalencies",
+        label: "Equivalencies & teach-out",
+        description:
+          "Substitutions, legacy transition matrices and teach-out rules.",
+        icon: ArrowLeftRight,
+      },
+    ],
+  },
   {
     label: "Configuration",
     items: [
@@ -77,52 +179,13 @@ export const navigation: NavGroup[] = [
     ],
   },
   {
-    label: "Overview",
-    items: [
-      {
-        href: "/",
-        label: "Access position",
-        description: "Where access stands across the institution right now.",
-        icon: GaugeCircle,
-      },
-      {
-        href: "/my-access",
-        label: "My access",
-        description: "Everything you can do, and exactly where it came from.",
-        icon: UserRoundCheck,
-      },
-    ],
-  },
-  {
-    label: "People",
-    items: [
-      {
-        href: "/people",
-        label: "People and accounts",
-        description: "One identity per person, with every linked role.",
-        icon: Users,
-      },
-      {
-        href: "/roles",
-        label: "Roles and permissions",
-        description: "The permission matrix and what each role may be scoped to.",
-        icon: KeyRound,
-      },
-      {
-        href: "/access-review",
-        label: "Access review",
-        description: "Confirm or withdraw standing access.",
-        icon: ClipboardCheck,
-      },
-    ],
-  },
-  {
     label: "Content",
     items: [
       {
         href: "/content",
         label: "Content workflow",
-        description: "Draft, review, schedule, publish and roll back public content.",
+        description:
+          "Draft, review, schedule, publish and roll back public content.",
         icon: FileClock,
       },
     ],
@@ -156,7 +219,8 @@ export const navigation: NavGroup[] = [
       {
         href: "/audit",
         label: "Audit trail",
-        description: "Tamper-evident record of who did what, and what was refused.",
+        description:
+          "Tamper-evident record of who did what, and what was refused.",
         icon: FileClock,
       },
     ],

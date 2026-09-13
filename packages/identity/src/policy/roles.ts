@@ -148,6 +148,7 @@ export const roleCatalogue: Role[] = [
     description: "Runs a department: curriculum proposals, teaching allocation and class oversight.",
     permissionIds: [
       "academics:curriculum:propose",
+      "academics:curriculum:review",
       "academics:timetable:publish",
       "lms:enrolment:read",
       "hr:staff-record:read",
@@ -155,6 +156,21 @@ export const roleCatalogue: Role[] = [
     ],
     assignableDimensions: ["department"],
     privileged: false,
+    breakGlassOnly: false,
+  },
+  {
+    id: "dap-director",
+    name: "Director of Academic Planning",
+    workspace: "academics",
+    description:
+      "Oversees academic curriculum catalogue, CCMAS compliance, and approves academic planning changes for Senate ratification.",
+    permissionIds: [
+      "academics:curriculum:review",
+      "academics:curriculum:approve",
+      "academics:timetable:publish",
+    ],
+    assignableDimensions: ["institution"],
+    privileged: true,
     breakGlassOnly: false,
   },
   {
