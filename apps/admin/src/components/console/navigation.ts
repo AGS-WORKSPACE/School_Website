@@ -1,9 +1,15 @@
 import type { LucideIcon } from "lucide-react";
 import {
+  Activity,
+  Building2,
+  CalendarDays,
   ClipboardCheck,
+  Database,
   FileClock,
+  Flag,
   GaugeCircle,
   KeyRound,
+  Settings2,
   ScaleIcon,
   ShieldAlert,
   UserRoundCheck,
@@ -23,6 +29,53 @@ export interface NavGroup {
 }
 
 export const navigation: NavGroup[] = [
+  {
+    label: "Configuration",
+    items: [
+      {
+        href: "/configuration",
+        label: "Configuration overview",
+        description: "Institutional master data and configuration readiness.",
+        icon: Settings2,
+      },
+      {
+        href: "/configuration/organisation",
+        label: "Organisation",
+        description: "Effective-dated units, hierarchy and reporting lines.",
+        icon: Building2,
+      },
+      {
+        href: "/configuration/academic-calendar",
+        label: "Academic calendar",
+        description: "Sessions, terms, teaching weeks and deadlines.",
+        icon: CalendarDays,
+      },
+      {
+        href: "/configuration/reference-data",
+        label: "Reference data",
+        description: "Controlled vocabularies reused across modules.",
+        icon: Database,
+      },
+      {
+        href: "/configuration/rules",
+        label: "Academic rules",
+        description: "Versioned grading, credit and progression policies.",
+        icon: ScaleIcon,
+      },
+      {
+        href: "/configuration/feature-flags",
+        label: "Feature flags",
+        description: "Environment rollout and reversible promotion.",
+        icon: Flag,
+      },
+      {
+        href: "/configuration/activity",
+        label: "Configuration activity",
+        description: "Readable record of configuration changes.",
+        icon: Activity,
+      },
+    ],
+  },
   {
     label: "Overview",
     items: [
