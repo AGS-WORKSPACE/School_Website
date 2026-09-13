@@ -4,6 +4,7 @@
 /* Workspace packages live outside this app, so Tailwind needs them declared. */
 @source "../../../../packages/ui/src";
 @source "../../../../packages/identity/src";
+@source "../../../../packages/curriculum/src";
 
 @layer utilities {
   /* Dense tabular readouts: audit entries, permission matrices, grant lists. */
