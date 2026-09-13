@@ -97,6 +97,16 @@ export const sodRuleset: SodRule[] = [
     severity: "blocking",
     basis: "Product principle 4 — maker-checker on academic and curriculum records (CUR-04).",
   },
+  {
+    id: "sod-assisted-intake-resolve",
+    label: "Capture walk-in application and resolve deduplication/discrepancies",
+    description:
+      "An officer who captures an assisted walk-in intake must not independently resolve deduplication match cases or identity discrepancies for those applications without a second authority.",
+    permissionA: "admissions:assisted:intake",
+    permissionB: "admissions:case:resolve",
+    severity: "blocking",
+    basis: "EP-05 Admissions Fraud Prevention (ADM-04, ADM-06) — maker-checker on assisted intake.",
+  },
 ];
 
 export function getSodRule(id: string): SodRule | undefined {

@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight, BookOpen, CheckCircle2, Clock, Mail } from "lucide-react";
 import { Card, CardContent } from "@tau/ui/card";

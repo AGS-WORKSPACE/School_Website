@@ -258,6 +258,35 @@ describe("IAM-05 — segregation of duties", () => {
     assert.ok(curriculumConflict, "proposing and approving curriculum must conflict");
     assert.equal(isConflictBlocking(curriculumConflict, now), true);
   });
+
+  it("blocks capturing assisted intake and resolving deduplication cases together (ADM-04, ADM-06)", () => {
+    const grants = [
+      {
+        permissionId: "admissions:assisted:intake",
+        scope: { dimension: "campus", unitId: "campus-main" },
+        source: { kind: "assignment", id: "asg-adm-1", roleId: "admissions-officer" },
+      },
+      {
+        permissionId: "admissions:case:resolve",
+        scope: { dimension: "institution", unitId: "inst-tau" },
+        source: { kind: "assignment", id: "asg-adm-2", roleId: "admissions-approver" },
+      },
+    ] as any;
+
+    const conflicts = detectConflicts({
+      personId: "per-test-admissions",
+      grants,
+      units: store.units,
+      exceptions: [],
+      now,
+    });
+
+    const admissionsConflict = conflicts.find(
+      (candidate) => candidate.rule.id === "sod-assisted-intake-resolve",
+    );
+    assert.ok(admissionsConflict, "assisted intake and resolving cases must conflict");
+    assert.equal(isConflictBlocking(admissionsConflict, now), true);
+  });
 });
 
 describe("IAM-06 — break-glass is time-limited and gated", () => {
