@@ -87,6 +87,16 @@ export const sodRuleset: SodRule[] = [
     severity: "reviewable",
     basis: "WEB-03 — only authorised approvers publish.",
   },
+  {
+    id: "sod-curriculum-approval",
+    label: "Propose and approve curriculum changes",
+    description:
+      "The officer or department that proposes a curriculum modification must not also be the authority that approves it for Senate.",
+    permissionA: "academics:curriculum:propose",
+    permissionB: "academics:curriculum:approve",
+    severity: "blocking",
+    basis: "Product principle 4 — maker-checker on academic and curriculum records (CUR-04).",
+  },
 ];
 
 export function getSodRule(id: string): SodRule | undefined {

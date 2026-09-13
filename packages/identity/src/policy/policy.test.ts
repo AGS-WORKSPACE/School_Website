@@ -229,6 +229,35 @@ describe("IAM-05 — segregation of duties", () => {
       !conflictsFor("per-amina").some((candidate) => candidate.rule.id === "sod-result-release"),
     );
   });
+
+  it("blocks proposing and approving curriculum changes together (CUR-04)", () => {
+    const grants = [
+      {
+        permissionId: "academics:curriculum:propose",
+        scope: { dimension: "faculty", unitId: "fac-health" },
+        source: { kind: "assignment", id: "asg-test-1", roleId: "head-of-department" },
+      },
+      {
+        permissionId: "academics:curriculum:approve",
+        scope: { dimension: "institution", unitId: "inst-tau" },
+        source: { kind: "assignment", id: "asg-test-2", roleId: "dap-director" },
+      },
+    ] as any;
+
+    const conflicts = detectConflicts({
+      personId: "per-test",
+      grants,
+      units: store.units,
+      exceptions: [],
+      now,
+    });
+
+    const curriculumConflict = conflicts.find(
+      (candidate) => candidate.rule.id === "sod-curriculum-approval",
+    );
+    assert.ok(curriculumConflict, "proposing and approving curriculum must conflict");
+    assert.equal(isConflictBlocking(curriculumConflict, now), true);
+  });
 });
 
 describe("IAM-06 — break-glass is time-limited and gated", () => {
