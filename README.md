@@ -1,4 +1,4 @@
-# TAU University Platform
+# School University Platform
 
 A monorepo for the university digital platform described in
 [UNIVERSITY_PLATFORM_PRODUCT_BACKLOG.md](./UNIVERSITY_PLATFORM_PRODUCT_BACKLOG.md).

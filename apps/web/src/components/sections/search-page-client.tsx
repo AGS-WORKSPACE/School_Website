@@ -1,34 +1,69 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, FileText, GraduationCap, Newspaper, Search, SearchX } from "lucide-react";
 import { Input } from "@tau/ui/input";
 import { Button } from "@tau/ui/button";
 import { Badge } from "@tau/ui/badge";
 import { Section, Container } from "@/components/common/container";
-import { staticResults, rankAllResults } from "@/lib/search";
+import { staticResults } from "@/lib/search";
+import { searchSite } from "@/services/search";
 import type { SearchResult } from "@/types";
+import { trackEvent } from "@/lib/analytics";
 
-const FILTERS = ["All", "Programme", "Faculty", "News", "Event", "Page"] as const;
+const FILTERS = ["All", "Programme", "Faculty", "News", "Announcement", "Event", "Campus", "Facility", "Page"] as const;
 
 const typeIcons: Record<string, React.ElementType> = {
   Faculty: GraduationCap,
   Programme: GraduationCap,
   News: Newspaper,
   Event: FileText,
+  Announcement: FileText,
+  Campus: FileText,
+  Facility: FileText,
   Page: FileText,
 };
 
 export function SearchPageClient() {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("All");
+  const [ranked, setRanked] = useState<SearchResult[]>([]);
+  const [completedQuery, setCompletedQuery] = useState("");
+  const [errorQuery, setErrorQuery] = useState("");
+  const searching = Boolean(query.trim()) && query !== completedQuery;
+  const searchError = Boolean(query.trim()) && query === errorQuery;
 
-  const ranked = useMemo(() => rankAllResults(query), [query]);
   const results = useMemo(
     () => (filter === "All" ? ranked : ranked.filter((result) => result.type === filter)),
     [ranked, filter],
   );
+
+  useEffect(() => {
+    if (!query.trim()) {
+      return;
+    }
+    let cancelled = false;
+    const timer = window.setTimeout(() => {
+      searchSite(query)
+        .then((nextResults) => {
+          if (!cancelled) {
+            setRanked(nextResults);
+            setCompletedQuery(query);
+            setErrorQuery("");
+            trackEvent("search", { queryLength: query.trim().length, resultCount: nextResults.length, hasResults: nextResults.length > 0, surface: "search_page" });
+          }
+        })
+        .catch(() => {
+          if (!cancelled) {
+            setRanked([]);
+            setCompletedQuery(query);
+            setErrorQuery(query);
+          }
+        });
+    }, 250);
+    return () => { cancelled = true; window.clearTimeout(timer); };
+  }, [query]);
 
   const search = (value: string) => {
     setQuery(value);
@@ -54,6 +89,7 @@ export function SearchPageClient() {
                   aria-hidden="true"
                 />
                 <Input
+                  aria-label="Search the University website"
                   autoFocus
                   value={query}
                   onChange={(event) => search(event.target.value)}
@@ -89,13 +125,24 @@ export function SearchPageClient() {
 
       <Section className="pt-10 sm:pt-12 lg:pt-14">
         <Container>
-          {query ? (
+          {query.trim() ? (
             <div className="mx-auto max-w-3xl">
-              <p className="mb-4 text-sm text-muted-foreground" role="status">
-                {results.length} result{results.length === 1 ? "" : "s"} for{" "}
+              <p className="mb-4 text-sm text-muted-foreground" role="status" aria-live="polite">
+                {searching ? "Searching…" : searchError ? "Search is temporarily unavailable." : `${results.length} result${results.length === 1 ? "" : "s"} for`} {searching || searchError ? null : (
+                  <>
                 <span className="font-semibold text-foreground">“{query}”</span>
+                  </>
+                )}
               </p>
-              {results.length === 0 ? (
+              {searchError ? (
+                <div className="rounded-3xl border border-destructive/20 bg-destructive/5 p-12 text-center" role="alert">
+                  <SearchX className="mx-auto size-10 text-destructive" aria-hidden="true" />
+                  <h2 className="mt-4 font-display text-xl font-bold">Search could not be completed</h2>
+                  <p className="mt-2 text-sm text-muted-foreground">Please try again in a moment.</p>
+                </div>
+              ) : searching ? (
+                <div className="rounded-3xl border border-border bg-muted/30 p-12 text-center" role="status"><p className="text-sm text-muted-foreground">Searching the University website…</p></div>
+              ) : results.length === 0 ? (
                 <div className="rounded-3xl border border-dashed border-border bg-muted/30 p-12 text-center">
                   <SearchX className="mx-auto size-10 text-muted-foreground" aria-hidden="true" />
                   <h2 className="mt-4 font-display text-xl font-bold">No results found</h2>
@@ -171,6 +218,7 @@ function SearchResultItem({ result }: { result: SearchResult }) {
             <Badge variant="muted">{result.type}</Badge>
           </span>
           <span className="mt-1 block text-sm text-muted-foreground">{result.description}</span>
+          {result.metadata ? <span className="mt-1 block text-xs font-medium text-medical">{result.metadata}</span> : null}
         </span>
         <ArrowRight className="mt-2 size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-medical" aria-hidden="true" />
       </Link>

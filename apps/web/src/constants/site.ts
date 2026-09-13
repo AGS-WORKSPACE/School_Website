@@ -44,6 +44,8 @@ export const route = {
     governance: "/about/governance",
     accreditations: "/about/accreditations",
     campusMap: "/about/campus-map",
+    campuses: "/campuses",
+    facilities: "/facilities",
     diversity: "/about/diversity",
     sustainability: "/about/sustainability",
   },

@@ -64,6 +64,17 @@ export const navigation: NavGroup[] = [
     ],
   },
   {
+    label: "Content",
+    items: [
+      {
+        href: "/content",
+        label: "Content workflow",
+        description: "Draft, review, schedule, publish and roll back public content.",
+        icon: FileClock,
+      },
+    ],
+  },
+  {
     label: "Controls",
     items: [
       {
