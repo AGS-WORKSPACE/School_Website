@@ -59,16 +59,19 @@ export function StaggerContainer({
   className?: string;
   stagger?: number;
 }) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <motion.div
       className={className}
-      initial="hidden"
-      whileInView="visible"
+      initial={reduceMotion ? undefined : "hidden"}
+      whileInView={reduceMotion ? undefined : "visible"}
       viewport={{ once: true, margin: "-60px" }}
       variants={{
         hidden: {},
         visible: { transition: { staggerChildren: stagger } },
       }}
+      style={reduceMotion ? { opacity: 1 } : undefined}
     >
       {children}
     </motion.div>
@@ -76,8 +79,9 @@ export function StaggerContainer({
 }
 
 export function StaggerItem({ children, className }: { children: ReactNode; className?: string }) {
+  const reduceMotion = useReducedMotion();
   return (
-    <motion.div className={className} variants={fadeUp}>
+    <motion.div className={className} variants={reduceMotion ? undefined : fadeUp} style={reduceMotion ? { opacity: 1 } : undefined}>
       {children}
     </motion.div>
   );

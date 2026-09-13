@@ -14,6 +14,7 @@ const statusStyles: Record<string, { variant: Variant; label?: string }> = {
   reviewed: { variant: "success" },
   confirmed: { variant: "success" },
   scheduled: { variant: "outline" },
+  "pending-approval": { variant: "warning", label: "Pending approval" },
   requested: { variant: "warning", label: "Awaiting decision" },
   "awaiting-review": { variant: "warning", label: "Awaiting review" },
   "pending-activation": { variant: "warning", label: "Not activated" },
@@ -21,6 +22,7 @@ const statusStyles: Record<string, { variant: Variant; label?: string }> = {
   expired: { variant: "muted" },
   revoked: { variant: "muted" },
   rejected: { variant: "destructive" },
+  "rolled-back": { variant: "destructive", label: "Rolled back" },
   disabled: { variant: "destructive" },
   blocked: { variant: "destructive" },
   blocking: { variant: "destructive" },
@@ -39,6 +41,7 @@ export function StatusBadge({ status, className }: { status: string; className?:
   const style = statusStyles[status] ?? { variant: "muted" as Variant };
   return (
     <Badge variant={style.variant} className={className}>
+      <span className="size-1.5 rounded-full bg-current" aria-hidden />
       {style.label ?? humanise(status)}
     </Badge>
   );

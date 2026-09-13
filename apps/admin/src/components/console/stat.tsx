@@ -35,16 +35,31 @@ export function Stat({
   href?: string;
 }) {
   const body = (
-    <Card className={cn("h-full transition-shadow", toneRing[tone], href && "hover:shadow-md")}>
-      <CardContent className="flex h-full flex-col gap-1 p-5">
-        <div className="flex items-start justify-between gap-3">
-          <p className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
-            {label}
+    <Card
+      className={cn(
+        "h-full transition-all duration-150",
+        toneRing[tone],
+        href && "hover:-translate-y-0.5 hover:border-[#b6c7d9] hover:shadow-card-hover",
+      )}
+    >
+      <CardContent className="flex h-full items-start gap-3 p-4">
+        {Icon ? (
+          <span
+            className={cn(
+              "grid size-9 shrink-0 place-items-center rounded-lg bg-primary/10",
+              toneText[tone],
+            )}
+          >
+            <Icon className="size-[1.125rem]" aria-hidden />
+          </span>
+        ) : null}
+        <div className="flex min-w-0 flex-1 flex-col">
+          <p className={cn("tabular font-display text-2xl leading-none font-extrabold", toneText[tone])}>
+            {value}
           </p>
-          {Icon ? <Icon className={cn("size-4 shrink-0", toneText[tone])} aria-hidden /> : null}
+          <p className="mt-2 text-xs font-bold text-foreground">{label}</p>
+          {hint ? <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{hint}</p> : null}
         </div>
-        <p className={cn("tabular font-display text-3xl font-bold", toneText[tone])}>{value}</p>
-        {hint ? <p className="text-muted-foreground mt-auto pt-1 text-xs">{hint}</p> : null}
       </CardContent>
     </Card>
   );

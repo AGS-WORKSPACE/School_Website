@@ -1,4 +1,4 @@
-import { faculties, departments, programs, news, events, leadership, staff, publications, jobs, partners, campusFacilities, testimonials, scholarships } from "@/data";
+import { faculties, departments, publishedPrograms, news, events, leadership, staff, publications, jobs, partners, campuses, campusFacilities, testimonials, scholarships, publicAnnouncements, publicEmergencyBanners } from "@/data";
 import type { Program } from "@/types";
 
 const latency = 150;
@@ -13,16 +13,21 @@ export const mockApi = {
   getDepartments: () => delay(departments),
   getDepartmentsByFaculty: (facultyId: string) =>
     delay(departments.filter((d) => d.facultyId === facultyId)),
-  getPrograms: () => delay(programs),
+  getPrograms: () => delay(publishedPrograms),
   getProgramsByType: (type: Program["type"]) =>
-    delay(programs.filter((p) => p.type === type)),
-  getProgram: (slug: string) => delay(programs.find((p) => p.slug === slug) ?? null),
+    delay(publishedPrograms.filter((p) => p.type === type)),
+  getProgram: (slug: string) => delay(publishedPrograms.find((p) => p.slug === slug) ?? null),
   getNews: () => delay(news),
   getNewsByCategory: (category: string) =>
     delay(category === "All" ? news : news.filter((n) => n.category === category)),
   getEvents: () => delay(events),
   getEventsByCategory: (category: string) =>
     delay(category === "All" ? events : events.filter((e) => e.category === category)),
+  getAnnouncements: () => delay(publicAnnouncements),
+  getAnnouncementsByCategory: (category: string) =>
+    delay(category === "All" ? publicAnnouncements : publicAnnouncements.filter((item) => item.category === category)),
+  getAnnouncement: (slug: string) => delay(publicAnnouncements.find((item) => item.slug === slug) ?? null),
+  getEmergencyBanners: () => delay(publicEmergencyBanners),
   getLeadership: () => delay(leadership),
   getStaff: () => delay(staff),
   getStaffByDepartment: (department: string) =>
@@ -33,6 +38,8 @@ export const mockApi = {
     delay(type === "All" ? jobs : jobs.filter((j) => j.type === type)),
   getPartners: () => delay(partners),
   getFacilities: () => delay(campusFacilities),
+  getCampuses: () => delay(campuses),
+  getCampus: (slug: string) => delay(campuses.find((campus) => campus.slug === slug) ?? null),
   getTestimonials: () => delay(testimonials),
   getScholarships: () => delay(scholarships),
 };
@@ -40,7 +47,8 @@ export const mockApi = {
 export const mockEndpoints = [
   { id: "faculties", name: "Faculties", path: "/api/mock/faculties", records: faculties.length },
   { id: "departments", name: "Departments", path: "/api/mock/departments", records: departments.length },
-  { id: "programs", name: "Programmes", path: "/api/mock/programs", records: programs.length },
+  { id: "programs", name: "Programmes", path: "/api/mock/programs", records: publishedPrograms.length },
   { id: "news", name: "News", path: "/api/mock/news", records: news.length },
   { id: "events", name: "Events", path: "/api/mock/events", records: events.length },
+  { id: "announcements", name: "Announcements", path: "/api/mock/announcements", records: publicAnnouncements.length },
 ] as const;

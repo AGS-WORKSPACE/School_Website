@@ -9,6 +9,9 @@ export const campusFacilities: CampusFacility[] = [
       "A 24/7 digital-first library with 80,000+ e-journals, 40,000 print volumes, quiet study floors, and dedicated research carrels.",
     image: "/images/placeholders/campus-library.jpg",
     hours: "Open 24/7 for registered students",
+    campusId: "main-campus",
+    accessibility: "Step-free entrance, lifts, accessible study spaces, and adjustable-height desks.",
+    highlights: ["80,000+ e-journals", "24/7 study access", "Research carrels"],
   },
   {
     id: "simulation",
@@ -18,6 +21,9 @@ export const campusFacilities: CampusFacility[] = [
       "High-fidelity adult, paediatric, and obstetric simulators plus an immersive VR surgical suite for interprofessional training.",
     image: "/images/placeholders/simulation-lab.jpg",
     hours: "7:00 AM – 9:00 PM",
+    campusId: "main-campus",
+    accessibility: "Step-free access and accessible simulation bays available by arrangement.",
+    highlights: ["High-fidelity simulators", "VR surgical suite", "Interprofessional training"],
   },
   {
     id: "lecture",
@@ -26,6 +32,9 @@ export const campusFacilities: CampusFacility[] = [
     description:
       "A 1,200-seat auditorium and tiered lecture theatres with hybrid learning technology for every faculty.",
     image: "/images/placeholders/lecture-theatre.jpg",
+    campusId: "main-campus",
+    accessibility: "Accessible seating, step-free routes, and hearing support available in the main theatre.",
+    highlights: ["1,200-seat auditorium", "Hybrid learning technology", "Tiered lecture rooms"],
   },
   {
     id: "hostels",
@@ -34,6 +43,9 @@ export const campusFacilities: CampusFacility[] = [
     description:
       "Modern on-campus hostels with high-speed internet, study lounges, and 24/7 security and pastoral care.",
     image: "/images/placeholders/student-hostel.jpg",
+    campusId: "main-campus",
+    accessibility: "Accessible rooms and step-free accommodation can be requested through student services.",
+    highlights: ["Study lounges", "High-speed internet", "24/7 security"],
   },
   {
     id: "sports",
@@ -42,6 +54,9 @@ export const campusFacilities: CampusFacility[] = [
     description:
       "Football pitch, athletics track, basketball and volleyball courts, and a fully equipped fitness centre.",
     image: "/images/placeholders/sports-complex.jpg",
+    campusId: "main-campus",
+    accessibility: "Step-free access to the main complex; support arrangements vary by activity.",
+    highlights: ["Football pitch", "Athletics track", "Fitness centre"],
   },
   {
     id: "cafeteria",
@@ -50,6 +65,9 @@ export const campusFacilities: CampusFacility[] = [
     description:
       "Nutritious meal plans and à la carte dining with halal, vegetarian, and clinical dietary options.",
     image: "/images/placeholders/cafeteria.jpg",
+    campusId: "main-campus",
+    accessibility: "Step-free dining areas with accessible seating and dietary support.",
+    highlights: ["Halal options", "Vegetarian options", "Clinical dietary options"],
   },
   {
     id: "research",
@@ -58,6 +76,9 @@ export const campusFacilities: CampusFacility[] = [
     description:
       "Core molecular, cell culture, analytical, and microbiology laboratories supporting all six faculties.",
     image: "/images/placeholders/research-lab.jpg",
+    campusId: "main-campus",
+    accessibility: "Accessible routes are available; laboratory-specific requirements should be discussed before a visit.",
+    highlights: ["Molecular biology", "Cell culture", "Analytical chemistry"],
   },
 ];
 

@@ -11,6 +11,9 @@ import { PlaceholderImage } from "@/components/common/placeholder-image";
 import { EventCard } from "@/components/cards/event-card";
 import { events, getEvent } from "@/data/events";
 import { formatDate } from "@/lib/utils";
+import { JsonLd } from "@/components/common/json-ld";
+import { eventStructuredData } from "@/lib/structured-data";
+import { ContentViewTracker } from "@/components/analytics/content-view-tracker";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -30,6 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: event.title,
     description: event.description,
     path: `/events/${event.slug}`,
+    image: event.image,
   });
 }
 
@@ -38,10 +42,14 @@ export default async function EventDetailPage({ params }: Props) {
   const event = getEvent(slug);
   if (!event) notFound();
 
+  const today = new Date().toISOString().slice(0, 10);
+  const hasEnded = event.date < today;
   const related = events.filter((item) => item.id !== event.id).slice(0, 3);
 
   return (
     <>
+      <JsonLd data={eventStructuredData(event)} />
+      <ContentViewTracker event="event_view" slug={event.slug} category={event.category} />
       <Section className="pt-10">
         <Container>
           <Breadcrumb items={[{ label: "Events", href: "/events" }, { label: event.title }]} />
@@ -49,6 +57,7 @@ export default async function EventDetailPage({ params }: Props) {
           <div className="grid gap-10 lg:grid-cols-[1.6fr_1fr]">
             <article className="mx-auto w-full max-w-3xl lg:max-w-none">
               <Badge variant="accent">{event.category}</Badge>
+              {hasEnded ? <Badge variant="muted">Event ended</Badge> : <Badge variant="success">Upcoming</Badge>}
               <h1 className="mt-4 text-balance font-display text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">
                 {event.title}
               </h1>
@@ -134,14 +143,17 @@ export default async function EventDetailPage({ params }: Props) {
 
             <aside className="lg:sticky lg:top-28 lg:self-start">
               <div className="rounded-3xl bg-gradient-to-br from-navy to-medical p-7 text-white sm:p-8">
-                <h2 className="font-display text-xl font-extrabold">Register for This Event</h2>
+                <h2 className="font-display text-xl font-extrabold">{hasEnded ? "Event information" : "Register for This Event"}</h2>
                 <p className="mt-3 text-sm leading-relaxed text-white/75">
-                  Registration is free for TAU students, staff, and faculty. Seats for public events are limited
-                  and allocated in order of registration.
+                  {hasEnded
+                    ? "This event has ended. Contact the events office if you need information about future events."
+                    : "Registration is free for TAU students, staff, and faculty. Seats for public events are limited and allocated in order of registration."}
                 </p>
-                <Button asChild size="lg" variant="accent" className="mt-6 w-full">
-                  <Link href="/contact">Register Now</Link>
-                </Button>
+                {!hasEnded ? (
+                  <Button asChild size="lg" variant="accent" className="mt-6 w-full">
+                    <Link href={`/contact?event=${encodeURIComponent(event.slug)}`}>Register Now</Link>
+                  </Button>
+                ) : null}
                 <p className="mt-4 text-xs text-white/60">
                   Have questions? Contact the events office at events@tau.edu.ng
                 </p>

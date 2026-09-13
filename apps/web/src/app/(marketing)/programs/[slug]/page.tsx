@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, BadgeCheck, Briefcase, CalendarDays, CheckCircle2, Clock, FileText, GraduationCap, School } from "lucide-react";
+import { ArrowRight, BadgeCheck, Briefcase, CalendarDays, CheckCircle2, Clock, FileText, GraduationCap, School, Building2 } from "lucide-react";
 import { generatePageMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/common/page-hero";
 import { Section, Container } from "@/components/common/container";
@@ -9,16 +9,20 @@ import { Reveal, StaggerContainer, StaggerItem } from "@/components/common/motio
 import { CTASection } from "@/components/common/cta-section";
 import { Badge } from "@tau/ui/badge";
 import { Button } from "@tau/ui/button";
-import { getProgram, programs } from "@/data/programs";
-import { getFaculty } from "@/data/faculties";
+import { getProgram, publishedPrograms } from "@/data/programs";
+import { faculties } from "@/data/faculties";
+import { getDepartment } from "@/data/departments";
 import { PlaceholderImage } from "@/components/common/placeholder-image";
+import { JsonLd } from "@/components/common/json-ld";
+import { programmeStructuredData } from "@/lib/structured-data";
+import { ContentViewTracker } from "@/components/analytics/content-view-tracker";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
 export function generateStaticParams() {
-  return programs.map((program) => ({ slug: program.slug }));
+  return publishedPrograms.map((program) => ({ slug: program.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -29,6 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${program.degree} — ${program.title}`,
     description: program.description,
     path: `/programs/${program.slug}`,
+    image: program.image,
   });
 }
 
@@ -37,11 +42,18 @@ export default async function ProgramDetailPage({ params }: Props) {
   const program = getProgram(slug);
   if (!program) notFound();
 
-  const faculty = getFaculty(program.facultyId);
-  const related = programs.filter((p) => p.id !== program.id && p.facultyId === program.facultyId).slice(0, 3);
+  const faculty = faculties.find((item) => item.id === program.facultyId);
+  const department = program.departmentId ? getDepartment(program.departmentId) : undefined;
+  const related = publishedPrograms
+    .filter((item) => item.id !== program.id && item.facultyId === program.facultyId)
+    .slice(0, 3);
+  const applicationHref = `/admissions/apply?programme=${encodeURIComponent(program.slug)}`;
+  const enquiryHref = `/contact?programme=${encodeURIComponent(program.slug)}`;
 
   return (
     <>
+      <JsonLd data={programmeStructuredData(program)} />
+      <ContentViewTracker event="programme_view" slug={program.slug} />
       <PageHero
         eyebrow={`${program.type} Programme`}
         title={program.title}
@@ -121,12 +133,49 @@ export default async function ProgramDetailPage({ params }: Props) {
                   </div>
                 </Reveal>
               </div>
+
+              <div className="mt-10 grid gap-6 md:grid-cols-2">
+                <Reveal>
+                  <section className="h-full rounded-2xl border border-border bg-card p-7" aria-labelledby="application-requirements-heading">
+                    <h2 id="application-requirements-heading" className="flex items-center gap-2 font-display text-lg font-extrabold">
+                      <FileText className="size-5 text-medical" aria-hidden="true" />
+                      Application Requirements
+                    </h2>
+                    <ul className="mt-4 space-y-3">
+                      {(program.applicationRequirements ?? []).map((requirement) => (
+                        <li key={requirement} className="flex items-start gap-2.5 text-sm leading-relaxed text-muted-foreground">
+                          <span className="mt-2 size-1.5 shrink-0 rounded-full bg-gold" aria-hidden="true" />
+                          {requirement}
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                </Reveal>
+                {program.importantDates?.length ? (
+                  <Reveal delay={0.05}>
+                    <section className="h-full rounded-2xl border border-border bg-card p-7" aria-labelledby="important-dates-heading">
+                      <h2 id="important-dates-heading" className="flex items-center gap-2 font-display text-lg font-extrabold">
+                        <CalendarDays className="size-5 text-medical" aria-hidden="true" />
+                        Important Dates
+                      </h2>
+                      <dl className="mt-4 space-y-4">
+                        {program.importantDates.map((item) => (
+                          <div key={item.label}>
+                            <dt className="text-sm font-bold">{item.label}</dt>
+                            <dd className="mt-1 text-sm text-muted-foreground">{item.date}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </section>
+                  </Reveal>
+                ) : null}
+              </div>
             </div>
 
             <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
               <Reveal>
-                <div className="rounded-2xl border border-border bg-card p-7">
-                  <h2 className="font-display text-lg font-extrabold">Programme Details</h2>
+                <section className="rounded-2xl border border-border bg-card p-7" aria-labelledby="programme-facts-heading">
+                  <h2 id="programme-facts-heading" className="font-display text-lg font-extrabold">Programme Facts</h2>
                   <dl className="mt-5 space-y-4 text-sm">
                     <div className="flex items-start gap-3 border-b pb-4">
                       <Clock className="mt-0.5 size-4 shrink-0 text-medical" aria-hidden="true" />
@@ -136,11 +185,23 @@ export default async function ProgramDetailPage({ params }: Props) {
                       </div>
                     </div>
                     <div className="flex items-start gap-3 border-b pb-4">
+                      <GraduationCap className="mt-0.5 size-4 shrink-0 text-medical" aria-hidden="true" />
+                      <div><dt className="font-bold">Level</dt><dd className="text-muted-foreground">{program.type}</dd></div>
+                    </div>
+                    <div className="flex items-start gap-3 border-b pb-4">
+                      <BadgeCheck className="mt-0.5 size-4 shrink-0 text-medical" aria-hidden="true" />
+                      <div><dt className="font-bold">Subject</dt><dd className="text-muted-foreground">{program.subject}</dd></div>
+                    </div>
+                    <div className="flex items-start gap-3 border-b pb-4">
                       <CalendarDays className="mt-0.5 size-4 shrink-0 text-medical" aria-hidden="true" />
                       <div>
                         <dt className="font-bold">Mode</dt>
                         <dd className="text-muted-foreground">{program.mode}</dd>
                       </div>
+                    </div>
+                    <div className="flex items-start gap-3 border-b pb-4">
+                      <Building2 className="mt-0.5 size-4 shrink-0 text-medical" aria-hidden="true" />
+                      <div><dt className="font-bold">Department</dt><dd className="text-muted-foreground">{department?.name ?? "Not specified"}</dd></div>
                     </div>
                     <div className="flex items-start gap-3 border-b pb-4">
                       <School className="mt-0.5 size-4 shrink-0 text-medical" aria-hidden="true" />
@@ -156,25 +217,29 @@ export default async function ProgramDetailPage({ params }: Props) {
                         <dd className="text-muted-foreground">{program.tuition}</dd>
                       </div>
                     </div>
+                    <div className="mt-1 border-t pt-4">
+                      <dt className="font-bold">Accreditation</dt>
+                      <dd className="mt-1"><Badge variant="success">{program.accreditationStatus}</Badge></dd>
+                    </div>
                   </dl>
-                </div>
+                </section>
               </Reveal>
 
               <Reveal delay={0.05}>
-                <div className="rounded-2xl bg-gradient-to-br from-navy to-medical p-7 text-center text-white">
-                  <h2 className="font-display text-xl font-extrabold">Ready to Apply?</h2>
+                <section className="rounded-2xl bg-gradient-to-br from-navy to-medical p-7 text-center text-white" aria-labelledby="application-actions-heading">
+                  <h2 id="application-actions-heading" className="font-display text-xl font-extrabold">Application actions</h2>
                   <p className="mt-2 text-sm text-white/75">
-                    Applications for the 2026/2027 session are open.
+                    Choose an application or enquiry route for this programme.
                   </p>
                   <div className="mt-5 flex flex-col gap-3">
                     <Button asChild variant="accent" className="w-full">
-                      <Link href="/admissions/apply">Apply Now</Link>
+                      <Link href={applicationHref}>Apply to this programme</Link>
                     </Button>
                     <Button asChild variant="outlineLight" className="w-full">
-                      <Link href="/tuition">Tuition & Scholarships</Link>
+                      <Link href={enquiryHref}>Ask about this programme</Link>
                     </Button>
                   </div>
-                </div>
+                </section>
               </Reveal>
             </aside>
           </div>
@@ -210,8 +275,8 @@ export default async function ProgramDetailPage({ params }: Props) {
       <CTASection
         title={`Begin Your ${program.degree} Journey`}
         description="Join the next cohort of students shaping the future of healthcare."
-        primary={{ label: "Apply Now", href: "/admissions/apply" }}
-        secondary={{ label: "Talk to Admissions", href: "/contact" }}
+        primary={{ label: "Apply to this programme", href: applicationHref }}
+        secondary={{ label: "Ask about this programme", href: enquiryHref }}
       />
     </>
   );

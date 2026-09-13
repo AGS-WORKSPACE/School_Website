@@ -1,5 +1,5 @@
 {
-  "name": "tau-platform",
+  "name": "school-website",
   "version": "0.1.0",
   "private": true,
   "description": "TAU university digital platform monorepo. Each product module (public web, admin/identity console, LMS, bursary...) is its own workspace over shared domain packages.",

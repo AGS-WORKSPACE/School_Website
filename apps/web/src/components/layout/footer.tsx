@@ -40,6 +40,7 @@ const columns = [
       { label: "Research & Innovation", href: route.research.overview },
       { label: "Publications", href: route.research.publications },
       { label: "News", href: route.community.news },
+      { label: "Announcements", href: "/announcements" },
       { label: "Events", href: route.community.events },
       { label: "Careers", href: route.community.careers },
     ],

@@ -4,7 +4,7 @@
   "private": true,
   "description": "Identity, access and delegated authority console (EP-01).",
   "scripts": {
-    "dev": "next dev --port 3001",
+    "dev": "next dev --webpack --port 3001",
     "build": "next build",
     "start": "next start --port 3001",
     "lint": "eslint",

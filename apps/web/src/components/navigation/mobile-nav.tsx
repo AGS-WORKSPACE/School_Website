@@ -31,7 +31,7 @@ export function MobileNav({ open, onOpenChange }: { open: boolean; onOpenChange:
                 href="/"
                 onClick={() => onOpenChange(false)}
                 className={cn(
-                  "block rounded-xl px-4 py-3 text-sm font-semibold transition-colors hover:bg-white/10",
+                  "block rounded-xl px-4 py-3 text-sm font-semibold transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                   pathname === "/" ? "bg-white/10 text-gold" : "text-white",
                 )}
               >
@@ -69,7 +69,7 @@ export function MobileNav({ open, onOpenChange }: { open: boolean; onOpenChange:
                               <Link
                                 href={group.href}
                                 onClick={() => onOpenChange(false)}
-                                className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-gold transition-colors hover:bg-white/10"
+                                className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-gold transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                               >
                                 <GraduationCap className="size-4" aria-hidden="true" />
                                 {group.label} Overview
@@ -82,7 +82,7 @@ export function MobileNav({ open, onOpenChange }: { open: boolean; onOpenChange:
                                 href={item.href}
                                 onClick={() => onOpenChange(false)}
                                 className={cn(
-                                  "block rounded-lg px-3 py-2.5 text-sm text-white/80 transition-colors hover:bg-white/10 hover:text-white",
+                                  "block rounded-lg px-3 py-2.5 text-sm text-white/80 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                                   pathname === item.href && "text-gold",
                                 )}
                               >

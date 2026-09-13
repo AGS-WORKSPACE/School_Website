@@ -10,6 +10,9 @@ import { NewsCard } from "@/components/cards/news-card";
 import { PlaceholderImage } from "@/components/common/placeholder-image";
 import { news, getNews } from "@/data/news";
 import { formatDate } from "@/lib/utils";
+import { JsonLd } from "@/components/common/json-ld";
+import { articleStructuredData } from "@/lib/structured-data";
+import { ContentViewTracker } from "@/components/analytics/content-view-tracker";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -29,6 +32,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: article.title,
     description: article.excerpt,
     path: `/news/${article.slug}`,
+    image: article.image,
+    kind: "article",
+    publishedTime: article.publishedAt,
+    authors: [article.author],
   });
 }
 
@@ -41,6 +48,8 @@ export default async function NewsArticlePage({ params }: Props) {
 
   return (
     <>
+      <JsonLd data={articleStructuredData(article)} />
+      <ContentViewTracker event="news_view" slug={article.slug} category={article.category} />
       <Section className="pt-10">
         <Container>
           <Breadcrumb
