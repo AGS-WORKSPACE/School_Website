@@ -3,6 +3,7 @@
 
 /* Workspace packages live outside this app, so Tailwind needs them declared. */
 @source "../../../../packages/ui/src";
+@source "../../../../packages/admissions/src";
 
 /* Presentation flourishes used only by the public site. */
 @theme inline {
