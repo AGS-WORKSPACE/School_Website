@@ -7,6 +7,7 @@ import type { ApplicationCase } from "../domain/application";
 import type { DuplicateMatchCase } from "../domain/deduplication";
 import type { ApplicationFeeInvoice } from "../domain/payment";
 import type { RefereeRequest } from "../domain/referee";
+import type { AcceptanceCharge, AdmissionOffer, MatriculationAllocation, MatriculationScheme, OfferTemplate, OnboardingAuditEntry, OnboardingTask, ProvisioningEvent, StudentRecord } from "../domain/onboarding";
 import {
   initialAdmissionCycles,
   initialAdmissionRoutes,
@@ -14,6 +15,7 @@ import {
   initialDeduplicationCases,
   initialRefereeRequests,
 } from "./seed";
+import { initialAcceptanceCharges, initialMatriculationAllocations, initialMatriculationSchemes, initialOffers, initialOfferTemplates, initialOnboardingAudit, initialOnboardingTasks, initialProvisioningEvents, initialStudents } from "./onboarding-seed";
 
 export interface AdmissionsStoreState {
   cycles: AdmissionCycle[];
@@ -21,6 +23,15 @@ export interface AdmissionsStoreState {
   applications: ApplicationCase[];
   deduplicationCases: DuplicateMatchCase[];
   refereeRequests: RefereeRequest[];
+  offerTemplates: OfferTemplate[];
+  offers: AdmissionOffer[];
+  acceptanceCharges: AcceptanceCharge[];
+  matriculationSchemes: MatriculationScheme[];
+  matriculationAllocations: MatriculationAllocation[];
+  students: StudentRecord[];
+  onboardingTasks: OnboardingTask[];
+  provisioningEvents: ProvisioningEvent[];
+  onboardingAudit: OnboardingAuditEntry[];
 }
 
 const STORAGE_KEY = "tau_admissions_store_v1";
@@ -38,19 +49,33 @@ class AdmissionsStore {
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
-          return JSON.parse(saved);
+          const parsed = JSON.parse(saved) as Partial<AdmissionsStoreState>;
+          return { ...this.seedState(), ...parsed };
         }
       } catch (err) {
         console.warn("Could not read admissions store from localStorage:", err);
       }
     }
 
+    return this.seedState();
+  }
+
+  private seedState(): AdmissionsStoreState {
     return {
       cycles: structuredClone(initialAdmissionCycles),
       routes: structuredClone(initialAdmissionRoutes),
       applications: structuredClone(initialApplications),
       deduplicationCases: structuredClone(initialDeduplicationCases),
       refereeRequests: structuredClone(initialRefereeRequests),
+      offerTemplates: structuredClone(initialOfferTemplates),
+      offers: structuredClone(initialOffers),
+      acceptanceCharges: structuredClone(initialAcceptanceCharges),
+      matriculationSchemes: structuredClone(initialMatriculationSchemes),
+      matriculationAllocations: structuredClone(initialMatriculationAllocations),
+      students: structuredClone(initialStudents),
+      onboardingTasks: structuredClone(initialOnboardingTasks),
+      provisioningEvents: structuredClone(initialProvisioningEvents),
+      onboardingAudit: structuredClone(initialOnboardingAudit),
     };
   }
 
@@ -75,13 +100,7 @@ class AdmissionsStore {
   }
 
   public resetToSeed() {
-    this.state = {
-      cycles: structuredClone(initialAdmissionCycles),
-      routes: structuredClone(initialAdmissionRoutes),
-      applications: structuredClone(initialApplications),
-      deduplicationCases: structuredClone(initialDeduplicationCases),
-      refereeRequests: structuredClone(initialRefereeRequests),
-    };
+    this.state = this.seedState();
     if (typeof window !== "undefined") {
       localStorage.removeItem(STORAGE_KEY);
     }
