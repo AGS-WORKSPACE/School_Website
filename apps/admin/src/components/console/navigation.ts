@@ -183,6 +183,23 @@ export const navigation: NavGroup[] = [
     ],
   },
   {
+    label: "Scheduling & Facilities",
+    items: [
+      {
+        href: "/scheduling",
+        label: "Timetable operations",
+        description: "Calendar publication, clash checks, rooms and workload.",
+        icon: CalendarDays,
+      },
+      {
+        href: "/scheduling/my-timetable",
+        label: "My timetable",
+        description: "Personal teaching or learning schedule and change alerts.",
+        icon: FileClock,
+      },
+    ],
+  },
+  {
     label: "Configuration",
     items: [
       {
