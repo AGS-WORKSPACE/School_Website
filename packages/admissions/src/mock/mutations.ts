@@ -14,6 +14,8 @@ import { scanForDeduplicationCases } from "../policy/deduplication-engine";
 import { reconcilePaymentCallback } from "../policy/payment-reconciler";
 import { recordRefereeSubmission, validateRefereeToken } from "../policy/referee-policy";
 import { validateAssistedIntakeCapture } from "../policy/assisted-intake-policy";
+import type { AcceptanceCharge, AdmissionOffer, OfferCondition, OnboardingTask } from "../domain/onboarding";
+import { canGenerateOffer, createProvisioningEvent, evaluateMatriculationEligibility, nextMatriculationNumber, routeRequiresCaps } from "../policy/onboarding-policy";
 
 export interface MutationActor {
   personId: string;
@@ -350,6 +352,174 @@ export const admissionsMutations = {
     return { ok: true };
   },
 
+  generateOffer(applicationId: string, templateId: string, actor: MutationActor): MutationResult<AdmissionOffer> {
+    const state = admissionsStore.getSnapshot();
+    const application = state.applications.find((item) => item.id === applicationId);
+    const template = state.offerTemplates.find((item) => item.id === templateId);
+    if (!application || !template) return { ok: false, error: "Application or offer template not found." };
+    if (state.offers.some((item) => item.applicationId === applicationId && item.status !== "Withdrawn")) {
+      return { ok: false, error: "An active offer already exists for this application." };
+    }
+    const decision = canGenerateOffer(application, template);
+    if (!decision.allowed) return { ok: false, error: decision.errors.join(" ") };
+    const now = new Date();
+    const code = `TAU-OFR-${now.getUTCFullYear().toString().slice(-2)}-${application.applicationNumber.split("/").at(-1)}-VF`;
+    const offer: AdmissionOffer = {
+      id: `offer-${application.id}-${Date.now()}`,
+      applicationId: application.id,
+      applicantId: application.applicant.id,
+      applicantName: [application.applicant.firstName, application.applicant.middleName, application.applicant.lastName].filter(Boolean).join(" "),
+      applicationNumber: application.applicationNumber,
+      templateId: template.id,
+      templateVersion: template.version,
+      kind: template.kind,
+      programmeId: application.programmeId,
+      programmeName: application.programmeName,
+      routeCode: application.routeCode,
+      entryLevel: state.routes.find((route) => route.code === application.routeCode)?.targetLevel ?? 100,
+      academicSession: application.academicSession,
+      conditions: template.defaultConditions.map((condition, index) => ({ ...condition, id: `cond-${application.id}-${index + 1}`, status: "Outstanding" })),
+      status: "Issued",
+      issuedAt: now.toISOString(),
+      issuedBy: actor.personId,
+      expiresAt: new Date(now.getTime() + template.defaultValidityDays * 86_400_000).toISOString(),
+      verificationCode: code,
+      verificationUrl: `/admissions/offer/${code}`,
+      capsRequired: routeRequiresCaps(application.routeCode),
+      capsStatus: routeRequiresCaps(application.routeCode) ? "Pending" : "Not_Applicable",
+    };
+    admissionsStore.setState((prev) => ({
+      ...prev,
+      offers: [offer, ...prev.offers],
+      applications: prev.applications.map((item) => item.id === applicationId ? { ...item, stage: "Offer_Issued", updatedAt: now.toISOString(), stageHistory: [...item.stageHistory, { id: `log-offer-${Date.now()}`, previousStage: item.stage, newStage: "Offer_Issued", timestamp: now.toISOString(), actorId: actor.personId, actorName: actor.name, actorRole: actor.role, remarks: `Generated from approved template ${template.name} v${template.version}.` }] } : item),
+      onboardingAudit: [{ id: `audit-${Date.now()}`, entityType: "Offer", entityId: offer.id, action: "OFFER_ISSUED", actorId: actor.personId, actorName: actor.name, timestamp: now.toISOString(), detail: `Issued ${offer.kind.toLowerCase()} offer with verification code ${code}.` }, ...prev.onboardingAudit],
+    }));
+    return { ok: true, data: offer };
+  },
+
+  respondToOffer(verificationCode: string, response: "Accepted" | "Declined", ipAddress = "Browser session"): MutationResult<AdmissionOffer> {
+    const state = admissionsStore.getSnapshot();
+    const offer = state.offers.find((item) => item.verificationCode === verificationCode);
+    if (!offer) return { ok: false, error: "Offer verification code is invalid." };
+    if (offer.status !== "Issued") return { ok: false, error: `This offer has already been ${offer.status.toLowerCase()}.` };
+    const now = new Date().toISOString();
+    if (new Date(offer.expiresAt).getTime() < Date.now()) return { ok: false, error: "This offer has expired." };
+    const updated: AdmissionOffer = { ...offer, status: response, responseIpAddress: ipAddress, ...(response === "Accepted" ? { acceptedAt: now } : { declinedAt: now }) };
+    admissionsStore.setState((prev) => ({
+      ...prev,
+      offers: prev.offers.map((item) => item.id === offer.id ? updated : item),
+      applications: prev.applications.map((item) => item.id === offer.applicationId ? { ...item, stage: response === "Accepted" ? "Offer_Accepted" : "Withdrawn", updatedAt: now } : item),
+      onboardingAudit: [{ id: `audit-${Date.now()}`, entityType: "Offer", entityId: offer.id, action: `OFFER_${response.toUpperCase()}`, actorId: offer.applicantId, actorName: offer.applicantName, timestamp: now, detail: `${response} by candidate; response timestamp retained.` }, ...prev.onboardingAudit],
+    }));
+    return { ok: true, data: updated };
+  },
+
+  decideOfferCondition(offerId: string, conditionId: string, status: "Satisfied" | "Waived" | "Rejected", actor: MutationActor, reason?: string): MutationResult<void> {
+    const state = admissionsStore.getSnapshot();
+    const offer = state.offers.find((item) => item.id === offerId);
+    const condition = offer?.conditions.find((item) => item.id === conditionId);
+    if (!offer || !condition) return { ok: false, error: "Offer condition not found." };
+    if (status === "Waived" && !reason?.trim()) return { ok: false, error: "A documented reason is required for a condition waiver." };
+    const now = new Date().toISOString();
+    const update = (item: OfferCondition): OfferCondition => item.id === conditionId ? { ...item, status, decidedAt: now, decidedBy: actor.personId, exceptionReason: status === "Waived" ? reason : undefined } : item;
+    admissionsStore.setState((prev) => ({ ...prev, offers: prev.offers.map((item) => item.id === offerId ? { ...item, conditions: item.conditions.map(update) } : item), onboardingAudit: [{ id: `audit-${Date.now()}`, entityType: "Condition", entityId: conditionId, action: `CONDITION_${status.toUpperCase()}`, actorId: actor.personId, actorName: actor.name, timestamp: now, detail: reason || condition.label }, ...prev.onboardingAudit] }));
+    return { ok: true };
+  },
+
+  recordCapsStatus(offerId: string, status: AdmissionOffer["capsStatus"], actor: MutationActor): MutationResult<void> {
+    const state = admissionsStore.getSnapshot();
+    const offer = state.offers.find((item) => item.id === offerId);
+    if (!offer) return { ok: false, error: "Offer not found." };
+    if (!offer.capsRequired) return { ok: false, error: "CAPS does not apply to this admission route." };
+    const now = new Date().toISOString();
+    admissionsStore.setState((prev) => ({ ...prev, offers: prev.offers.map((item) => item.id === offerId ? { ...item, capsStatus: status, capsCheckedAt: now } : item), onboardingAudit: [{ id: `audit-${Date.now()}`, entityType: "Offer", entityId: offerId, action: "CAPS_STATUS_RECORDED", actorId: actor.personId, actorName: actor.name, timestamp: now, detail: `CAPS status recorded as ${status}.` }, ...prev.onboardingAudit] }));
+    return { ok: true };
+  },
+
+  assessAcceptanceCharge(offerId: string, amount: number, actor: MutationActor): MutationResult<AcceptanceCharge> {
+    const state = admissionsStore.getSnapshot();
+    if (!state.offers.some((item) => item.id === offerId)) return { ok: false, error: "Offer not found." };
+    const existing = state.acceptanceCharges.find((item) => item.offerId === offerId);
+    if (existing) return { ok: true, data: existing };
+    if (amount < 0) return { ok: false, error: "Charge amount cannot be negative." };
+    const now = new Date();
+    const charge: AcceptanceCharge = { id: `charge-${Date.now()}`, offerId, amount, currency: "NGN", status: "Assessed", assessedAt: now.toISOString(), assessedBy: actor.personId, dueAt: new Date(now.getTime() + 14 * 86_400_000).toISOString(), reliefType: "None" };
+    admissionsStore.setState((prev) => ({ ...prev, acceptanceCharges: [charge, ...prev.acceptanceCharges] }));
+    return { ok: true, data: charge };
+  },
+
+  setAcceptanceChargeStatus(chargeId: string, status: "Reconciled" | "Waived" | "Sponsored" | "Refunded", actor: MutationActor, reason?: string): MutationResult<void> {
+    if (["Waived", "Sponsored", "Refunded"].includes(status) && !reason?.trim()) return { ok: false, error: `${status} requires a documented reason.` };
+    const state = admissionsStore.getSnapshot();
+    if (!state.acceptanceCharges.some((item) => item.id === chargeId)) return { ok: false, error: "Acceptance charge not found." };
+    const now = new Date().toISOString();
+    admissionsStore.setState((prev) => ({ ...prev, acceptanceCharges: prev.acceptanceCharges.map((item) => item.id === chargeId ? { ...item, status, reliefType: status === "Reconciled" ? "None" : status === "Waived" ? "Waiver" : status === "Sponsored" ? "Sponsorship" : "Refund", reliefReason: reason, reliefApprovedBy: status === "Reconciled" ? undefined : actor.personId, reconciledAt: status === "Reconciled" ? now : item.reconciledAt, refundedAt: status === "Refunded" ? now : item.refundedAt } : item), onboardingAudit: [{ id: `audit-${Date.now()}`, entityType: "Charge", entityId: chargeId, action: `CHARGE_${status.toUpperCase()}`, actorId: actor.personId, actorName: actor.name, timestamp: now, detail: reason || "Payment reconciled against provider record." }, ...prev.onboardingAudit] }));
+    return { ok: true };
+  },
+
+  matriculate(offerId: string, schemeId: string, identityVerified: boolean, actor: MutationActor) {
+    const state = admissionsStore.getSnapshot();
+    const offer = state.offers.find((item) => item.id === offerId);
+    const scheme = state.matriculationSchemes.find((item) => item.id === schemeId && item.active);
+    if (!offer || !scheme) return { ok: false, error: "Offer or active matriculation scheme not found." };
+    const existingStudent = state.students.find((item) => item.sourceOfferId === offerId);
+    if (existingStudent) return { ok: true, data: existingStudent };
+    const charge = state.acceptanceCharges.find((item) => item.offerId === offerId);
+    const eligibility = evaluateMatriculationEligibility(offer, charge, scheme, identityVerified);
+    if (!eligibility.eligible) return { ok: false, error: eligibility.errors.join(" ") };
+    const { matriculationNumber, nextSequence } = nextMatriculationNumber(scheme, state.matriculationAllocations);
+    const now = new Date().toISOString();
+    const studentId = `student-${offer.applicationId.replace("app-", "")}`;
+    const student = { id: studentId, personId: offer.applicantId, sourceApplicationId: offer.applicationId, sourceOfferId: offer.id, matriculationNumber, fullName: offer.applicantName, programmeId: offer.programmeId, programmeName: offer.programmeName, routeCode: offer.routeCode, entryLevel: offer.entryLevel, academicSession: offer.academicSession, status: "Provisioning" as const, identityVerified, createdAt: now };
+    const event = createProvisioningEvent(studentId, state.provisioningEvents, now);
+    admissionsStore.setState((prev) => ({
+      ...prev,
+      students: [student, ...prev.students],
+      matriculationSchemes: prev.matriculationSchemes.map((item) => item.id === schemeId ? { ...item, nextSequence } : item),
+      matriculationAllocations: [{ id: `mat-${Date.now()}`, studentId, offerId, schemeId, matriculationNumber, status: "Issued", reservedAt: now, reservedBy: actor.personId, issuedAt: now, issuedBy: actor.personId }, ...prev.matriculationAllocations],
+      onboardingTasks: [...createDefaultOnboardingTasks(studentId), ...prev.onboardingTasks],
+      provisioningEvents: prev.provisioningEvents.some((item) => item.idempotencyKey === event.idempotencyKey) ? prev.provisioningEvents : [event, ...prev.provisioningEvents],
+      onboardingAudit: [
+        { id: `audit-student-${Date.now()}`, entityType: "Student", entityId: studentId, action: "STUDENT_CREATED", actorId: actor.personId, actorName: actor.name, timestamp: now, detail: `Created directly from application data; no candidate details were re-keyed.` },
+        { id: `audit-mat-${Date.now()}`, entityType: "Matriculation", entityId: matriculationNumber, action: "MATRICULATION_NUMBER_ISSUED", actorId: actor.personId, actorName: actor.name, timestamp: now, detail: `${matriculationNumber} reserved and issued under controlled scheme ${scheme.id}.` },
+        ...prev.onboardingAudit,
+      ],
+    }));
+    return { ok: true, data: student };
+  },
+
+  retryProvisioning(eventId: string, system: "SIS" | "LMS" | "Email" | "Library"): MutationResult<void> {
+    const state = admissionsStore.getSnapshot();
+    if (!state.provisioningEvents.some((item) => item.id === eventId)) return { ok: false, error: "Provisioning event not found." };
+    const now = new Date().toISOString();
+    admissionsStore.setState((prev) => ({ ...prev, provisioningEvents: prev.provisioningEvents.map((event) => event.id === eventId ? { ...event, destinations: event.destinations.map((destination) => destination.system === system ? { ...destination, status: "Succeeded", attempts: destination.attempts + 1, lastAttemptAt: now, externalAccountId: destination.externalAccountId ?? `${system.toLowerCase()}-${event.studentId}`, error: undefined } : destination) } : event) }));
+    return { ok: true };
+  },
+
+  voidMatriculationAllocation(allocationId: string, reason: string, actor: MutationActor): MutationResult<void> {
+    if (!reason.trim()) return { ok: false, error: "A void reason is required." };
+    const state = admissionsStore.getSnapshot();
+    const allocation = state.matriculationAllocations.find((item) => item.id === allocationId);
+    if (!allocation) return { ok: false, error: "Matriculation allocation not found." };
+    if (allocation.status === "Void") return { ok: true };
+    if (allocation.status === "Issued") return { ok: false, error: "An issued matriculation number cannot be voided from this workflow." };
+    const now = new Date().toISOString();
+    admissionsStore.setState((prev) => ({
+      ...prev,
+      matriculationAllocations: prev.matriculationAllocations.map((item) => item.id === allocationId ? { ...item, status: "Void", voidedAt: now, voidedBy: actor.personId, voidReason: reason } : item),
+      onboardingAudit: [{ id: `audit-${Date.now()}`, entityType: "Matriculation", entityId: allocationId, action: "MATRICULATION_NUMBER_VOIDED", actorId: actor.personId, actorName: actor.name, timestamp: now, detail: `${allocation.matriculationNumber} permanently retired: ${reason}` }, ...prev.onboardingAudit],
+    }));
+    return { ok: true };
+  },
+
+  exceptOnboardingTask(taskId: string, reason: string, actor: MutationActor): MutationResult<void> {
+    if (!reason.trim()) return { ok: false, error: "An exception reason is required." };
+    const state = admissionsStore.getSnapshot();
+    if (!state.onboardingTasks.some((item) => item.id === taskId)) return { ok: false, error: "Onboarding task not found." };
+    admissionsStore.setState((prev) => ({ ...prev, onboardingTasks: prev.onboardingTasks.map((item): OnboardingTask => item.id === taskId ? { ...item, status: "Excepted", exceptionReason: reason, exceptionApprovedBy: actor.personId } : item) }));
+    return { ok: true };
+  },
+
   /**
    * Updates route configuration (ADM-02).
    */
@@ -361,3 +531,15 @@ export const admissionsMutations = {
     return { ok: true };
   },
 };
+
+function createDefaultOnboardingTasks(studentId: string): OnboardingTask[] {
+  const definitions: Array<Pick<OnboardingTask, "type" | "title" | "required" | "sensitive" | "accessRoles">> = [
+    { type: "Identity_Verification", title: "Verify identity", required: true, sensitive: true, accessRoles: ["Registry", "Identity_Verification_Officer"] },
+    { type: "Policy_Acknowledgement", title: "Acknowledge student policies", required: true, sensitive: false, accessRoles: ["Student", "Registry"] },
+    { type: "Medical_Form", title: "Submit confidential medical form", required: true, sensitive: true, accessRoles: ["Student", "Medical_Officer"] },
+    { type: "Consent_Form", title: "Complete consent forms", required: true, sensitive: true, accessRoles: ["Student", "Registry"] },
+    { type: "Orientation", title: "Attend new-student orientation", required: true, sensitive: false, accessRoles: ["Student", "Student_Affairs"] },
+    { type: "Account_Activation", title: "Activate university account", required: true, sensitive: false, accessRoles: ["Student", "ICT"] },
+  ];
+  return definitions.map((definition, index) => ({ id: `task-${studentId}-${index + 1}`, studentId, status: "Not_Started", ...definition }));
+}

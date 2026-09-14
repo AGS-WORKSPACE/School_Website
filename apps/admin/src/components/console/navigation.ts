@@ -120,6 +120,12 @@ export const navigation: NavGroup[] = [
         description: "Verified payment gateway callbacks and transaction audit.",
         icon: Receipt,
       },
+      {
+        href: "/admissions/onboarding",
+        label: "Offers & onboarding",
+        description: "Offers, acceptance charges, matriculation and provisioning.",
+        icon: GraduationCap,
+      },
     ],
   },
   {

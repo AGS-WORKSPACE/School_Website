@@ -6,3 +6,4 @@ export * from "./referee";
 export * from "./assisted-intake";
 export * from "./deduplication";
 export * from "./application";
+export * from "./onboarding";
