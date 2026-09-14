@@ -30,6 +30,17 @@ const statusStyles: Record<string, { variant: Variant; label?: string }> = {
   failure: { variant: "destructive" },
   success: { variant: "success" },
   reviewable: { variant: "warning" },
+  // Student record states (EP-08)
+  submitted: { variant: "warning", label: "Awaiting decision" },
+  proposed: { variant: "warning", label: "Awaiting approval" },
+  "in-review": { variant: "warning", label: "In review" },
+  deferred: { variant: "outline" },
+  withdrawn: { variant: "muted" },
+  deceased: { variant: "muted" },
+  released: { variant: "muted" },
+  verified: { variant: "success" },
+  unverified: { variant: "warning" },
+  disputed: { variant: "destructive" },
 };
 
 function humanise(status: string): string {

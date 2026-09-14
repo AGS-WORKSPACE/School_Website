@@ -102,9 +102,20 @@ export const roleCatalogue: Role[] = [
     name: "Records approver",
     workspace: "records",
     description: "Moderates and releases results, and issues sealed transcripts and certificates.",
-    permissionIds: ["records:result:approve", "records:transcript:issue", "identity:person:read"],
+    permissionIds: ["records:result:approve", "records:transcript:issue", "records:student-record:approve", "identity:person:read"],
     assignableDimensions: ["institution", "faculty"],
     privileged: true,
+    breakGlassOnly: false,
+  },
+  {
+    id: "registry-officer",
+    name: "Registry officer",
+    workspace: "records",
+    description:
+      "Maintains the student record: contact and sponsor details, identity corrections, lifecycle proposals, transfer cases and Registry holds. Changes to protected data wait for a records approver.",
+    permissionIds: ["records:student-record:amend", "records:hold:manage", "identity:person:read"],
+    assignableDimensions: ["institution", "faculty"],
+    privileged: false,
     breakGlassOnly: false,
   },
   {
