@@ -26,6 +26,13 @@ import {
   RotateCcw,
 } from 'lucide-react';
 
+/** Only faculties with a published programme can be chosen in the programme step. */
+const facultiesWithProgrammes = faculties.filter((fac) => publishedPrograms.some((prog) => prog.facultyId === fac.id));
+
+function firstProgrammeIn(facultyId: string): string {
+  return publishedPrograms.find((prog) => prog.facultyId === facultyId)?.id ?? '';
+}
+
 function createUploadedDocument(req: DocumentRequirement, file: File): UploadedDocument {
   const ts = Date.now();
   const iso = new Date(ts).toISOString();
@@ -136,9 +143,12 @@ export function ApplicationForm({ initialProgramme }: Props) {
       : null;
 
   // Programme Choice & Academic Info
+  // Faculty is chosen first; the programme list is limited to that faculty.
   const initialProg = publishedPrograms.find((p) => p.id === initialProgramme || p.slug === initialProgramme);
-  const [programmeId, setProgrammeId] = useState<string>(initialProg?.id ?? publishedPrograms[0]?.id ?? '');
-  const [facultyId, setFacultyId] = useState<string>(faculties[0]?.id ?? '');
+  const initialFacultyId = initialProg?.facultyId ?? facultiesWithProgrammes[0]?.id ?? '';
+  const [facultyId, setFacultyId] = useState<string>(initialFacultyId);
+  const [programmeId, setProgrammeId] = useState<string>(initialProg?.id ?? firstProgrammeIn(initialFacultyId));
+  const facultyProgrammes = publishedPrograms.filter((p) => p.facultyId === facultyId);
   const [jambReg, setJambReg] = useState('');
   const [highestQualification, setHighestQualification] = useState('SSCE / WAEC (5 Credits)');
 
@@ -813,30 +823,37 @@ export function ApplicationForm({ initialProgramme }: Props) {
         {currentStep === 'programme' && (
           <div className="mt-6 space-y-6">
             <div>
-              <label className="block text-xs font-semibold text-foreground">Select Programme *</label>
+              <label htmlFor="application-faculty" className="block text-xs font-semibold text-foreground">Faculty *</label>
               <select
-                value={programmeId}
-                onChange={(e) => setProgrammeId(e.target.value)}
+                id="application-faculty"
+                value={facultyId}
+                onChange={(e) => {
+                  setFacultyId(e.target.value);
+                  setProgrammeId(firstProgrammeIn(e.target.value));
+                }}
                 className="mt-1 w-full rounded-lg border border-input bg-background p-2.5 text-sm text-foreground focus:ring-2 focus:ring-medical focus:outline-none"
               >
-                {publishedPrograms.map((prog) => (
-                  <option key={prog.id} value={prog.id}>
-                    {prog.degree} — {prog.title}
+                {facultiesWithProgrammes.map((fac) => (
+                  <option key={fac.id} value={fac.id}>
+                    {fac.name}
                   </option>
                 ))}
               </select>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-foreground">Faculty *</label>
+              <label htmlFor="application-programme" className="block text-xs font-semibold text-foreground">Select Programme *</label>
               <select
-                value={facultyId}
-                onChange={(e) => setFacultyId(e.target.value)}
-                className="mt-1 w-full rounded-lg border border-input bg-background p-2.5 text-sm text-foreground focus:ring-2 focus:ring-medical focus:outline-none"
+                id="application-programme"
+                value={programmeId}
+                onChange={(e) => setProgrammeId(e.target.value)}
+                disabled={facultyProgrammes.length === 0}
+                className="mt-1 w-full rounded-lg border border-input bg-background p-2.5 text-sm text-foreground focus:ring-2 focus:ring-medical focus:outline-none disabled:opacity-60"
               >
-                {faculties.map((fac) => (
-                  <option key={fac.id} value={fac.id}>
-                    {fac.name}
+                {facultyProgrammes.length === 0 && <option value="">Choose a faculty first</option>}
+                {facultyProgrammes.map((prog) => (
+                  <option key={prog.id} value={prog.id}>
+                    {prog.degree} — {prog.title}
                   </option>
                 ))}
               </select>
@@ -880,7 +897,8 @@ export function ApplicationForm({ initialProgramme }: Props) {
               <button
                 type="button"
                 onClick={() => setCurrentStep('documents')}
-                className="flex items-center gap-2 rounded-lg bg-medical px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:opacity-90"
+                disabled={!programmeId}
+                className="flex items-center gap-2 rounded-lg bg-medical px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Continue to Evidence Uploads
                 <ArrowRight className="size-4" />
@@ -1130,6 +1148,10 @@ export function ApplicationForm({ initialProgramme }: Props) {
                 <div>
                   <span className="text-muted-foreground">Phone:</span>{' '}
                   <strong className="text-foreground">{phone}</strong>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">Faculty:</span>{' '}
+                  <strong className="text-foreground">{faculties.find((f) => f.id === facultyId)?.name}</strong>
                 </div>
                 <div>
                   <span className="text-muted-foreground">Programme Choice:</span>{' '}
