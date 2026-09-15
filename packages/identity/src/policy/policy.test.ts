@@ -259,6 +259,27 @@ describe("IAM-05 — segregation of duties", () => {
     assert.equal(isConflictBlocking(curriculumConflict, now), true);
   });
 
+  it("blocks amending and approving student record changes together (SIS-02, SIS-03)", () => {
+    const grants = [
+      {
+        permissionId: "records:student-record:amend",
+        scope: { dimension: "institution", unitId: "inst-tau" },
+        source: { kind: "assignment", id: "asg-sis-1", roleId: "registry-officer" },
+      },
+      {
+        permissionId: "records:student-record:approve",
+        scope: { dimension: "institution", unitId: "inst-tau" },
+        source: { kind: "assignment", id: "asg-sis-2", roleId: "records-approver" },
+      },
+    ] as any;
+
+    const conflict = detectConflicts({ personId: "per-test", grants, units: store.units, exceptions: [], now }).find(
+      (candidate) => candidate.rule.id === "sod-student-record-change",
+    );
+    assert.ok(conflict, "amending and approving student record changes must conflict");
+    assert.equal(isConflictBlocking(conflict, now), true);
+  });
+
   it("blocks capturing assisted intake and resolving deduplication cases together (ADM-04, ADM-06)", () => {
     const grants = [
       {

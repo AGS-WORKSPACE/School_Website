@@ -98,6 +98,16 @@ export const sodRuleset: SodRule[] = [
     basis: "Product principle 4 — maker-checker on academic and curriculum records (CUR-04).",
   },
   {
+    id: "sod-student-record-change",
+    label: "Amend and approve student record changes",
+    description:
+      "The officer who raises an identity correction or proposes a lifecycle change must not also approve it.",
+    permissionA: "records:student-record:amend",
+    permissionB: "records:student-record:approve",
+    severity: "blocking",
+    basis: "Product principle 4 — maker-checker on the authoritative student record (SIS-02, SIS-03).",
+  },
+  {
     id: "sod-assisted-intake-resolve",
     label: "Capture walk-in application and resolve deduplication/discrepancies",
     description:
