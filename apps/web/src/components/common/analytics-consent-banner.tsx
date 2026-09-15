@@ -1,11 +1,24 @@
 "use client";
 
+import { useSyncExternalStore } from "react";
 import { Button } from "@tau/ui/button";
 import { setAnalyticsConsent, useAnalyticsConsent } from "@/lib/analytics";
 
+const noSubscription = () => () => {};
+
+/**
+ * False on the server and during hydration, true afterwards. The stored consent
+ * is only known in the browser, so the banner must not appear until hydration
+ * has finished or the client HTML would not match the server's.
+ */
+function useHydrated() {
+  return useSyncExternalStore(noSubscription, () => true, () => false);
+}
+
 export function AnalyticsConsentBanner() {
+  const hydrated = useHydrated();
   const consent = useAnalyticsConsent();
-  if (consent !== "unknown" || typeof window === "undefined") return null;
+  if (!hydrated || consent !== "unknown") return null;
 
   return (
     <aside className="fixed inset-x-4 bottom-4 z-50 rounded-2xl border border-border bg-card p-5 shadow-2xl sm:inset-x-auto sm:right-6 sm:max-w-md" role="dialog" aria-label="Analytics preferences" aria-describedby="analytics-consent-description">
