@@ -11,8 +11,8 @@ import { Textarea } from "@tau/ui/textarea";
 import { EmptyState, Field, Section } from "@/components/console/section";
 import { StatusBadge } from "@/components/console/status-badge";
 import { useActingAs } from "./acting-as";
-import { formatDate, humanise, statusKey } from "./format";
-import { NoticeBanner, useNotice } from "./notice";
+import { formatDate, humanise, statusKey } from "@/lib/format";
+import { NoticeBanner, useNotice } from "@/components/console/notice";
 
 const proposable = (Object.keys(lifecycleEventRules) as LifecycleEventType[]).filter((type) => type !== "Matriculation" && !lifecycleEventRules[type].workflowOnly);
 const modes: StudyMode[] = ["Full_Time", "Part_Time", "Online", "Blended"];

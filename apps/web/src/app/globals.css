@@ -4,6 +4,8 @@
 /* Workspace packages live outside this app, so Tailwind needs them declared. */
 @source "../../../../packages/ui/src";
 @source "../../../../packages/admissions/src";
+@source "../../../../packages/students/src";
+@source "../../../../packages/lms/src";
 
 /* Presentation flourishes used only by the public site. */
 @theme inline {

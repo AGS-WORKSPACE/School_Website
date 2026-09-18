@@ -41,6 +41,13 @@ const statusStyles: Record<string, { variant: Variant; label?: string }> = {
   verified: { variant: "success" },
   unverified: { variant: "warning" },
   disputed: { variant: "destructive" },
+  // Learning (EP-14)
+  dropped: { variant: "muted" },
+  draft: { variant: "outline" },
+  final: { variant: "success" },
+  pending: { variant: "warning", label: "Awaiting moderation" },
+  visible: { variant: "success" },
+  hidden: { variant: "muted" },
 };
 
 function humanise(status: string): string {

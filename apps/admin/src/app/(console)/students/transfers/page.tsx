@@ -12,8 +12,9 @@ import { PageHeader } from "@/components/console/page-header";
 import { EmptyState, Section } from "@/components/console/section";
 import { StatusBadge } from "@/components/console/status-badge";
 import { ActingAsSwitcher, useActingAs } from "@/features/students/acting-as";
-import { formatDate, humanise, statusKey, studentName } from "@/features/students/format";
-import { NoticeBanner, useNotice } from "@/features/students/notice";
+import { studentName } from "@/features/students/format";
+import { formatDate, humanise, statusKey } from "@/lib/format";
+import { NoticeBanner, useNotice } from "@/components/console/notice";
 
 export default function TransfersPage() {
   const { students, transfers } = useStudents();

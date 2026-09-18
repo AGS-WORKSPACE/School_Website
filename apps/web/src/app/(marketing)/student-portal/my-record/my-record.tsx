@@ -42,7 +42,7 @@ export function MyRecord() {
   }
 
   return (
-    <main className="bg-muted/25 py-12 sm:py-20">
+    <div className="bg-muted/25 py-12 sm:py-20">
       <div className="container-site max-w-5xl space-y-6">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -108,7 +108,7 @@ export function MyRecord() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 
