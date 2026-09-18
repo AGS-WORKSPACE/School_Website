@@ -195,9 +195,50 @@ export const roleCatalogue: Role[] = [
     name: "Lecturer",
     workspace: "lms",
     description: "Teaches assigned classes and sees only those class lists.",
-    permissionIds: ["lms:course:teach", "lms:enrolment:read"],
+    permissionIds: ["lms:course:teach", "lms:enrolment:read", "lms:discussion:moderate"],
     assignableDimensions: ["department", "programme", "cohort"],
     privileged: false,
+    breakGlassOnly: false,
+  },
+  {
+    id: "course-moderator",
+    name: "Course moderator",
+    workspace: "lms",
+    description:
+      "Moderates coursework marked by others and finalises the outcomes that pass back to the SIS result workflow.",
+    permissionIds: ["lms:grade:finalise", "lms:enrolment:read"],
+    assignableDimensions: ["faculty", "department"],
+    privileged: false,
+    breakGlassOnly: false,
+  },
+  {
+    id: "instructional-designer",
+    name: "Instructional designer",
+    workspace: "lms",
+    description: "Maintains course templates and builds outcome-aligned course shells.",
+    permissionIds: ["lms:course:design"],
+    assignableDimensions: ["institution", "faculty"],
+    privileged: false,
+    breakGlassOnly: false,
+  },
+  {
+    id: "lms-administrator",
+    name: "LMS administrator",
+    workspace: "lms",
+    description: "Runs the learning platform: roster sync and integration requests. Cannot activate integrations.",
+    permissionIds: ["lms:integration:request", "lms:enrolment:read"],
+    assignableDimensions: ["institution"],
+    privileged: false,
+    breakGlassOnly: false,
+  },
+  {
+    id: "lms-integration-approver",
+    name: "Integration security approver",
+    workspace: "lms",
+    description: "Reviews the security and data contract of learning-tool integrations and activates or suspends them.",
+    permissionIds: ["lms:integration:approve"],
+    assignableDimensions: ["institution"],
+    privileged: true,
     breakGlassOnly: false,
   },
   {
@@ -259,4 +300,13 @@ export function assignableRoles(): Role[] {
 
 export function breakGlassRoles(): Role[] {
   return roleCatalogue.filter((role) => role.breakGlassOnly);
+}
+
+/**
+ * Unscoped check for module service layers that act on a role list rather than
+ * full effective grants: does any of these roles carry the permission? Scope,
+ * delegation and MFA still belong to `can()` once callers hold real grants.
+ */
+export function rolesPermit(roleIds: readonly string[], permissionId: string): boolean {
+  return roleIds.some((roleId) => byId.get(roleId)?.permissionIds.includes(permissionId) ?? false);
 }

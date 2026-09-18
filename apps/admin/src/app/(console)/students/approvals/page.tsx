@@ -10,8 +10,9 @@ import { PageHeader } from "@/components/console/page-header";
 import { EmptyState, Section } from "@/components/console/section";
 import { StatusBadge } from "@/components/console/status-badge";
 import { ActingAsSwitcher, useActingAs } from "@/features/students/acting-as";
-import { formatDate, formatDateTime, studentName } from "@/features/students/format";
-import { NoticeBanner, useNotice } from "@/features/students/notice";
+import { studentName } from "@/features/students/format";
+import { formatDate, formatDateTime } from "@/lib/format";
+import { NoticeBanner, useNotice } from "@/components/console/notice";
 
 export default function StudentApprovalsPage() {
   const { students, corrections, lifecycleEvents, mutations } = useStudents();

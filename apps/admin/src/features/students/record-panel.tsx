@@ -12,8 +12,8 @@ import { Textarea } from "@tau/ui/textarea";
 import { EmptyState, Section } from "@/components/console/section";
 import { StatusBadge } from "@/components/console/status-badge";
 import { useActingAs } from "./acting-as";
-import { formatDate, formatDateTime, humanise, statusKey } from "./format";
-import { NoticeBanner, useNotice } from "./notice";
+import { formatDate, formatDateTime, humanise, statusKey } from "@/lib/format";
+import { NoticeBanner, useNotice } from "@/components/console/notice";
 import { usePersonName } from "./people";
 
 const categories: FieldCategory[] = ["Biographical", "Contact", "Sponsor"];

@@ -108,6 +108,26 @@ export const sodRuleset: SodRule[] = [
     basis: "Product principle 4 — maker-checker on the authoritative student record (SIS-02, SIS-03).",
   },
   {
+    id: "sod-lms-integration",
+    label: "Request and activate a learning-tool integration",
+    description:
+      "The administrator who proposes an LTI, OneRoster or QTI integration must not also sign off its security review and activate it.",
+    permissionA: "lms:integration:request",
+    permissionB: "lms:integration:approve",
+    severity: "blocking",
+    basis: "LMS-07 — security review and data contract precede activation; product principle 4.",
+  },
+  {
+    id: "sod-lms-grade-finalise",
+    label: "Teach a course and finalise its coursework grades",
+    description:
+      "A lecturer finalising outcomes in a class they mark weakens moderation. Small departments may need a documented exception; the grade workflow still refuses self-finalisation.",
+    permissionA: "lms:course:teach",
+    permissionB: "lms:grade:finalise",
+    severity: "reviewable",
+    basis: "LMS-06 — only moderated, approved outcomes enter the SIS result workflow.",
+  },
+  {
     id: "sod-assisted-intake-resolve",
     label: "Capture walk-in application and resolve deduplication/discrepancies",
     description:
