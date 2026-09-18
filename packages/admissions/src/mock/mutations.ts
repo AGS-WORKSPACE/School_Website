@@ -9,6 +9,11 @@ import type { ApplicationFeeInvoice, ProviderCallback } from "../domain/payment"
 import type { RefereeRecommendationContent } from "../domain/referee";
 import type { DiscrepancyStatus } from "../domain/deduplication";
 import type { AdmissionRouteConfig } from "../domain/route";
+import type { CapsCandidateAssociation, CapsImportReport } from "../domain/caps";
+import type { EligibilityScoringRule } from "../domain/scoring";
+import type { ScreeningAppointment, ScreeningScoreEntry } from "../domain/scheduling";
+import type { RecommendationStatus, RankingOverrideAudit } from "../domain/ranking";
+import type { AdmissionBatch, AdmissionBatchReview } from "../domain/batch";
 import { admissionsStore } from "./store";
 import { scanForDeduplicationCases } from "../policy/deduplication-engine";
 import { reconcilePaymentCallback } from "../policy/payment-reconciler";
@@ -16,6 +21,8 @@ import { recordRefereeSubmission, validateRefereeToken } from "../policy/referee
 import { validateAssistedIntakeCapture } from "../policy/assisted-intake-policy";
 import type { AcceptanceCharge, AdmissionOffer, OfferCondition, OnboardingTask } from "../domain/onboarding";
 import { canGenerateOffer, createProvisioningEvent, evaluateMatriculationEligibility, nextMatriculationNumber, routeRequiresCaps } from "../policy/onboarding-policy";
+import { validateScreeningAppointment } from "../policy/scheduling-policy";
+import { validateRankingOverride } from "../policy/ranking-policy";
 
 export interface MutationActor {
   personId: string;
@@ -30,6 +37,105 @@ export interface MutationResult<T = void> {
 }
 
 export const admissionsMutations = {
+  submitAdmissionBatch(batchId: string, actor: MutationActor): MutationResult<AdmissionBatch> {
+    const batch = admissionsStore.getSnapshot().admissionBatches.find((item) => item.id === batchId);
+    if (!batch) return { ok: false, error: "Admission batch not found." };
+    if (batch.preparerId !== actor.personId && batch.status !== "Draft") return { ok: false, error: "Only the named preparer may prepare this batch." };
+    if (batch.candidates.some((candidate) => candidate.blocked)) return { ok: false, error: "Blocked candidates must be removed or corrected before review." };
+    const updated = { ...batch, status: "Pending_Review" as const, version: batch.version + 1, preparedAt: new Date().toISOString(), capsChecklist: batch.capsChecklist.map((item) => item.id === "capacity-checked" || item.id === "policy-checked" || item.id === "overrides-reviewed" ? item : { ...item, complete: false }) };
+    admissionsStore.setState((prev) => ({ ...prev, admissionBatches: prev.admissionBatches.map((item) => item.id === batchId ? updated : item) }));
+    return { ok: true, data: updated };
+  },
+
+  decideAdmissionBatch(batchId: string, decision: AdmissionBatchReview["decision"], actor: MutationActor, reason?: string, mfaSatisfied = false): MutationResult<AdmissionBatch> {
+    const batch = admissionsStore.getSnapshot().admissionBatches.find((item) => item.id === batchId);
+    if (!batch) return { ok: false, error: "Admission batch not found." };
+    if (batch.preparerId === actor.personId) return { ok: false, error: "The preparer cannot approve or reject their own batch." };
+    if (!mfaSatisfied) return { ok: false, error: "MFA is required for batch approval decisions." };
+    if (!reason?.trim() && decision !== "Approved") return { ok: false, error: "A reason is required for rejection or correction requests." };
+    if (decision === "Approved" && batch.candidates.some((candidate) => candidate.blocked)) return { ok: false, error: "Blocked candidates prevent approval." };
+    const review: AdmissionBatchReview = { reviewer: actor.name, reviewedAt: new Date().toISOString(), decision, reason, batchVersion: batch.version };
+    const status = decision === "Approved" ? "Frozen" : decision === "Rejected" ? "Rejected" : "Prepared";
+    const updated = { ...batch, status: status as AdmissionBatch["status"], review, ...(decision === "Approved" ? { frozenAt: review.reviewedAt, frozenBy: actor.name, capsChecklist: batch.capsChecklist.map((item) => item.id === "batch-approved" || item.id === "approval-recorded" ? { ...item, complete: true } : item) } : {}) };
+    admissionsStore.setState((prev) => ({ ...prev, admissionBatches: prev.admissionBatches.map((item) => item.id === batchId ? updated : item) }));
+    return { ok: true, data: updated };
+  },
+  recordRankingOverride(input: { rankedCandidateId: string; overriddenResult: RecommendationStatus; reason: string; authority: string; actor: string }): MutationResult<RankingOverrideAudit> {
+    const candidate = admissionsStore.getSnapshot().rankedCandidates.find((item) => item.id === input.rankedCandidateId);
+    if (!candidate) return { ok: false, error: "Ranked candidate not found." };
+    const validation = validateRankingOverride({ originalResult: candidate.recommendationStatus, overriddenResult: input.overriddenResult, reason: input.reason, authority: input.authority });
+    if (!validation.valid) return { ok: false, error: validation.errors.join(" ") };
+    if (input.overriddenResult === "Recommended" && (candidate.eligibility !== "Eligible" || candidate.score === null || candidate.tieStatus === "Tied")) return { ok: false, error: "A blocked, ineligible, unscored, or unresolved-tie candidate cannot be recommended." };
+    if (input.overriddenResult === "Recommended") {
+      const summary = admissionsStore.getSnapshot().rankedCandidates.filter((item) => item.programmeId === candidate.programmeId && item.recommendationStatus === "Recommended");
+      const quota = admissionsStore.getSnapshot().approvedAdmissionQuotas.find((item) => item.type === "Programme" && item.programmeId === candidate.programmeId);
+      if (quota && summary.length >= quota.limit) return { ok: false, error: "Override cannot exceed the approved programme capacity." };
+    }
+    const audit: RankingOverrideAudit = { id: `ranking-override-${Date.now()}`, rankedCandidateId: candidate.id, originalResult: candidate.recommendationStatus, overriddenResult: input.overriddenResult, reason: input.reason, authority: input.authority, timestamp: new Date().toISOString(), actor: input.actor, status: "Recorded_Frontend_Only" };
+    admissionsStore.setState((prev) => ({ ...prev, rankedCandidates: prev.rankedCandidates.map((item) => item.id === candidate.id ? { ...item, recommendationStatus: input.overriddenResult } : item), rankingOverrideAudits: [audit, ...prev.rankingOverrideAudits] }));
+    return { ok: true, data: audit };
+  },
+  scheduleScreeningAppointment(appointment: ScreeningAppointment): MutationResult<ScreeningAppointment> {
+    const state = admissionsStore.getSnapshot();
+    const validation = validateScreeningAppointment(appointment, state.screeningAppointments);
+    if (!validation.valid) return { ok: false, error: validation.conflicts.map((item) => item.message).join(" ") };
+    admissionsStore.setState((prev) => ({ ...prev, screeningAppointments: [appointment, ...prev.screeningAppointments.filter((item) => item.id !== appointment.id)] }));
+    return { ok: true, data: appointment };
+  },
+
+  recordScreeningAttendance(appointmentId: string, status: Extract<ScreeningAppointment["status"], "Attended" | "Absent" | "Rescheduled">, actor: MutationActor, note?: string): MutationResult<ScreeningAppointment> {
+    const appointment = admissionsStore.getSnapshot().screeningAppointments.find((item) => item.id === appointmentId);
+    if (!appointment) return { ok: false, error: "Screening appointment not found." };
+    const updated = { ...appointment, status, attendanceAt: new Date().toISOString(), attendanceNote: note ? `${actor.name}: ${note}` : `Recorded by ${actor.name}.` };
+    admissionsStore.setState((prev) => ({ ...prev, screeningAppointments: prev.screeningAppointments.map((item) => item.id === appointmentId ? updated : item) }));
+    return { ok: true, data: updated };
+  },
+
+  recordScreeningScore(entry: Omit<ScreeningScoreEntry, "recordedAt">): MutationResult<ScreeningScoreEntry> {
+    if (entry.score < 0 || entry.score > entry.maximum) return { ok: false, error: `Score must be between 0 and ${entry.maximum}.` };
+    if (!admissionsStore.getSnapshot().screeningRecords.some((item) => item.id === entry.screeningRecordId)) return { ok: false, error: "Screening record not found." };
+    const recorded: ScreeningScoreEntry = { ...entry, recordedAt: new Date().toISOString() };
+    admissionsStore.setState((prev) => {
+      const existing = prev.screeningScoreEntries.filter((item) => !(item.screeningRecordId === entry.screeningRecordId && item.criterion === entry.criterion));
+      const record = prev.screeningRecords.find((item) => item.id === entry.screeningRecordId);
+      if (!record) return prev;
+      const scores = [...record.scores.filter((item) => item.criterion !== entry.criterion), { criterion: entry.criterion, score: entry.score, maximum: entry.maximum, source: entry.source }];
+      return { ...prev, screeningScoreEntries: [recorded, ...existing], screeningRecords: prev.screeningRecords.map((item) => item.id === entry.screeningRecordId ? { ...item, scores, score: scores.reduce((sum, item) => sum + item.score, 0) } : item) };
+    });
+    return { ok: true, data: recorded };
+  },
+  createScoringRuleVersion(ruleId: string): MutationResult<EligibilityScoringRule> {
+    const rule = admissionsStore.getSnapshot().scoringRules.find((item) => item.id === ruleId);
+    if (!rule) return { ok: false, error: "Scoring rule not found." };
+    const draft: EligibilityScoringRule = {
+      ...structuredClone(rule),
+      version: `${rule.version}-draft`,
+      status: "Draft",
+      approvalStatus: "Pending",
+      effectiveDate: "2026-10-01",
+      versions: [{ version: `${rule.version}-draft`, status: "Draft", effectiveDate: "2026-10-01", changedAt: new Date().toISOString(), changedBy: "Current admissions officer", reason: "Created as a separate editable version." }, ...structuredClone(rule.versions)],
+    };
+    admissionsStore.setState((prev) => ({ ...prev, scoringRules: prev.scoringRules.map((item) => item.id === ruleId ? draft : item) }));
+    return { ok: true, data: draft };
+  },
+  saveCapsImportReport(report: CapsImportReport): MutationResult<CapsImportReport> {
+    admissionsStore.setState((prev) => ({ ...prev, capsImportReports: [report, ...prev.capsImportReports] }));
+    return { ok: true, data: report };
+  },
+
+  associateCapsRecord(input: Omit<CapsCandidateAssociation, "id" | "associatedAt">): MutationResult<CapsCandidateAssociation> {
+    if (input.status === "Blocked" || input.discrepancyStatus === "Blocked") return { ok: false, error: "This CAPS record has a blocking discrepancy and cannot be associated." };
+    const association: CapsCandidateAssociation = { ...input, id: `caps-association-${Date.now()}`, associatedAt: new Date().toISOString() };
+    admissionsStore.setState((prev) => ({
+      ...prev,
+      capsAssociations: [association, ...prev.capsAssociations.filter((item) => item.importRecordId !== input.importRecordId)],
+      capsImportReports: prev.capsImportReports.map((report) => ({
+        ...report,
+        records: report.records.map((record) => record.id === input.importRecordId ? { ...record, associationStatus: "Associated" } : record),
+      })),
+    }));
+    return { ok: true, data: association };
+  },
   /**
    * Saves or updates an applicant's draft application.
    */

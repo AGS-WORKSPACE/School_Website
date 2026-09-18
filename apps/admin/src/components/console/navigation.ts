@@ -22,11 +22,13 @@ import {
   Receipt,
   Settings2,
   ScaleIcon,
+  School,
   ShieldAlert,
   UserCheck,
   UserPlus,
   UserRoundCheck,
   Users,
+  Upload,
 } from "lucide-react";
 
 export interface NavItem {
@@ -97,6 +99,60 @@ export const navigation: NavGroup[] = [
         label: "Applicant dossiers",
         description: "Candidate applications, documents and referee status.",
         icon: FileText,
+      },
+      {
+        href: "/admissions/screening",
+        label: "Screening workspace",
+        description: "Review candidate evidence, eligibility and screening readiness.",
+        icon: ClipboardCheck,
+      },
+      {
+        href: "/admissions/screening/caps-import",
+        label: "CAPS import",
+        description: "Validate CAPS exports and associate clear records with candidates.",
+        icon: Upload,
+      },
+      {
+        href: "/admissions/screening/rules",
+        label: "Eligibility & scoring rules",
+        description: "Manage versioned eligibility conditions and scoring inputs.",
+        icon: ScaleIcon,
+      },
+      {
+        href: "/admissions/screening/appointments",
+        label: "Screening appointments",
+        description: "Schedule candidates, record attendance and manage arrangements.",
+        icon: CalendarDays,
+      },
+      {
+        href: "/admissions/ranking",
+        label: "Ranked admissions lists",
+        description: "Review ranks, approved capacity, ties, quotas and overrides.",
+        icon: ScaleIcon,
+      },
+      {
+        href: "/admissions/batches",
+        label: "Admission batches",
+        description: "Prepare, review, approve and freeze admission recommendations.",
+        icon: GitPullRequest,
+      },
+      {
+        href: "/admissions/jupeb",
+        label: "JUPEB admissions",
+        description: "Review configured subject combinations, centres and result status.",
+        icon: School,
+      },
+      {
+        href: "/admissions/postgraduate",
+        label: "Postgraduate review",
+        description: "Review qualifications, referees, assessments and supervisor capacity.",
+        icon: GraduationCap,
+      },
+      {
+        href: "/admissions/compliance",
+        label: "Compliance & decision audit",
+        description: "Inspect scoring inputs, human review and decision evidence.",
+        icon: ShieldAlert,
       },
       {
         href: "/admissions/assisted-intake",

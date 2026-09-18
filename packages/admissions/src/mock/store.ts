@@ -7,6 +7,15 @@ import type { ApplicationCase } from "../domain/application";
 import type { DuplicateMatchCase } from "../domain/deduplication";
 import type { ApplicationFeeInvoice } from "../domain/payment";
 import type { RefereeRequest } from "../domain/referee";
+import type { ScreeningRecord } from "../domain/screening";
+import type { CapsCandidateAssociation, CapsImportReport } from "../domain/caps";
+import type { EligibilityScoringRule } from "../domain/scoring";
+import type { ScreeningAccommodation, ScreeningAppointment, ScreeningScoreEntry } from "../domain/scheduling";
+import type { ApprovedAdmissionQuota, RankedCandidate, RankingOverrideAudit } from "../domain/ranking";
+import type { AdmissionBatch } from "../domain/batch";
+import type { JupebApprovedCentre, JupebCandidateRecord, JupebSubjectCombination } from "../domain/jupeb";
+import type { PostgraduateReviewRecord } from "../domain/postgraduate";
+import type { AdmissionDecisionHistory } from "../domain/compliance";
 import type { AcceptanceCharge, AdmissionOffer, MatriculationAllocation, MatriculationScheme, OfferTemplate, OnboardingAuditEntry, OnboardingTask, ProvisioningEvent, StudentRecord } from "../domain/onboarding";
 import {
   initialAdmissionCycles,
@@ -16,6 +25,14 @@ import {
   initialRefereeRequests,
 } from "./seed";
 import { initialAcceptanceCharges, initialMatriculationAllocations, initialMatriculationSchemes, initialOffers, initialOfferTemplates, initialOnboardingAudit, initialOnboardingTasks, initialProvisioningEvents, initialStudents } from "./onboarding-seed";
+import { initialScreeningRecords } from "./screening-seed";
+import { initialScoringRules } from "./scoring-seed";
+import { initialScreeningAccommodations, initialScreeningAppointments } from "./scheduling-seed";
+import { initialApprovedAdmissionQuotas, initialRankedCandidates } from "./ranking-seed";
+import { initialAdmissionBatches } from "./batch-seed";
+import { initialJupebCandidates, initialJupebCentres, initialJupebCombinations } from "./jupeb-seed";
+import { initialPostgraduateReviews } from "./postgraduate-seed";
+import { initialAdmissionDecisionHistory } from "./compliance-seed";
 
 export interface AdmissionsStoreState {
   cycles: AdmissionCycle[];
@@ -23,6 +40,22 @@ export interface AdmissionsStoreState {
   applications: ApplicationCase[];
   deduplicationCases: DuplicateMatchCase[];
   refereeRequests: RefereeRequest[];
+  screeningRecords: ScreeningRecord[];
+  capsImportReports: CapsImportReport[];
+  capsAssociations: CapsCandidateAssociation[];
+  scoringRules: EligibilityScoringRule[];
+  screeningAppointments: ScreeningAppointment[];
+  screeningAccommodations: ScreeningAccommodation[];
+  screeningScoreEntries: ScreeningScoreEntry[];
+  rankedCandidates: RankedCandidate[];
+  approvedAdmissionQuotas: ApprovedAdmissionQuota[];
+  rankingOverrideAudits: RankingOverrideAudit[];
+  admissionBatches: AdmissionBatch[];
+  jupebCombinations: JupebSubjectCombination[];
+  jupebCentres: JupebApprovedCentre[];
+  jupebCandidates: JupebCandidateRecord[];
+  postgraduateReviews: PostgraduateReviewRecord[];
+  admissionDecisionHistory: AdmissionDecisionHistory[];
   offerTemplates: OfferTemplate[];
   offers: AdmissionOffer[];
   acceptanceCharges: AcceptanceCharge[];
@@ -67,6 +100,22 @@ class AdmissionsStore {
       applications: structuredClone(initialApplications),
       deduplicationCases: structuredClone(initialDeduplicationCases),
       refereeRequests: structuredClone(initialRefereeRequests),
+      screeningRecords: structuredClone(initialScreeningRecords),
+      capsImportReports: [],
+      capsAssociations: [],
+      scoringRules: structuredClone(initialScoringRules),
+      screeningAppointments: structuredClone(initialScreeningAppointments),
+      screeningAccommodations: structuredClone(initialScreeningAccommodations),
+      screeningScoreEntries: [],
+      rankedCandidates: structuredClone(initialRankedCandidates),
+      approvedAdmissionQuotas: structuredClone(initialApprovedAdmissionQuotas),
+      rankingOverrideAudits: [],
+      admissionBatches: structuredClone(initialAdmissionBatches),
+      jupebCombinations: structuredClone(initialJupebCombinations),
+      jupebCentres: structuredClone(initialJupebCentres),
+      jupebCandidates: structuredClone(initialJupebCandidates),
+      postgraduateReviews: structuredClone(initialPostgraduateReviews),
+      admissionDecisionHistory: structuredClone(initialAdmissionDecisionHistory),
       offerTemplates: structuredClone(initialOfferTemplates),
       offers: structuredClone(initialOffers),
       acceptanceCharges: structuredClone(initialAcceptanceCharges),

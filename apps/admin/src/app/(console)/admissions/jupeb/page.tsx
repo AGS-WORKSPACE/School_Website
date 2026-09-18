@@ -1,0 +1,43 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import Link from "next/link";
+import { ArrowLeft, CheckCircle2, ExternalLink, LockKeyhole, School, XCircle } from "lucide-react";
+import { useAdmissions, validateJupebCombination } from "@tau/admissions";
+import { usePerson } from "@tau/identity/react";
+import { Badge } from "@tau/ui/badge";
+import { Button } from "@tau/ui/button";
+import { NativeSelect } from "@tau/ui/native-select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@tau/ui/tabs";
+import { PageHeader } from "@/components/console/page-header";
+import { Section } from "@/components/console/section";
+import { ScreeningStatusBadge } from "@/components/console/screening-status";
+import { useSession } from "@/providers/session-provider";
+
+const resultLabels = { Pending: "Pending", Received: "Received", Verified: "Verified", Failed_Verification: "Failed verification", Incomplete: "Incomplete" } as const;
+const centreLabels = { Not_Submitted: "Not submitted", Submitted: "Submitted", Verified: "Verified", Rejected: "Rejected", Pending_Verification: "Pending verification" } as const;
+
+export default function JupebAdmissionsPage() {
+  const { jupebCandidates, jupebCombinations, jupebCentres } = useAdmissions();
+  const { session } = useSession();
+  const { data: person, isLoading } = usePerson(session?.personId ?? "");
+  const [selectedId, setSelectedId] = useState(jupebCandidates[0]?.id ?? "");
+  const [combinationId, setCombinationId] = useState(jupebCandidates[0]?.combinationId ?? "");
+  const candidate = jupebCandidates.find((item) => item.id === selectedId) ?? jupebCandidates[0];
+  const combination = jupebCombinations.find((item) => item.id === combinationId);
+  const canViewExternal = person?.permissionIds.includes("admissions:config:manage") ?? false;
+  const validation = candidate && combination ? validateJupebCombination({ selectedSubjects: combination.subjects, programmeName: candidate.programmeName }, jupebCombinations) : { valid: false, combination: undefined };
+  const activeCombinations = useMemo(() => jupebCombinations.filter((item) => item.active && item.approvedForProgrammes.includes(candidate?.programmeName ?? "")), [candidate?.programmeName, jupebCombinations]);
+  const centre = jupebCentres.find((item) => item.id === candidate?.centreId);
+
+  if (isLoading) return <div className="rounded-xl border bg-card p-8 text-sm text-muted-foreground" role="status">Loading JUPEB admissions workspace…</div>;
+  if (!candidate) return <div className="rounded-xl border border-dashed p-8 text-sm text-muted-foreground">No JUPEB candidates are available.</div>;
+
+  return <div className="space-y-6"><Link href="/admissions/screening" className="inline-flex items-center text-sm font-semibold text-muted-foreground hover:text-primary"><ArrowLeft className="mr-1.5 size-4" />Back to screening workspace</Link><PageHeader eyebrow="EP-06 · SCR-06" title="JUPEB admissions route" description="Review configured subject combinations, approved centre evidence, and external result status for JUPEB candidates." actions={<Badge variant="outline"><School className="mr-1 size-3.5" />Configured route data</Badge>} /><div className="rounded-xl border border-primary/20 bg-primary/5 p-4 text-sm" role="note">Only approved centre records and configured subject combinations are displayed. This frontend does not register candidates with JUPEB or verify external results.</div>
+    <div className="flex flex-wrap gap-2">{jupebCandidates.map((item) => <Button key={item.id} size="sm" variant={item.id === candidate.id ? "default" : "outline"} onClick={() => { setSelectedId(item.id); setCombinationId(item.combinationId); }}>{item.candidateName}</Button>)}</div>
+    <Section title="Candidate overview" description="External identifiers are restricted to authorized admissions configuration users."><div className="grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-4"><Info label="Candidate" value={candidate.candidateName} /><Info label="Application" value={candidate.applicationNumber} /><Info label="Programme" value={candidate.programmeName} /><Info label="Eligibility" value={<ScreeningStatusBadge status={candidate.eligibilityStatus} />} />{canViewExternal ? <><Info label="JUPEB candidate reference" value={candidate.externalCandidateReference ?? "Not available"} /><Info label="JUPEB centre reference" value={candidate.externalCentreReference ?? "Not available"} /></> : <div className="flex items-center gap-2 rounded-lg border bg-muted/20 p-3 text-xs text-muted-foreground sm:col-span-2"><LockKeyhole className="size-4" />External identifiers are restricted.</div>}</div></Section>
+    <Tabs defaultValue="subjects"><TabsList><TabsTrigger value="subjects">Subject combination</TabsTrigger><TabsTrigger value="centre">Centre evidence</TabsTrigger><TabsTrigger value="result">Result status</TabsTrigger></TabsList><TabsContent value="subjects"><Section title="Subject combination" description="Selections are validated against active combinations configured for this programme."><div className="grid gap-5 lg:grid-cols-[1fr_1fr]"><div><label className="block space-y-1.5 text-sm font-medium">Configured combination<NativeSelect value={combinationId} onChange={(event) => setCombinationId(event.target.value)}>{activeCombinations.map((item) => <option key={item.id} value={item.id}>{item.code} · {item.label}</option>)}</NativeSelect></label><div className="mt-4 flex flex-wrap gap-2">{(combination?.subjects ?? []).map((subject) => <Badge key={subject} variant="secondary">{subject}</Badge>)}</div></div><div className={`rounded-lg border p-4 ${validation.valid ? "border-emerald-500/30 bg-emerald-500/5" : "border-destructive/30 bg-destructive/5"}`}>{validation.valid ? <><CheckCircle2 className="size-5 text-emerald-600" /><div className="mt-2 font-semibold">Combination eligible</div><p className="mt-1 text-xs text-muted-foreground">Validated against {validation.combination?.policyReference}.</p></> : <><XCircle className="size-5 text-destructive" /><div className="mt-2 font-semibold">Invalid combination</div><p className="mt-1 text-xs text-muted-foreground">Choose an active configured combination for this programme.</p></>}</div></div></Section></TabsContent><TabsContent value="centre"><Section title="Approved centre registration evidence" description="Centre information is limited to configured approved-centre records and attached evidence status."><div className="rounded-lg border p-4"><div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"><div><div className="font-semibold">{centre?.name ?? "Centre not found"}</div><div className="text-sm text-muted-foreground">{centre?.location ?? "No configured location"}</div>{centre && <div className="mt-1 text-xs text-muted-foreground">Approval valid until {centre.approvedUntil}</div>}</div><Badge variant={candidate.centreEvidenceStatus === "Verified" ? "success" : candidate.centreEvidenceStatus === "Rejected" ? "destructive" : "warning"}>{centreLabels[candidate.centreEvidenceStatus]}</Badge></div><div className="mt-4 space-y-2 border-t pt-3">{candidate.centreEvidence.map((item) => <div key={item.id} className="flex items-center justify-between gap-3 text-sm"><span>{item.label}</span><div className="flex items-center gap-2"><ScreeningStatusBadge status={item.status} />{item.documentId && <Link href={`/admissions/applications/${candidate.applicationId}`} className="inline-flex items-center gap-1 text-xs text-primary hover:underline">View dossier <ExternalLink className="size-3" /></Link>}</div></div>)}</div></div></Section></TabsContent><TabsContent value="result"><Section title="JUPEB result status" description="Result status is shown separately from subject-combination eligibility and centre evidence."><div className="grid gap-3 sm:grid-cols-2"><Info label="Result status" value={<Badge variant={candidate.resultStatus === "Verified" ? "success" : candidate.resultStatus === "Failed_Verification" ? "destructive" : "warning"}>{resultLabels[candidate.resultStatus]}</Badge>} /><Info label="Screening eligibility" value={<ScreeningStatusBadge status={candidate.eligibilityStatus} />} /></div><div className="mt-4 rounded-lg border border-dashed p-4 text-sm text-muted-foreground">External result verification is an integration point. No result has been verified by this frontend preview.</div></Section></TabsContent></Tabs>
+  </div>;
+}
+
+function Info({ label, value }: { label: string; value: React.ReactNode }) { return <div className="rounded-lg border bg-muted/20 p-3"><div className="text-xs text-muted-foreground">{label}</div><div className="mt-1 font-semibold">{value}</div></div>; }

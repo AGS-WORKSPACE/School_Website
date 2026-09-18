@@ -54,6 +54,9 @@ function NavLinks({
   onNavigate?: () => void;
 }) {
   const pathname = usePathname();
+  const activeHref = [...navItems]
+    .sort((left, right) => right.href.length - left.href.length)
+    .find((item) => isRouteActive(pathname, item.href))?.href;
 
   return (
     <nav className="space-y-5" aria-label="Console sections">
@@ -65,7 +68,7 @@ function NavLinks({
             </p>
           ) : null}
           {group.items.map((item) => {
-            const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+            const active = item.href === activeHref;
             const Icon = item.icon;
             return (
               <Link
@@ -91,6 +94,10 @@ function NavLinks({
       ))}
     </nav>
   );
+}
+
+function isRouteActive(pathname: string, href: string): boolean {
+  return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 }
 
 /** A live emergency grant is the one thing that should follow you around the console. */

@@ -194,6 +194,17 @@ export default function AdmissionsOverviewPage() {
               </Link>
 
               <Link
+                href="/admissions/screening"
+                className="flex items-center justify-between rounded-lg border border-border p-3 text-xs font-semibold hover:bg-muted/50 transition-colors"
+              >
+                <div className="flex items-center gap-2.5">
+                  <FileCheck2 className="size-4 text-teal-600" />
+                  <span>Screening Workspace</span>
+                </div>
+                <ArrowRight className="size-3.5 text-muted-foreground" />
+              </Link>
+
+              <Link
                 href="/admissions/assisted-intake"
                 className="flex items-center justify-between rounded-lg border border-border p-3 text-xs font-semibold hover:bg-muted/50 transition-colors"
               >
