@@ -1,7 +1,7 @@
 import { AlertTriangle, CheckCircle2, CircleDot, Clock, XCircle } from "lucide-react";
 import type { StudentTimelineItem } from "@tau/students";
 import { EmptyState } from "@/components/console/section";
-import { formatDate } from "./format";
+import { formatDate } from "@/lib/format";
 
 const stateIcon = {
   Completed: CheckCircle2,

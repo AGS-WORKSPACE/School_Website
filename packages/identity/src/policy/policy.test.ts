@@ -15,6 +15,7 @@ import { getStore } from "../mock/store";
 import { can, computeEffectiveGrants, filterByScope } from "./access";
 import { validateDelegation } from "./delegation";
 import { indexUnits, scopeCovers } from "./scope";
+import { rolesPermit } from "./roles";
 import { detectConflicts } from "./sod";
 
 const store = await getStore();
@@ -280,6 +281,48 @@ describe("IAM-05 — segregation of duties", () => {
     assert.equal(isConflictBlocking(conflict, now), true);
   });
 
+  it("blocks requesting and activating a learning-tool integration together (LMS-07)", () => {
+    const grants = [
+      {
+        permissionId: "lms:integration:request",
+        scope: { dimension: "institution", unitId: "inst-tau" },
+        source: { kind: "assignment", id: "asg-lms-1", roleId: "lms-administrator" },
+      },
+      {
+        permissionId: "lms:integration:approve",
+        scope: { dimension: "institution", unitId: "inst-tau" },
+        source: { kind: "assignment", id: "asg-lms-2", roleId: "lms-integration-approver" },
+      },
+    ] as any;
+
+    const conflict = detectConflicts({ personId: "per-test", grants, units: store.units, exceptions: [], now }).find(
+      (candidate) => candidate.rule.id === "sod-lms-integration",
+    );
+    assert.ok(conflict, "requesting and activating an integration must conflict");
+    assert.equal(isConflictBlocking(conflict, now), true);
+  });
+
+  it("flags teaching and finalising coursework grades as reviewable, not blocking (LMS-06)", () => {
+    const grants = [
+      {
+        permissionId: "lms:course:teach",
+        scope: { dimension: "institution", unitId: "inst-tau" },
+        source: { kind: "assignment", id: "asg-lms-3", roleId: "lecturer" },
+      },
+      {
+        permissionId: "lms:grade:finalise",
+        scope: { dimension: "institution", unitId: "inst-tau" },
+        source: { kind: "assignment", id: "asg-lms-4", roleId: "course-moderator" },
+      },
+    ] as any;
+
+    const conflict = detectConflicts({ personId: "per-test", grants, units: store.units, exceptions: [], now }).find(
+      (candidate) => candidate.rule.id === "sod-lms-grade-finalise",
+    );
+    assert.ok(conflict);
+    assert.equal(isConflictBlocking(conflict, now), false);
+  });
+
   it("blocks capturing assisted intake and resolving deduplication cases together (ADM-04, ADM-06)", () => {
     const grants = [
       {
@@ -340,5 +383,19 @@ describe("OPS-05 — the audit trail is tamper-evident", () => {
   it("detects a removed entry", async () => {
     const result = await verifyAuditChain(store.auditEvents.filter((_, index) => index !== 4));
     assert.equal(result.valid, false);
+  });
+});
+
+describe("Role permission lookup for module service layers", () => {
+  it("answers from the role catalogue", () => {
+    assert.equal(rolesPermit(["course-moderator"], "lms:grade:finalise"), true);
+    assert.equal(rolesPermit(["lecturer"], "lms:grade:finalise"), false);
+    assert.equal(rolesPermit(["lecturer", "course-moderator"], "lms:course:teach"), true);
+    assert.equal(rolesPermit(["lms-administrator"], "lms:integration:approve"), false);
+  });
+
+  it("denies unknown roles and empty role lists", () => {
+    assert.equal(rolesPermit([], "lms:course:teach"), false);
+    assert.equal(rolesPermit(["no-such-role"], "lms:course:teach"), false);
   });
 });

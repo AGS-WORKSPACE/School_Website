@@ -14,7 +14,8 @@ import { EmptyState, Section } from "@/components/console/section";
 import { Stat } from "@/components/console/stat";
 import { StatusBadge } from "@/components/console/status-badge";
 import { ActingAsSwitcher } from "@/features/students/acting-as";
-import { humanise, statusKey, studentName } from "@/features/students/format";
+import { studentName } from "@/features/students/format";
+import { humanise, statusKey } from "@/lib/format";
 
 const statuses: EnrolmentStatus[] = ["Active", "Deferred", "Suspended", "Withdrawn", "Deceased"];
 

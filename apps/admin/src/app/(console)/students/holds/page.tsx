@@ -10,7 +10,7 @@ import { EmptyState, Section } from "@/components/console/section";
 import { ActingAsSwitcher, useActingAs } from "@/features/students/acting-as";
 import { studentName } from "@/features/students/format";
 import { HoldCard } from "@/features/students/holds-panel";
-import { NoticeBanner, useNotice } from "@/features/students/notice";
+import { NoticeBanner, useNotice } from "@/components/console/notice";
 
 const effects = Object.keys(holdEffectLabels) as HoldEffect[];
 
