@@ -6,6 +6,7 @@
 @source "../../../../packages/identity/src";
 @source "../../../../packages/curriculum/src";
 @source "../../../../packages/admissions/src";
+@source "../../../../packages/scheduling/src";
 
 @layer utilities {
   /* Dense tabular readouts: audit entries, permission matrices, grant lists. */
