@@ -45,7 +45,7 @@ export default function CourseDetailPage({
                 {course.deliveryMode}
               </Badge>
               <Button asChild size="sm">
-                <Link href="/curriculum/proposals">Propose syllabus change</Link>
+                <Link href={`/curriculum/assessment?courseId=${course.id}`}>Assessment configuration</Link>
               </Button>
             </div>
           }

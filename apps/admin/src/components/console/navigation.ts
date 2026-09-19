@@ -209,6 +209,12 @@ export const navigation: NavGroup[] = [
         icon: BookOpen,
       },
       {
+        href: "/curriculum/assessment",
+        label: "Assessment configuration",
+        description: "Configure course assessment components, weights and effective versions.",
+        icon: ClipboardCheck,
+      },
+      {
         href: "/curriculum/ccmas",
         label: "CCMAS & QA compliance",
         description:
@@ -329,6 +335,41 @@ export const navigation: NavGroup[] = [
         description:
           "Tamper-evident record of who did what, and what was refused.",
         icon: FileClock,
+      },
+    ],
+  },
+  {
+    label: "Results and records",
+    items: [
+      {
+        href: "/results/entry",
+        label: "Mark entry",
+        description: "Enter, validate, autosave and import marks against registered students.",
+        icon: ClipboardCheck,
+      },
+      {
+        href: "/results/moderation",
+        label: "Moderation workspace",
+        description: "Review result distributions, anomalies, evidence and recommendations.",
+        icon: FileCheck2,
+      },
+      {
+        href: "/results/batches",
+        label: "Result batches",
+        description: "Stage preparation, moderation, approval, locking and publication.",
+        icon: GitPullRequest,
+      },
+      {
+        href: "/results/corrections",
+        label: "Result corrections",
+        description: "Preserve original results while reviewing corrections, recalculation and notification.",
+        icon: FileClock,
+      },
+      {
+        href: "/results/reconciliation",
+        label: "Result reconciliation",
+        description: "Compare approved results with SIS and LMS data without overwriting the approved source.",
+        icon: ArrowLeftRight,
       },
     ],
   },

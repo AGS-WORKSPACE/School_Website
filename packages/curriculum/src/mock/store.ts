@@ -8,6 +8,7 @@ import type { CCMASBenchmark, CourseCCMASMapping } from "../domain/ccmas";
 import type { CurriculumProposal } from "../domain/proposal";
 import type { CapacityModel, CapacityScenario } from "../domain/capacity";
 import type { CourseEquivalency, TeachOutSchedule } from "../domain/equivalency";
+import type { AssessmentConfiguration } from "../domain/assessment";
 import {
   initialProgrammes,
   initialCourses,
@@ -18,6 +19,7 @@ import {
   initialEquivalencies,
   initialTeachOutSchedules,
 } from "./seed";
+import { initialAssessmentConfigurations } from "./assessment-seed";
 
 export interface CurriculumStoreState {
   programmes: Programme[];
@@ -28,6 +30,7 @@ export interface CurriculumStoreState {
   capacityModels: CapacityModel[];
   equivalencies: CourseEquivalency[];
   teachOutSchedules: TeachOutSchedule[];
+  assessmentConfigurations: AssessmentConfiguration[];
 }
 
 let state: CurriculumStoreState = {
@@ -39,6 +42,7 @@ let state: CurriculumStoreState = {
   capacityModels: structuredClone(initialCapacityModels),
   equivalencies: structuredClone(initialEquivalencies),
   teachOutSchedules: structuredClone(initialTeachOutSchedules),
+  assessmentConfigurations: structuredClone(initialAssessmentConfigurations),
 };
 
 type Listener = () => void;
@@ -70,6 +74,7 @@ export const curriculumStore = {
       capacityModels: structuredClone(initialCapacityModels),
       equivalencies: structuredClone(initialEquivalencies),
       teachOutSchedules: structuredClone(initialTeachOutSchedules),
+      assessmentConfigurations: structuredClone(initialAssessmentConfigurations),
     };
     notify();
   },
