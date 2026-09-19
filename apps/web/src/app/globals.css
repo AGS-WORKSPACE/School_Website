@@ -6,6 +6,7 @@
 @source "../../../../packages/admissions/src";
 @source "../../../../packages/students/src";
 @source "../../../../packages/lms/src";
+@source "../../../../packages/graduation/src";
 
 /* Presentation flourishes used only by the public site. */
 @theme inline {

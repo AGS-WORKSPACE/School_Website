@@ -9,6 +9,7 @@
 @source "../../../../packages/scheduling/src";
 @source "../../../../packages/students/src";
 @source "../../../../packages/lms/src";
+@source "../../../../packages/graduation/src";
 
 @layer utilities {
   /* Dense tabular readouts: audit entries, permission matrices, grant lists. */

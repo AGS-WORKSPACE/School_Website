@@ -281,6 +281,26 @@ describe("IAM-05 — segregation of duties", () => {
     assert.equal(isConflictBlocking(conflict, now), true);
   });
 
+  it("blocks preparing and approving graduation decisions together (GRD-01, GRD-03)", () => {
+    const grants = [
+      { permissionId: "records:graduation:audit", scope: { dimension: "institution", unitId: "inst-tau" }, source: { kind: "assignment", id: "asg-grd-1", roleId: "graduation-officer" } },
+      { permissionId: "records:graduation:approve", scope: { dimension: "institution", unitId: "inst-tau" }, source: { kind: "assignment", id: "asg-grd-2", roleId: "records-approver" } },
+    ] as any;
+    const conflict = detectConflicts({ personId: "per-test", grants, units: store.units, exceptions: [], now }).find((candidate) => candidate.rule.id === "sod-graduation-list");
+    assert.ok(conflict);
+    assert.equal(isConflictBlocking(conflict, now), true);
+  });
+
+  it("blocks preparing and signing transcripts together (GRD-05)", () => {
+    const grants = [
+      { permissionId: "records:transcript:prepare", scope: { dimension: "institution", unitId: "inst-tau" }, source: { kind: "assignment", id: "asg-trn-1", roleId: "graduation-officer" } },
+      { permissionId: "records:transcript:issue", scope: { dimension: "institution", unitId: "inst-tau" }, source: { kind: "assignment", id: "asg-trn-2", roleId: "records-approver" } },
+    ] as any;
+    const conflict = detectConflicts({ personId: "per-test", grants, units: store.units, exceptions: [], now }).find((candidate) => candidate.rule.id === "sod-transcript-production");
+    assert.ok(conflict);
+    assert.equal(isConflictBlocking(conflict, now), true);
+  });
+
   it("blocks requesting and activating a learning-tool integration together (LMS-07)", () => {
     const grants = [
       {
@@ -392,6 +412,14 @@ describe("Role permission lookup for module service layers", () => {
     assert.equal(rolesPermit(["lecturer"], "lms:grade:finalise"), false);
     assert.equal(rolesPermit(["lecturer", "course-moderator"], "lms:course:teach"), true);
     assert.equal(rolesPermit(["lms-administrator"], "lms:integration:approve"), false);
+  });
+
+  it("keeps graduation preparation and approval in separate roles", () => {
+    assert.equal(rolesPermit(["graduation-officer"], "records:graduation:audit"), true);
+    assert.equal(rolesPermit(["graduation-officer"], "records:graduation:approve"), false);
+    assert.equal(rolesPermit(["graduation-officer"], "records:transcript:issue"), false);
+    assert.equal(rolesPermit(["records-approver"], "records:graduation:approve"), true);
+    assert.equal(rolesPermit(["clearance-officer"], "records:clearance:decide"), true);
   });
 
   it("denies unknown roles and empty role lists", () => {

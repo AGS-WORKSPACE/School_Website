@@ -108,6 +108,25 @@ export const sodRuleset: SodRule[] = [
     basis: "Product principle 4 — maker-checker on the authoritative student record (SIS-02, SIS-03).",
   },
   {
+    id: "sod-graduation-list",
+    label: "Prepare and approve graduation decisions",
+    description:
+      "The officer who audits graduands, requests overrides or prepares the graduand list must not also approve them for Senate.",
+    permissionA: "records:graduation:audit",
+    permissionB: "records:graduation:approve",
+    severity: "blocking",
+    basis: "GRD-01, GRD-03 — overrides are separately approved; approval freezes the list. Product principle 4.",
+  },
+  {
+    id: "sod-transcript-production",
+    label: "Prepare and sign transcripts",
+    description: "Whoever generates a transcript must not also sign and seal it.",
+    permissionA: "records:transcript:prepare",
+    permissionB: "records:transcript:issue",
+    severity: "blocking",
+    basis: "GRD-05 — authorised signatory and seal; product principle 4 names transcripts explicitly.",
+  },
+  {
     id: "sod-lms-integration",
     label: "Request and activate a learning-tool integration",
     description:
