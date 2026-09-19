@@ -15,12 +15,22 @@ import { PageHeader } from "@/components/console/page-header";
 import { Section } from "@/components/console/section";
 import { useAdmissions, ApplicationStage } from "@tau/admissions";
 
+const routeLabels: Record<string, string> = {
+  UTME: "UTME",
+  DIRECT_ENTRY: "Direct entry",
+  JUPEB_FOUNDATION: "JUPEB foundation",
+  POSTGRADUATE: "Postgraduate",
+  TRANSFER: "Transfer",
+  INTERNATIONAL: "International",
+};
+
 export default function ApplicationsListPage() {
   const { applications, routes } = useAdmissions();
 
   const [query, setQuery] = useState("");
   const [routeFilter, setRouteFilter] = useState<string>("all");
   const [stageFilter, setStageFilter] = useState<string>("all");
+  const stageBadgeClass = "whitespace-nowrap px-2 py-0.5 text-[11px] leading-4";
 
   const filtered = applications.filter((app) => {
     const matchesQuery =
@@ -42,19 +52,19 @@ export default function ApplicationsListPage() {
   const getStageBadge = (stage: ApplicationStage) => {
     switch (stage) {
       case "Payment_Verified":
-        return <Badge variant="default" className="bg-emerald-600 text-white">Payment Verified</Badge>;
+        return <Badge variant="default" className={`${stageBadgeClass} bg-emerald-600 text-white`}>Payment Verified</Badge>;
       case "Submitted_Pending_Payment":
-        return <Badge variant="outline" className="text-amber-600 border-amber-500/40">Pending Payment</Badge>;
+        return <Badge variant="outline" className={`${stageBadgeClass} border-amber-500/40 text-amber-700`}>Pending Payment</Badge>;
       case "Draft":
-        return <Badge variant="secondary">Draft</Badge>;
+        return <Badge variant="secondary" className={stageBadgeClass}>Draft</Badge>;
       case "Under_Screening":
-        return <Badge variant="default" className="bg-blue-600">Under Screening</Badge>;
+        return <Badge variant="default" className={`${stageBadgeClass} bg-blue-600`}>Under Screening</Badge>;
       case "Screening_Passed":
-        return <Badge variant="default" className="bg-teal-600">Screening Passed</Badge>;
+        return <Badge variant="default" className={`${stageBadgeClass} bg-teal-600`}>Screening Passed</Badge>;
       case "Offer_Recommended":
-        return <Badge variant="default" className="bg-purple-600">Offer Recommended</Badge>;
+        return <Badge variant="default" className={`${stageBadgeClass} bg-purple-600`}>Offer Recommended</Badge>;
       default:
-        return <Badge variant="outline">{stage.replace(/_/g, " ")}</Badge>;
+        return <Badge variant="outline" className={stageBadgeClass}>{stage.replace(/_/g, " ")}</Badge>;
     }
   };
 
@@ -122,55 +132,59 @@ export default function ApplicationsListPage() {
         description="Select any candidate to view uploaded qualifications, evidence, referee feedback and payment audit."
       >
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs border-collapse">
+          <table className="w-full min-w-[78rem] table-fixed border-collapse text-left text-sm">
             <thead>
-              <tr className="border-b border-border bg-muted/40 font-semibold text-muted-foreground">
-                <th className="py-2.5 px-3">Application Number</th>
-                <th className="py-2.5 px-3">Applicant Name</th>
-                <th className="py-2.5 px-3">Route</th>
-                <th className="py-2.5 px-3">Programme</th>
-                <th className="py-2.5 px-3">Identifiers</th>
-                <th className="py-2.5 px-3">Stage</th>
-                <th className="py-2.5 px-3 text-right">Action</th>
+              <tr className="border-b border-border bg-muted/40 text-xs font-semibold text-muted-foreground">
+                <th scope="col" className="w-48 px-3 py-3">Application</th>
+                <th scope="col" className="w-52 px-3 py-3">Applicant</th>
+                <th scope="col" className="w-36 px-3 py-3">Route</th>
+                <th scope="col" className="w-48 px-3 py-3">Programme</th>
+                <th scope="col" className="w-56 px-3 py-3">Identifiers</th>
+                <th scope="col" className="w-40 px-3 py-3">Stage</th>
+                <th scope="col" className="w-36 px-3 py-3 text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
-              {filtered.map((app) => (
-                <tr key={app.id} className="hover:bg-muted/30 transition-colors">
-                  <td className="py-3 px-3 font-mono font-bold text-foreground">
+              {filtered.map((app) => {
+                const sharesIdentifier = applications.some((other) => other.id !== app.id && (
+                  (app.applicant.jambRegistrationNumber && other.applicant.jambRegistrationNumber === app.applicant.jambRegistrationNumber) ||
+                  (app.applicant.nationalIdNumber && other.applicant.nationalIdNumber === app.applicant.nationalIdNumber)
+                ));
+                return <tr key={app.id} className="transition-colors hover:bg-muted/30">
+                  <td className="px-3 py-3 font-semibold tabular text-foreground">
                     <Link
                       href={`/admissions/applications/${app.id}`}
-                      className="hover:underline hover:text-primary"
+                      className="whitespace-nowrap hover:text-primary hover:underline"
                     >
                       {app.applicationNumber}
                     </Link>
                   </td>
-                  <td className="py-3 px-3">
-                    <div className="font-semibold text-foreground">
+                  <td className="px-3 py-3">
+                    <div className="font-semibold leading-snug text-foreground">
                       {app.applicant.firstName} {app.applicant.lastName}
                     </div>
-                    <div className="text-[0.68rem] text-muted-foreground">{app.applicant.email}</div>
+                    <div className="mt-0.5 truncate text-xs text-muted-foreground" title={app.applicant.email}>{app.applicant.email}</div>
+                    {sharesIdentifier ? <Badge variant="warning" className="mt-1.5 px-2 py-0.5 text-[11px]" title="JAMB or NIN matches another application">Possible duplicate</Badge> : null}
                   </td>
-                  <td className="py-3 px-3">
-                    <Badge variant="outline" className="font-mono text-[0.65rem]">
-                      {app.routeCode}
-                    </Badge>
+                  <td className="px-3 py-3 text-xs font-medium text-foreground">
+                    {routeLabels[app.routeCode] ?? app.routeCode.replaceAll("_", " ")}
                   </td>
-                  <td className="py-3 px-3 font-medium">{app.programmeName}</td>
-                  <td className="py-3 px-3 text-[0.68rem] font-mono text-muted-foreground">
-                    <div>JAMB: {app.applicant.jambRegistrationNumber ?? "N/A"}</div>
-                    <div>NIN: {app.applicant.nationalIdNumber ?? "N/A"}</div>
+                  <td className="px-3 py-3 text-xs leading-snug">{app.programmeName}</td>
+                  <td className="px-3 py-3 text-[11px] leading-4 text-muted-foreground">
+                    {app.applicant.jambRegistrationNumber ? <div className="flex gap-2"><span className="w-10 shrink-0">JAMB</span><span className="tabular font-medium tracking-tight text-foreground">{app.applicant.jambRegistrationNumber}</span></div> : null}
+                    {app.applicant.nationalIdNumber ? <div className="flex gap-2"><span className="w-10 shrink-0">NIN</span><span className="tabular font-medium tracking-tight text-foreground">{app.applicant.nationalIdNumber}</span></div> : null}
+                    {!app.applicant.jambRegistrationNumber && !app.applicant.nationalIdNumber ? <span>Not supplied</span> : null}
                   </td>
-                  <td className="py-3 px-3">{getStageBadge(app.stage)}</td>
-                  <td className="py-3 px-3 text-right">
-                    <Button asChild size="sm" variant="ghost" className="h-7 text-xs">
+                  <td className="px-3 py-3">{getStageBadge(app.stage)}</td>
+                  <td className="px-3 py-3 text-right">
+                    <Button asChild size="sm" variant="ghost" className="h-8 whitespace-nowrap px-2 text-xs">
                       <Link href={`/admissions/applications/${app.id}`}>
-                        Open Dossier <ArrowRight className="ml-1 size-3" />
+                        Open dossier <ArrowRight className="ml-1 size-3" />
                       </Link>
                     </Button>
                   </td>
-                </tr>
-              ))}
+                </tr>;
+              })}
               {filtered.length === 0 && (
                 <tr>
                   <td colSpan={7} className="py-8 text-center text-xs text-muted-foreground">

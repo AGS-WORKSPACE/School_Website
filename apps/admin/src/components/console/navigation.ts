@@ -242,6 +242,17 @@ export const navigation: NavGroup[] = [
     ],
   },
   {
+    label: "Library & Research",
+    items: [
+      {
+        href: "/library-research",
+        label: "Library & research",
+        description: "Patron access, discovery, clearance, researcher profiles and funded activity.",
+        icon: BookOpen,
+      },
+    ],
+  },
+  {
     label: "Academic Planning",
     items: [
       {
@@ -391,6 +402,17 @@ export const navigation: NavGroup[] = [
         label: "Emergency access",
         description: "Requested, approved, expiring and reviewed after use.",
         icon: ShieldAlert,
+      },
+    ],
+  },
+  {
+    label: "Digital Operations",
+    items: [
+      {
+        href: "/digital-operations",
+        label: "Service desk & operations",
+        description: "Support tickets, knowledge, safe assistance, changes, monitoring and SLA reporting.",
+        icon: Activity,
       },
     ],
   },

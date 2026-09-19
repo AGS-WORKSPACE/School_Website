@@ -4,13 +4,13 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:translate-y-px",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold leading-none transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:translate-y-px",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow-sm hover:bg-[#004586]",
+        default: "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/90",
-        accent: "bg-accent text-accent-foreground shadow-sm hover:bg-[#b69138]",
+        accent: "bg-accent text-accent-foreground shadow-sm hover:bg-accent/90",
         outline: "border border-input bg-transparent hover:bg-muted hover:text-foreground",
         outlineLight: "border border-white/40 bg-transparent text-white backdrop-blur-sm hover:bg-white/10",
         ghost: "hover:bg-muted hover:text-foreground",
@@ -22,7 +22,7 @@ const buttonVariants = cva(
       size: {
         default: "h-10 px-4",
         sm: "h-9 px-3 text-xs",
-        lg: "h-11 px-6 text-base",
+        lg: "h-11 px-6 text-sm",
         xl: "h-12 px-7 text-base",
         icon: "size-10 p-0",
         iconSm: "size-9 p-0",

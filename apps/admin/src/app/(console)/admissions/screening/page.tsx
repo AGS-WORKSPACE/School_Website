@@ -5,7 +5,6 @@ import { useMemo, useState } from "react";
 import { ArrowRight, Search, ShieldCheck } from "lucide-react";
 import { usePerson } from "@tau/identity/react";
 import { useAdmissions } from "@tau/admissions";
-import { Badge } from "@tau/ui/badge";
 import { Button } from "@tau/ui/button";
 import { Input } from "@tau/ui/input";
 import { NativeSelect } from "@tau/ui/native-select";
@@ -16,7 +15,7 @@ import { ScreeningStatusBadge } from "@/components/console/screening-status";
 import { useSession } from "@/providers/session-provider";
 
 export default function ScreeningWorkspacePage() {
-  const { screeningRecords, routes } = useAdmissions();
+  const { applications, rankedCandidates, screeningRecords, routes } = useAdmissions();
   const { session } = useSession();
   const { data: person, isLoading: permissionLoading, isError: permissionError } = usePerson(session?.personId ?? "");
   const [query, setQuery] = useState("");
@@ -65,7 +64,7 @@ export default function ScreeningWorkspacePage() {
         </NativeSelect>
         <NativeSelect aria-label="Filter by admission route" value={route} onChange={(event) => setRoute(event.target.value)}>
           <option value="all">All routes</option>
-          {routes.map((item) => <option key={item.code} value={item.code}>{item.code}</option>)}
+          {routes.map((item) => <option key={item.code} value={item.code}>{item.name}</option>)}
         </NativeSelect>
         <NativeSelect aria-label="Filter by application status" value={applicationStage} onChange={(event) => setApplicationStage(event.target.value)}>
           <option value="all">All application statuses</option>
@@ -90,18 +89,32 @@ export default function ScreeningWorkspacePage() {
       </div>
 
       <Section title={`Screening queue (${filtered.length})`} description="Sensitive identity identifiers are intentionally excluded from this operational list.">
-        {filtered.length === 0 ? <div className="rounded-lg border border-dashed p-8 text-center text-sm text-muted-foreground">No candidates match the current filters.</div> : <Table>
-          <TableHeader><TableRow><TableHead>Candidate</TableHead><TableHead>Programme / route</TableHead><TableHead>Application</TableHead><TableHead>Screening</TableHead><TableHead>Eligibility</TableHead><TableHead>Evidence</TableHead><TableHead>Score / rank</TableHead><TableHead className="text-right">Review</TableHead></TableRow></TableHeader>
-          <TableBody>{filtered.map((item) => <TableRow key={item.id}>
-            <TableCell><div className="font-semibold">{item.applicantName}</div><div className="text-xs text-muted-foreground">{item.facultyName}</div></TableCell>
-            <TableCell><div className="font-medium">{item.programmeName}</div><Badge variant="outline" className="mt-1 font-mono text-[0.65rem]">{item.routeCode}</Badge></TableCell>
-            <TableCell className="font-mono text-xs">{item.applicationNumber}<div className="mt-1 text-[0.68rem] text-muted-foreground">{item.applicationStage.replaceAll("_", " ")}</div></TableCell>
-            <TableCell><ScreeningStatusBadge status={item.screeningStatus} /></TableCell>
-            <TableCell><ScreeningStatusBadge status={item.eligibilityStatus} /></TableCell>
-            <TableCell><ScreeningStatusBadge status={item.evidenceStatus} /></TableCell>
-            <TableCell className="text-xs">{item.score === null ? "—" : `${item.score}/${item.maximumScore}`}<div className="text-muted-foreground">Rank {item.rank ?? "—"}</div></TableCell>
-            <TableCell className="text-right"><Button asChild size="sm" variant="ghost"><Link href={`/admissions/screening/${item.id}`}>Open <ArrowRight className="ml-1 size-3.5" /></Link></Button></TableCell>
-          </TableRow>)}</TableBody>
+        {filtered.length === 0 ? <div className="rounded-lg border border-dashed p-8 text-center text-sm text-muted-foreground">No candidates match the current filters.</div> : <Table className="min-w-[92rem] table-fixed">
+          <TableHeader><TableRow>
+            <TableHead className="w-52">Candidate</TableHead>
+            <TableHead className="w-64">Programme / route</TableHead>
+            <TableHead className="w-52">Application</TableHead>
+            <TableHead className="w-36">Screening</TableHead>
+            <TableHead className="w-36">Eligibility</TableHead>
+            <TableHead className="w-44">Evidence</TableHead>
+            <TableHead className="w-32 whitespace-nowrap">Score / rank</TableHead>
+            <TableHead className="w-28 text-right">Review</TableHead>
+          </TableRow></TableHeader>
+          <TableBody>{filtered.map((item) => {
+            const application = applications.find((candidate) => candidate.id === item.applicationId);
+            const ranking = rankedCandidates.find((candidate) => candidate.screeningRecordId === item.id);
+            const rank = ranking ? ranking.rank : item.rank;
+            return <TableRow key={item.id}>
+              <TableCell><div className="font-semibold leading-snug">{item.applicantName}</div><div className="mt-1 text-xs leading-snug text-muted-foreground">{item.facultyName}</div></TableCell>
+              <TableCell><div className="text-sm font-medium leading-snug">{item.programmeName}</div><div className="mt-1 text-xs text-muted-foreground">{routes.find((route) => route.code === item.routeCode)?.name ?? item.routeCode.replaceAll("_", " ")}</div></TableCell>
+              <TableCell><div className="whitespace-nowrap text-xs font-semibold tabular">{application?.applicationNumber ?? item.applicationNumber}</div><div className="mt-1 text-xs text-muted-foreground">{(application?.stage ?? item.applicationStage).replaceAll("_", " ")}</div></TableCell>
+              <TableCell className="[&>span]:whitespace-nowrap [&>span]:px-2 [&>span]:py-0.5 [&>span]:text-xs"><ScreeningStatusBadge status={item.screeningStatus} /></TableCell>
+              <TableCell className="[&>span]:whitespace-nowrap [&>span]:px-2 [&>span]:py-0.5 [&>span]:text-xs"><ScreeningStatusBadge status={item.eligibilityStatus} /></TableCell>
+              <TableCell className="[&>span]:whitespace-nowrap [&>span]:px-2 [&>span]:py-0.5 [&>span]:text-xs"><ScreeningStatusBadge status={item.evidenceStatus} /></TableCell>
+              <TableCell className="text-xs tabular"><div className="font-semibold">{item.score === null ? "Not scored" : `${item.score}/${item.maximumScore}`}</div><div className="mt-1 text-muted-foreground">{rank === null ? "Not ranked" : `Rank ${rank}`}</div></TableCell>
+              <TableCell className="text-right"><Button asChild size="sm" variant="ghost" className="whitespace-nowrap px-2 text-xs"><Link href={`/admissions/screening/${item.id}`}>Open <ArrowRight className="ml-1 size-3.5" /></Link></Button></TableCell>
+            </TableRow>;
+          })}</TableBody>
         </Table>}
       </Section>
     </div>

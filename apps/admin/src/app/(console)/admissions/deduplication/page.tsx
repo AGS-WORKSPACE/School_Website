@@ -28,24 +28,24 @@ export default function DeduplicationWorkbenchPage() {
   const getSeverityBadge = (sev: DiscrepancySeverity) => {
     switch (sev) {
       case "High":
-        return <Badge variant="destructive">High Risk ({sev})</Badge>;
+        return <Badge variant="destructive" className="px-2 py-0.5 text-[11px]">High Risk ({sev})</Badge>;
       case "Medium":
-        return <Badge variant="outline" className="text-amber-600 border-amber-500/40">Medium Risk</Badge>;
+        return <Badge variant="outline" className="border-amber-500/40 px-2 py-0.5 text-[11px] text-amber-600">Medium Risk</Badge>;
       default:
-        return <Badge variant="secondary">Low Risk</Badge>;
+        return <Badge variant="secondary" className="px-2 py-0.5 text-[11px]">Low Risk</Badge>;
     }
   };
 
   const getStatusBadge = (status: DiscrepancyStatus) => {
     switch (status) {
       case "Open_Under_Review":
-        return <Badge variant="outline" className="text-amber-600 border-amber-500/40">Under Review</Badge>;
+        return <Badge variant="outline" className="border-amber-500/40 px-2 py-0.5 text-[11px] text-amber-600">Under Review</Badge>;
       case "Confirmed_Duplicate":
-        return <Badge variant="destructive">Confirmed Duplicate</Badge>;
+        return <Badge variant="destructive" className="px-2 py-0.5 text-[11px]">Confirmed Duplicate</Badge>;
       case "Confirmed_Separate_Person":
-        return <Badge variant="default" className="bg-emerald-600">Separate Person</Badge>;
+        return <Badge variant="default" className="bg-emerald-600 px-2 py-0.5 text-[11px]">Separate Person</Badge>;
       default:
-        return <Badge variant="outline">{status.replace(/_/g, " ")}</Badge>;
+        return <Badge variant="outline" className="px-2 py-0.5 text-[11px]">{status.replace(/_/g, " ")}</Badge>;
     }
   };
 
@@ -107,19 +107,19 @@ export default function DeduplicationWorkbenchPage() {
           {filtered.map((c) => (
             <div
               key={c.id}
-              className="rounded-xl border border-border p-4.5 space-y-3 text-xs hover:border-primary/50 transition-colors"
+              className="rounded-xl border border-border p-4 space-y-3 text-[11px] hover:border-primary/50 transition-colors"
             >
-              <div className="flex items-center justify-between border-b border-border pb-3">
-                <div className="flex items-center gap-3">
-                  <span className="font-mono font-bold text-sm text-foreground">{c.id}</span>
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-3">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-bold text-foreground">{c.id}</span>
                   {getSeverityBadge(c.severity)}
-                  <span className="text-muted-foreground font-mono text-[0.7rem]">
+                  <span className="tabular text-[11px] text-muted-foreground">
                     Match Score: {c.compositeScore}/100
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   {getStatusBadge(c.status)}
-                  <Button asChild size="sm" variant="outline" className="h-7 text-xs">
+                  <Button asChild size="sm" variant="outline" className="h-7 text-[11px]">
                     <Link href={`/admissions/deduplication/${c.id}`}>
                       Adjudicate Case <ArrowRight className="ml-1 size-3" />
                     </Link>
@@ -130,21 +130,21 @@ export default function DeduplicationWorkbenchPage() {
               {/* Candidate Pair Summary */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-muted/20 p-3 rounded-lg">
                 <div className="space-y-1">
-                  <span className="text-[0.68rem] uppercase font-bold text-muted-foreground block">
+                  <span className="block text-[10px] font-bold uppercase text-muted-foreground">
                     Incoming Case (Primary)
                   </span>
-                  <div className="font-bold text-foreground">{c.primaryApplicantName}</div>
-                  <div className="text-[0.68rem] text-muted-foreground font-mono">
+                  <div className="text-[11px] font-bold text-foreground">{c.primaryApplicantName}</div>
+                  <div className="text-[10px] tabular text-muted-foreground">
                     App ID: {c.primaryApplicationId}
                   </div>
                 </div>
 
                 <div className="space-y-1 sm:border-l sm:border-border sm:pl-4">
-                  <span className="text-[0.68rem] uppercase font-bold text-muted-foreground block">
+                  <span className="block text-[10px] font-bold uppercase text-muted-foreground">
                     Matched Existing Candidate
                   </span>
-                  <div className="font-bold text-foreground">{c.matchedApplicantName}</div>
-                  <div className="text-[0.68rem] text-muted-foreground font-mono">
+                  <div className="text-[11px] font-bold text-foreground">{c.matchedApplicantName}</div>
+                  <div className="text-[10px] tabular text-muted-foreground">
                     App ID: {c.matchedApplicationId}
                   </div>
                 </div>
@@ -156,14 +156,14 @@ export default function DeduplicationWorkbenchPage() {
                   <Badge
                     key={i}
                     variant="outline"
-                    className="text-[0.65rem] font-mono bg-background text-foreground"
+                    className="bg-background px-2 py-0.5 text-[10px] text-foreground"
                   >
-                    {f.attribute}: {f.isExactMatch ? "Exact Match" : "Fuzzy Match"} (+{f.weight} pts)
+                    {f.attribute.replaceAll("_", " ")}: {f.isExactMatch ? "Exact Match" : "Fuzzy Match"} (+{f.weight} pts)
                   </Badge>
                 ))}
               </div>
 
-              <p className="text-muted-foreground text-[0.72rem] leading-relaxed pt-1">
+              <p className="pt-1 text-[11px] leading-relaxed text-muted-foreground">
                 {c.investigationNotes}
               </p>
             </div>
