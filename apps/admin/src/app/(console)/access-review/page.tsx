@@ -92,11 +92,11 @@ export default function AccessReviewPage() {
         ) : rows.length === 0 ? (
           <EmptyState message="Nothing outstanding in this view." />
         ) : (
-          <ul className="divide-border divide-y">
+          <ul className="grid gap-4 lg:grid-cols-2">
             {rows.map((view) => {
               const isSelf = view.assignment.personId === actor.personId;
               return (
-                <li key={view.assignment.id} className="py-4 first:pt-0">
+                <li key={view.assignment.id} className="rounded-xl border border-border bg-muted/20 p-5 shadow-sm">
                   <div className="flex flex-wrap items-center gap-2">
                     <Link
                       href={`/people/${view.assignment.personId}`}

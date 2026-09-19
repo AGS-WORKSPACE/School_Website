@@ -124,18 +124,18 @@ export default function RolesPage() {
                 <EmptyState message="No permissions in that module." />
               </div>
             ) : (
-              <div className="overflow-x-auto">
-                <Table className="min-w-[60rem]">
+              <div>
+                <Table className="w-max min-w-full">
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="sticky left-0 min-w-[18rem] bg-inherit">
+                      <TableHead className="sticky left-0 z-20 w-80 min-w-80 max-w-80 bg-[#e6eef7] shadow-[1px_0_0_0_var(--border)]">
                         Permission
                       </TableHead>
                       {roles
                         .filter((role) => !role.breakGlassOnly)
                         .map((role) => (
-                          <TableHead key={role.id} className="text-center align-bottom">
-                            <span className="block max-w-[6rem] text-xs leading-tight">
+                          <TableHead key={role.id} className="w-32 min-w-32 text-center align-bottom">
+                            <span className="block text-xs leading-tight">
                               {role.name}
                             </span>
                           </TableHead>
@@ -145,7 +145,7 @@ export default function RolesPage() {
                   <TableBody>
                     {visiblePermissions.map((permission) => (
                       <TableRow key={permission.id}>
-                        <TableCell className="sticky left-0 bg-inherit">
+                        <TableCell className="sticky left-0 z-10 w-80 min-w-80 max-w-80 bg-[#f1f6fb] shadow-[1px_0_0_0_var(--border)]">
                           <span className="flex flex-wrap items-center gap-2 text-sm font-semibold">
                             {permission.label}
                             <Badge
@@ -176,7 +176,7 @@ export default function RolesPage() {
                         {roles
                           .filter((role) => !role.breakGlassOnly)
                           .map((role) => (
-                            <TableCell key={role.id} className="text-center">
+                            <TableCell key={role.id} className="w-32 min-w-32 text-center">
                               {role.permissionIds.includes(permission.id) ? (
                                 <Check
                                   className="text-primary mx-auto size-4"

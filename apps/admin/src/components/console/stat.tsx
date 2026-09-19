@@ -54,11 +54,11 @@ export function Stat({
           </span>
         ) : null}
         <div className="flex min-w-0 flex-1 flex-col">
-          <p className={cn("tabular font-display text-2xl leading-none font-extrabold", toneText[tone])}>
+          <p className="text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">{label}</p>
+          <p className={cn("mt-2 tabular font-display text-2xl leading-none font-bold", toneText[tone])}>
             {value}
           </p>
-          <p className="mt-2 text-xs font-bold text-foreground">{label}</p>
-          {hint ? <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{hint}</p> : null}
+          {hint ? <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{hint}</p> : null}
         </div>
       </CardContent>
     </Card>

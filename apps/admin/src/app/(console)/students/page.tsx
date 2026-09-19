@@ -72,8 +72,8 @@ export default function StudentRegisterPage() {
         description="Programme, level and status are derived from approved lifecycle events as of today; they are never typed over."
         actions={
           <div className="flex flex-wrap gap-2">
-            <Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search name, matric or programme" aria-label="Search students" className="w-64" />
-            <NativeSelect value={status} onChange={(event) => setStatus(event.target.value as EnrolmentStatus | "")} aria-label="Filter by status" className="w-40">
+            <Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search name, matric or programme" aria-label="Search students" className="h-9 w-64 text-xs" />
+            <NativeSelect value={status} onChange={(event) => setStatus(event.target.value as EnrolmentStatus | "")} aria-label="Filter by status" className="h-9 w-40 text-xs">
               <option value="">All statuses</option>
               {statuses.map((item) => <option key={item} value={item}>{item}</option>)}
             </NativeSelect>
@@ -84,8 +84,8 @@ export default function StudentRegisterPage() {
           <EmptyState message="No students match these filters." />
         ) : (
           <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
+            <Table className="min-w-[64rem] text-xs">
+              <TableHeader className="[&_th]:h-9 [&_th]:px-3 [&_th]:text-[11px]">
                 <TableRow>
                   <TableHead>Student</TableHead>
                   <TableHead>Programme</TableHead>
@@ -95,27 +95,27 @@ export default function StudentRegisterPage() {
                   <TableHead className="text-right">Open items</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody>
+              <TableBody className="[&_td]:px-3 [&_td]:py-2.5">
                 {filtered.map(({ student, name, placement, activeHolds, pending }) => (
                   <TableRow key={student.id}>
                     <TableCell>
-                      <Link href={`/students/${student.id}`} className="font-semibold text-primary hover:underline">{name}</Link>
-                      <div className="font-mono text-xs text-muted-foreground">{student.matriculationNumber}</div>
+                      <Link href={`/students/${student.id}`} className="text-xs font-semibold text-primary hover:underline">{name}</Link>
+                      <div className="text-[11px] tabular text-muted-foreground">{student.matriculationNumber}</div>
                     </TableCell>
                     <TableCell>
-                      {placement?.programmeName ?? "—"}
-                      <div className="text-xs text-muted-foreground">{placement ? `${placement.level} level · ${humanise(placement.mode)} · ${placement.cohort}` : "Not matriculated"}</div>
+                      <span className="text-xs">{placement?.programmeName ?? "—"}</span>
+                      <div className="text-[11px] text-muted-foreground">{placement ? `${placement.level} level · ${humanise(placement.mode)} · ${placement.cohort}` : "Not matriculated"}</div>
                     </TableCell>
-                    <TableCell>{placement ? <StatusBadge status={statusKey(placement.status)} /> : "—"}</TableCell>
-                    <TableCell className="text-sm">{placement ? humanise(placement.standing) : "—"}</TableCell>
+                    <TableCell>{placement ? <StatusBadge status={statusKey(placement.status)} className="px-2 py-0.5 text-[11px]" /> : "—"}</TableCell>
+                    <TableCell className="text-xs">{placement ? humanise(placement.standing) : "—"}</TableCell>
                     <TableCell>
                       <div className="flex flex-wrap gap-1">
-                        {activeHolds.length === 0 ? <span className="text-xs text-muted-foreground">None</span> : activeHolds.map((hold) => (
-                          <Badge key={hold.id} variant="warning" title={hold.effects.map((effect) => holdEffectLabels[effect]).join(", ")}>{hold.type}</Badge>
+                        {activeHolds.length === 0 ? <span className="text-[11px] text-muted-foreground">None</span> : activeHolds.map((hold) => (
+                          <Badge key={hold.id} variant="warning" className="px-2 py-0.5 text-[11px]" title={hold.effects.map((effect) => holdEffectLabels[effect]).join(", ")}>{hold.type}</Badge>
                         ))}
                       </div>
                     </TableCell>
-                    <TableCell className="text-right">{pending ? <Badge variant="outline">{pending} pending</Badge> : <span className="text-xs text-muted-foreground">—</span>}</TableCell>
+                    <TableCell className="text-right">{pending ? <Badge variant="outline" className="px-2 py-0.5 text-[11px]">{pending} pending</Badge> : <span className="text-[11px] text-muted-foreground">—</span>}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

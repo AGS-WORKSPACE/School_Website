@@ -138,7 +138,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <div className="flex flex-1">
         <aside
           className={cn(
-            "sticky top-0 hidden h-dvh shrink-0 flex-col bg-navy text-white shadow-[8px_0_30px_rgba(4,20,40,0.05)] transition-[width] duration-200 lg:flex",
+            "sticky top-0 z-40 hidden h-dvh shrink-0 flex-col bg-navy text-white shadow-[8px_0_30px_rgba(4,20,40,0.05)] transition-[width] duration-200 lg:flex",
             collapsed ? "w-[4.875rem]" : "w-[17rem]",
           )}
         >
@@ -190,11 +190,10 @@ export function AppShell({ children }: { children: ReactNode }) {
           <button
             type="button"
             onClick={() => setCollapsed((value) => !value)}
-            className={cn(
-              "absolute top-[5.55rem] grid size-8 place-items-center rounded-lg border border-white/15 bg-white/[0.07] text-[#c8d5e5] transition-colors hover:bg-white/[0.13] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-light",
-              collapsed ? "right-[1.45rem]" : "right-3",
-            )}
+            className="absolute top-[3.875rem] -right-4 z-50 grid size-8 place-items-center rounded-full border border-white/20 bg-navy text-[#c8d5e5] shadow-md transition-colors hover:bg-primary hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-light focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
             aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            aria-expanded={!collapsed}
+            title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
             {collapsed ? <ChevronRight className="size-4" /> : <ChevronLeft className="size-4" />}
           </button>

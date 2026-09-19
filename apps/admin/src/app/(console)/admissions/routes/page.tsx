@@ -3,6 +3,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useAdmissions, AdmissionRouteConfig } from '@tau/admissions';
+import { Button } from '@tau/ui/button';
+import { Card } from '@tau/ui/card';
+import { PageHeader } from '@/components/console/page-header';
 
 export default function AdmissionRoutesConfigPage() {
   const { routes, mutations } = useAdmissions();
@@ -41,32 +44,16 @@ export default function AdmissionRoutesConfigPage() {
   };
 
   return (
-    <div className="space-y-8 p-8">
-      {/* Header */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <div className="flex items-center gap-2">
-            <Link
-              href="/admissions"
-              className="text-sm font-medium text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-            >
-              ← Admissions Overview
-            </Link>
-          </div>
-          <h1 className="mt-2 text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-            Admission Routes & Requirements
-          </h1>
-          <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-            ADM-02: Configurable route requirements, fees, document checklists, and referee rules without code deployments.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <span className="inline-flex items-center rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-semibold text-indigo-700 dark:text-indigo-400">
-            Active Cycle: 2026/2027
-          </span>
-        </div>
-      </div>
+    <div className="space-y-6">
+      <Link href="/admissions" className="inline-flex text-xs font-medium text-muted-foreground hover:text-primary">
+        ← Admissions Overview
+      </Link>
+      <PageHeader
+        eyebrow="ADM-02 · Admissions configuration"
+        title="Admission Routes & Requirements"
+        description="Configurable route requirements, fees, document checklists, and referee rules without code deployments."
+        actions={<span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">Active Cycle: 2026/2027</span>}
+      />
 
       {saveSuccess && (
         <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm text-emerald-800 dark:text-emerald-200">
@@ -77,14 +64,14 @@ export default function AdmissionRoutesConfigPage() {
       {/* Routes Grid */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {routes.map((route) => (
-          <div
+          <Card
             key={route.id}
-            className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-slate-800 dark:bg-slate-900"
+            className="flex flex-col justify-between p-5 transition-shadow hover:shadow-card-hover"
           >
             <div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="rounded bg-slate-100 px-2 py-0.5 font-mono text-xs font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                  <span className="rounded bg-slate-100 px-2 py-0.5 text-[10px] font-semibold leading-4 tracking-tight text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                     {route.code}
                   </span>
                   <span
@@ -97,16 +84,13 @@ export default function AdmissionRoutesConfigPage() {
                     {route.active ? 'Active' : 'Disabled'}
                   </span>
                 </div>
-                <button
-                  onClick={() => startEdit(route)}
-                  className="rounded-lg border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
-                >
+                <Button type="button" variant="outline" size="sm" onClick={() => startEdit(route)}>
                   Configure
-                </button>
+                </Button>
               </div>
 
-              <h3 className="mt-3 text-lg font-bold text-slate-900 dark:text-white">{route.name}</h3>
-              <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{route.description}</p>
+              <h3 className="mt-3 font-display text-base font-bold leading-snug text-foreground">{route.name}</h3>
+              <p className="mt-1 text-[13px] leading-relaxed text-muted-foreground">{route.description}</p>
 
               {/* Fee & Referees */}
               <div className="mt-4 grid grid-cols-2 gap-3 rounded-lg bg-slate-50 p-3 text-xs dark:bg-slate-800/50">
@@ -150,7 +134,7 @@ export default function AdmissionRoutesConfigPage() {
             <div className="mt-6 border-t border-slate-100 pt-3 text-[11px] text-slate-400 dark:border-slate-800">
               Target Level: {route.targetLevel}L · JAMB Required: {route.requiresJambRegNumber ? 'Yes' : 'No'}
             </div>
-          </div>
+          </Card>
         ))}
       </div>
 
@@ -165,12 +149,15 @@ export default function AdmissionRoutesConfigPage() {
                 </span>
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white">Edit {editingRoute.name}</h3>
               </div>
-              <button
+              <Button
+                type="button"
+                variant="ghost"
+                size="iconSm"
                 onClick={() => setEditingRoute(null)}
-                className="text-slate-400 hover:text-slate-600 dark:hover:text-white"
+                aria-label="Close route editor"
               >
                 ✕
-              </button>
+              </Button>
             </div>
 
             <form onSubmit={handleSave} className="mt-5 space-y-4 text-sm">
@@ -230,19 +217,16 @@ export default function AdmissionRoutesConfigPage() {
               </div>
 
               <div className="flex justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
-                <button
+                <Button
                   type="button"
+                  variant="outline"
                   onClick={() => setEditingRoute(null)}
-                  className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
                 >
                   Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
-                >
+                </Button>
+                <Button type="submit">
                   Save Changes
-                </button>
+                </Button>
               </div>
             </form>
           </div>

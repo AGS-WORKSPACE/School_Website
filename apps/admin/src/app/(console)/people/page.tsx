@@ -117,17 +117,28 @@ export default function PeoplePage() {
                       <p className="text-muted-foreground/80 text-xs">{row.unitLabel}</p>
                     </TableCell>
                     <TableCell>
-                      <div className="flex flex-wrap gap-1">
-                        {row.person.affiliations.map((affiliation) => (
+                      <div
+                        className="flex max-w-56 items-center gap-1"
+                        role="group"
+                        aria-label={`Relationships: ${row.person.affiliations.map((affiliation) => affiliation.type).join(", ")}`}
+                        title={row.person.affiliations.map((affiliation) => affiliation.type).join(", ")}
+                      >
+                        {row.person.affiliations.slice(0, 2).map((affiliation) => (
                           <Badge
                             key={affiliation.id}
                             variant={affiliation.status === "active" ? "outline" : "muted"}
-                            className="capitalize"
+                            className="min-w-0 max-w-24 shrink truncate capitalize"
                             title={`${affiliation.reference} · ${affiliation.status}`}
+                            aria-hidden="true"
                           >
                             {affiliation.type}
                           </Badge>
                         ))}
+                        {row.person.affiliations.length > 2 ? (
+                          <Badge variant="muted" className="shrink-0" aria-hidden="true">
+                            +{row.person.affiliations.length - 2}
+                          </Badge>
+                        ) : null}
                       </div>
                     </TableCell>
                     <TableCell>

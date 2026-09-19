@@ -13,7 +13,6 @@ import {
   UserPlus,
   Users,
 } from "lucide-react";
-import { Badge } from "@tau/ui/badge";
 import { Button } from "@tau/ui/button";
 import { Progress } from "@tau/ui/progress";
 import { PageHeader } from "@/components/console/page-header";
@@ -155,15 +154,15 @@ export default function AdmissionsOverviewPage() {
               {routeCounts.map((r) => {
                 const pct = totalApplications > 0 ? Math.round((r.count / totalApplications) * 100) : 0;
                 return (
-                  <div key={r.id} className="py-3.5 first:pt-0 last:pb-0 space-y-2">
-                    <div className="flex items-center justify-between text-xs">
-                      <div className="flex items-center gap-2">
-                        <span className="font-bold text-foreground">{r.name}</span>
-                        <Badge variant="outline" className="text-[0.65rem] font-mono">
+                  <div key={r.id} className="space-y-2 py-3 first:pt-0 last:pb-0">
+                    <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+                      <div className="min-w-0">
+                        <p className="text-xs font-semibold leading-snug text-foreground">{r.name}</p>
+                        <p className="mt-0.5 text-[10px] leading-tight tracking-tight text-muted-foreground">
                           {r.code}
-                        </Badge>
+                        </p>
                       </div>
-                      <span className="font-semibold text-muted-foreground">
+                      <span className="shrink-0 text-[11px] font-medium tabular text-muted-foreground">
                         {r.count} applicant{r.count !== 1 ? "s" : ""} ({pct}%)
                       </span>
                     </div>

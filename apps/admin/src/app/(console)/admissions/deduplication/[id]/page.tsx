@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAdmissions, canAutoMerge, DiscrepancyStatus } from '@tau/admissions';
 import { useActor } from '@/providers/session-provider';
+import { PageHeader } from '@/components/console/page-header';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -78,29 +79,15 @@ export default function DeduplicationCasePage({ params }: Props) {
   };
 
   return (
-    <div className="space-y-8 p-8">
-      {/* Header */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <div className="flex items-center gap-2">
-            <Link
-              href="/admissions/deduplication"
-              className="text-sm font-medium text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-            >
-              ← Deduplication Workbench
-            </Link>
-            <span className="text-slate-300 dark:text-slate-600">/</span>
-            <span className="text-sm font-semibold text-slate-800 dark:text-slate-200">{dCase.id}</span>
-          </div>
-          <h1 className="mt-2 text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-            Identity Discrepancy Adjudication
-          </h1>
-          <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-            Side-by-side comparison of suspected duplicate applicants. Policy strictly forbids automatic merging on name alone.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-3">
+    <div className="space-y-6">
+      <Link href="/admissions/deduplication" className="inline-flex text-xs font-medium text-muted-foreground hover:text-primary">
+        ← Deduplication Workbench
+      </Link>
+      <PageHeader
+        eyebrow={`ADM-06 · ${dCase.id}`}
+        title="Identity Discrepancy Adjudication"
+        description="Side-by-side comparison of suspected duplicate applicants. Policy strictly forbids automatic merging on name alone."
+        actions={<div className="flex flex-wrap items-center gap-3">
           <span
             className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${
               dCase.status !== 'Open_Under_Review'
@@ -113,8 +100,8 @@ export default function DeduplicationCasePage({ params }: Props) {
           <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
             Composite Score: <strong className="text-slate-800 dark:text-slate-200">{dCase.compositeScore}%</strong>
           </span>
-        </div>
-      </div>
+        </div>}
+      />
 
       {/* Safety Invariant Notice */}
       <div className="rounded-xl border border-blue-500/30 bg-blue-500/10 p-5 text-blue-900 dark:text-blue-200">

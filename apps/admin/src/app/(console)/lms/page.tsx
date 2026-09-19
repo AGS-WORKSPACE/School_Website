@@ -69,7 +69,15 @@ export default function LmsOverviewPage() {
       <Section title="Course shells" description="Roster, outcome coverage, content checks and coursework rules for each offering.">
         {lms.offerings.length === 0 ? <EmptyState message="No course shells yet." /> : (
           <div className="overflow-x-auto">
-            <Table>
+            <Table className="min-w-[72rem] table-fixed text-xs">
+              <colgroup>
+                <col style={{ width: "40%" }} />
+                <col style={{ width: "9%" }} />
+                <col style={{ width: "8%" }} />
+                <col style={{ width: "15%" }} />
+                <col style={{ width: "12%" }} />
+                <col style={{ width: "16%" }} />
+              </colgroup>
               <TableHeader>
                 <TableRow>
                   <TableHead>Course</TableHead>
@@ -96,10 +104,10 @@ export default function LmsOverviewPage() {
                       <TableCell><Badge variant="outline">{humanise(offering.deliveryMode)}</Badge></TableCell>
                       <TableCell className="text-sm">{activeRoster(lms.enrolments, offering.id).length} active{pending > 0 && <div className="text-xs font-medium text-accent-foreground">{pending} SIS change(s) waiting</div>}</TableCell>
                       <TableCell className="text-sm">{coverage.filter((row) => row.covered).length} of {coverage.length}</TableCell>
-                      <TableCell>{report.passes ? <Badge variant="success">Meets checks</Badge> : <Badge variant="warning">{report.accessibilityIssueCount + report.lowBandwidthIssueCount} issue(s)</Badge>}</TableCell>
+                      <TableCell>{report.passes ? <Badge variant="success" className="whitespace-nowrap px-2 py-0.5 text-[11px]">Meets checks</Badge> : <Badge variant="warning" className="whitespace-nowrap px-2 py-0.5 text-[11px]">{report.accessibilityIssueCount + report.lowBandwidthIssueCount} content issues</Badge>}</TableCell>
                       <TableCell className="text-xs">
-                        {weights.allowed ? <Badge variant="success">Weights match scheme</Badge> : <Badge variant="destructive">Weights off scheme</Badge>}
-                        <div className="mt-1 text-muted-foreground">{latest ? `Passback v${latest.version}, ${formatDateTime(latest.submittedAt)}` : "Not yet passed back"}</div>
+                        {weights.allowed ? <Badge variant="success" className="whitespace-nowrap px-2 py-0.5 text-[11px]">Weights match scheme</Badge> : <Badge variant="destructive" className="whitespace-nowrap px-2 py-0.5 text-[11px]">Weights off scheme</Badge>}
+                        <div className="mt-1 text-[11px] leading-snug text-muted-foreground">{latest ? `Passback v${latest.version}, ${formatDateTime(latest.submittedAt)}` : "Not yet passed back"}</div>
                       </TableCell>
                     </TableRow>
                   );
