@@ -220,6 +220,17 @@ export const navigation: NavGroup[] = [
     ],
   },
   {
+    label: "Finance",
+    items: [
+      {
+        href: "/finance",
+        label: "Financial control",
+        description: "Reconciliation, journals, refunds, reporting, ERP export and period close.",
+        icon: Receipt,
+      },
+    ],
+  },
+  {
     label: "Learning",
     items: [
       {
