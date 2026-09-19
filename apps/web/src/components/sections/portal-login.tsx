@@ -9,6 +9,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@tau/ui/tabs";
 import { Input } from "@tau/ui/input";
 import { Label } from "@tau/ui/label";
 import { cn } from "@/lib/utils";
+import { StudentResultView } from "@/components/sections/student-result-view";
 
 interface StatItem {
   readonly label: string;
@@ -66,7 +67,8 @@ export function PortalLogin({ variant, identifierLabel, identifierPlaceholder, s
   };
 
   return (
-    <div className="mx-auto grid w-full max-w-5xl gap-8 lg:grid-cols-5">
+    <div className="mx-auto w-full max-w-5xl">
+      <div className="grid gap-8 lg:grid-cols-5">
       <Card className="lg:col-span-2">
         <CardContent className="p-8">
           <span className="flex size-12 items-center justify-center rounded-xl bg-medical/10 text-medical">
@@ -212,6 +214,8 @@ export function PortalLogin({ variant, identifierLabel, identifierPlaceholder, s
           </div>
         </CardContent>
       </Card>
+      </div>
+      {signedIn && variant === "student" ? <StudentResultView studentId={identifier} /> : null}
     </div>
   );
 }
