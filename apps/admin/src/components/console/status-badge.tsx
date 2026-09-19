@@ -45,9 +45,27 @@ const statusStyles: Record<string, { variant: Variant; label?: string }> = {
   dropped: { variant: "muted" },
   draft: { variant: "outline" },
   final: { variant: "success" },
-  pending: { variant: "warning", label: "Awaiting moderation" },
+  pending: { variant: "warning" },
   visible: { variant: "success" },
   hidden: { variant: "muted" },
+  // Graduation and credentials (EP-18)
+  cleared: { variant: "success" },
+  "in-progress": { variant: "warning", label: "In progress" },
+  "not-applicable": { variant: "muted", label: "Not applicable" },
+  "awaiting-payment": { variant: "warning", label: "Awaiting payment" },
+  paid: { variant: "outline" },
+  prepared: { variant: "outline" },
+  issued: { variant: "success" },
+  dispatched: { variant: "outline" },
+  delivered: { variant: "success" },
+  returned: { variant: "destructive" },
+  blank: { variant: "muted" },
+  printed: { variant: "outline" },
+  void: { variant: "muted" },
+  valid: { variant: "success" },
+  "not-found": { variant: "destructive", label: "Not found" },
+  "invalid-link": { variant: "destructive", label: "Invalid link" },
+  "rate-limited": { variant: "warning", label: "Rate limited" },
 };
 
 function humanise(status: string): string {

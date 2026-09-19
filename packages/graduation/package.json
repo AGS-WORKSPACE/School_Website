@@ -1,0 +1,32 @@
+{
+  "name": "@tau/graduation",
+  "version": "0.1.0",
+  "private": true,
+  "description": "EP-18 clearance, graduation, transcripts and credentials: graduation audit, multi-unit clearance, Senate graduand lists, transcripts, certificate custody and credential verification.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./domain": "./src/domain/index.ts",
+    "./policy": "./src/policy/index.ts",
+    "./mock": "./src/mock/index.ts",
+    "./react": "./src/react/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test \"src/**/*.test.ts\""
+  },
+  "dependencies": {
+    "@tau/curriculum": "*",
+    "@tau/identity": "*",
+    "@tau/students": "*"
+  },
+  "peerDependencies": {
+    "react": "^19"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "tsx": "^4.20.6",
+    "typescript": "^5"
+  }
+}
