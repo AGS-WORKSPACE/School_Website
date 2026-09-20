@@ -18,6 +18,8 @@
     "@tau/graduation": "*",
     "@tau/identity": "*",
     "@tau/lms": "*",
+    "@tau/odl": "*",
+    "@tau/registration": "*",
     "@tau/scheduling": "*",
     "@tau/students": "*",
     "@tau/ui": "*",

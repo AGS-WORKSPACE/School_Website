@@ -107,6 +107,12 @@ export function PortalLogin({ variant, identifierLabel, identifierPlaceholder, s
                         Degree Audit
                       </Link>
                     </Button>
+                    <Button asChild variant="outline" className="w-full">
+                      <Link href="/student-portal/readiness">
+                        <ShieldCheck aria-hidden="true" />
+                        Readiness Check
+                      </Link>
+                    </Button>
                   </>
                 ) : null}
                 <Button variant="outline" className="w-full" onClick={signOut}>

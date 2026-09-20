@@ -11,6 +11,7 @@
 @source "../../../../packages/lms/src";
 @source "../../../../packages/graduation/src";
 @source "../../../../packages/registration/src";
+@source "../../../../packages/odl/src";
 
 @layer utilities {
   /* Dense tabular readouts: audit entries, permission matrices, grant lists. */
