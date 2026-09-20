@@ -13,7 +13,7 @@ import Link from "next/link";
 export const metadata: Metadata = generatePageMetadata({
   title: "Research Centres & Institutes",
   description:
-    "TAU's research centres and institutes — dedicated hubs advancing neglected tropical diseases, cardiovascular health, nutrition, and more.",
+    "NAU's research centres and institutes — dedicated hubs advancing neglected tropical diseases, cardiovascular health, nutrition, and more.",
   path: "/research/centres",
 });
 

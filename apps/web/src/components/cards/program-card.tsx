@@ -45,7 +45,7 @@ export function ProgramCard({ program }: { program: Program }) {
             {program.title}
           </Link>
         </h3>
-        <p className="mt-2 text-xs font-semibold text-medical">{faculty?.name ?? "Transatlantic University"}</p>
+        <p className="mt-2 text-xs font-semibold text-medical">{faculty?.name ?? "Nnamdi Azikiwe University"}</p>
         <p className="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-muted-foreground">
           {program.description}
         </p>

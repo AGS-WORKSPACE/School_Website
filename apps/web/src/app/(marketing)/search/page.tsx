@@ -6,7 +6,7 @@ import { SearchPageClient } from "@/components/sections/search-page-client";
 export const metadata: Metadata = generatePageMetadata({
   title: "Search",
   description:
-    "Search programmes, faculties, departments, news, events, and pages across Transatlantic University.",
+    "Search programmes, faculties, departments, news, events, and pages across Nnamdi Azikiwe University.",
   path: "/search",
 });
 
@@ -15,9 +15,9 @@ export default function SearchPage() {
     <>
       <PageHero
         image="/images/placeholders/campus-library.jpg"
-        eyebrow="Search TAU"
+        eyebrow="Search NAU"
         title="Search the University"
-        description="Find programmes, faculties, news, events, and pages across Transatlantic University in one place."
+        description="Find programmes, faculties, news, events, and pages across Nnamdi Azikiwe University in one place."
         crumbs={[{ label: "Search" }]}
       />
       <SearchPageClient />

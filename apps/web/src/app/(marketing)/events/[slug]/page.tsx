@@ -147,7 +147,7 @@ export default async function EventDetailPage({ params }: Props) {
                 <p className="mt-3 text-sm leading-relaxed text-white/75">
                   {hasEnded
                     ? "This event has ended. Contact the events office if you need information about future events."
-                    : "Registration is free for TAU students, staff, and faculty. Seats for public events are limited and allocated in order of registration."}
+                    : "Registration is free for NAU students, staff, and faculty. Seats for public events are limited and allocated in order of registration."}
                 </p>
                 {!hasEnded ? (
                   <Button asChild size="lg" variant="accent" className="mt-6 w-full">
@@ -155,7 +155,7 @@ export default async function EventDetailPage({ params }: Props) {
                   </Button>
                 ) : null}
                 <p className="mt-4 text-xs text-white/60">
-                  Have questions? Contact the events office at events@tau.edu.ng
+                  Have questions? Contact the events office at registrar@unizik.edu.ng
                 </p>
               </div>
 

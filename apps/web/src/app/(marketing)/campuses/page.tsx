@@ -9,7 +9,7 @@ import { campuses } from "@/data/campuses";
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Campuses",
-  description: "Explore Transatlantic University's campuses, locations, facilities, and visitor information.",
+  description: "Explore Nnamdi Azikiwe University's campuses, locations, facilities, and visitor information.",
   path: "/campuses",
 });
 
@@ -20,7 +20,7 @@ export default function CampusesPage() {
         image="/images/placeholders/hero-campus.jpg"
         eyebrow="Our Campuses"
         title="Places Built for Learning and Living"
-        description="Explore the locations where TAU students learn, research, connect, and grow."
+        description="Explore the locations where NAU students learn, research, connect, and grow."
         crumbs={[{ label: "Campuses" }]}
       />
 
@@ -28,7 +28,7 @@ export default function CampusesPage() {
         <Container>
           <SectionHeader
             eyebrow="Campus Directory"
-            title="Find Your Place at TAU"
+            title="Find Your Place at NAU"
             description="Each campus profile includes location, facilities, accessibility information, and visitor contacts."
           />
           {campuses.length > 0 ? (
@@ -45,8 +45,8 @@ export default function CampusesPage() {
       </Section>
 
       <CTASection
-        title="Plan a Visit to TAU"
-        description="Our team can help arrange a campus tour and answer questions about visiting Umuchukwu."
+        title="Plan a Visit to NAU"
+        description="Our team can help arrange a campus tour and answer questions about visiting Awka."
         primary={{ label: "Contact Us", href: "/contact" }}
         secondary={{ label: "Apply Now", href: "/admissions/apply" }}
       />

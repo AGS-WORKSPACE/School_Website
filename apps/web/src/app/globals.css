@@ -55,8 +55,8 @@
 
   .bg-grid-dark {
     background-image:
-      linear-gradient(to right, rgb(11 31 58 / 0.04) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(11 31 58 / 0.04) 1px, transparent 1px);
+      linear-gradient(to right, rgb(4 4 85 / 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(4 4 85 / 0.04) 1px, transparent 1px);
     background-size: 44px 44px;
   }
 

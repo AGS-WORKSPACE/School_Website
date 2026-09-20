@@ -16,7 +16,7 @@ import { formatDate } from "@/lib/utils";
 export const metadata: Metadata = generatePageMetadata({
   title: "News & Updates",
   description:
-    "Stories, milestones, and updates from Transatlantic University of Medicine and Health Sciences.",
+    "Stories, milestones, and updates from Nnamdi Azikiwe University.",
   path: "/news",
 });
 
@@ -35,8 +35,8 @@ export default async function NewsPage({ searchParams }: Props) {
     <>
       <PageHero image="/images/placeholders/news-1.jpg"
         eyebrow="News & Updates"
-        title="The TAU Chronicle"
-        description="Milestones, research breakthroughs, and the people making TAU extraordinary."
+        title="The NAU Chronicle"
+        description="Milestones, research breakthroughs, and the people making NAU extraordinary."
         crumbs={[{ label: "News" }]}
       />
 

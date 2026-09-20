@@ -13,7 +13,7 @@ import Link from "next/link";
 export const metadata: Metadata = generatePageMetadata({
   title: "Innovation & Partnerships",
   description:
-    "Translate TAU research into real-world impact — devices, diagnostics, startups, and clinical partnerships.",
+    "Translate NAU research into real-world impact — devices, diagnostics, startups, and clinical partnerships.",
   path: "/research/innovation",
 });
 
@@ -29,7 +29,7 @@ export default function InnovationPage() {
       <PageHero image="/images/placeholders/innovation-center.jpg"
         eyebrow="Innovation & Partnerships"
         title="From Lab to Life"
-        description="We don't just publish — we translate. TAU innovations are changing practice in clinics and communities."
+        description="We don't just publish — we translate. NAU innovations are changing practice in clinics and communities."
         crumbs={[{ label: "Research", href: "/research" }, { label: "Innovation Partnerships" }]}
       />
 
@@ -38,7 +38,7 @@ export default function InnovationPage() {
           <SectionHeader
             eyebrow="Innovation Stories"
             title="Ideas Making Impact"
-            description="Flagship innovations born from TAU research and now moving toward the real world."
+            description="Flagship innovations born from NAU research and now moving toward the real world."
           />
           <StaggerContainer className="grid gap-6 md:grid-cols-3">
             {stories.map(({ Icon, title, description, status }) => (
@@ -64,13 +64,13 @@ export default function InnovationPage() {
           <SectionHeader
             eyebrow="How We Partner"
             title="Collaboration Models"
-            description="Flexible pathways for industry, government, and academia to work with TAU."
+            description="Flexible pathways for industry, government, and academia to work with NAU."
           />
           <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { Icon: Building2, title: "Sponsored Research", description: "Commission targeted research on your most pressing questions with dedicated TAU teams." },
-              { Icon: Handshake, title: "Technology Licensing", description: "License TAU-owned IP — from screening libraries to medical devices — for commercial development." },
-              { Icon: Rocket, title: "Startup Incubation", description: "Spin out TAU research through the Innovation Hub's incubation and accelerator programmes." },
+              { Icon: Building2, title: "Sponsored Research", description: "Commission targeted research on your most pressing questions with dedicated NAU teams." },
+              { Icon: Handshake, title: "Technology Licensing", description: "License NAU-owned IP — from screening libraries to medical devices — for commercial development." },
+              { Icon: Rocket, title: "Startup Incubation", description: "Spin out NAU research through the Innovation Hub's incubation and accelerator programmes." },
             ].map(({ Icon, title, description }) => (
               <StaggerItem key={title}>
                 <Card className="h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-navy/10">

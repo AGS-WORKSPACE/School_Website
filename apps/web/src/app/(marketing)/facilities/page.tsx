@@ -9,7 +9,7 @@ import { campusFacilities } from "@/data/campus";
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Facilities",
-  description: "Explore TAU facilities for learning, research, residence, recreation, and student wellbeing.",
+  description: "Explore NAU facilities for learning, research, residence, recreation, and student wellbeing.",
   path: "/facilities",
 });
 
@@ -25,7 +25,7 @@ export default function FacilitiesPage() {
       />
       <Section>
         <Container>
-          <SectionHeader eyebrow="Facility Directory" title="Explore TAU Facilities" description="Browse facilities by purpose and open each profile for access and accessibility information." />
+          <SectionHeader eyebrow="Facility Directory" title="Explore NAU Facilities" description="Browse facilities by purpose and open each profile for access and accessibility information." />
           {campusFacilities.length > 0 ? (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {campusFacilities.map((facility) => <FacilityCard key={facility.id} facility={facility} />)}

@@ -11,7 +11,7 @@ import { ClipboardCheck, FileCheck2, ScrollText, ShieldCheck, UsersRound } from 
 export const metadata: Metadata = generatePageMetadata({
   title: "Research Ethics Board",
   description:
-    "Independent ethical oversight for all human and animal research at Transatlantic University.",
+    "Independent ethical oversight for all human and animal research at Nnamdi Azikiwe University.",
   path: "/research/ethics",
 });
 
@@ -29,7 +29,7 @@ export default function EthicsPage() {
       <PageHero image="/images/placeholders/research-lab.jpg"
         eyebrow="Research Governance"
         title="Research Ethics Board"
-        description="Independent, rigorous, and human-centred oversight for every research project at TAU."
+        description="Independent, rigorous, and human-centred oversight for every research project at NAU."
         crumbs={[{ label: "Research", href: "/research" }, { label: "Research Ethics Board" }]}
       />
 
@@ -102,7 +102,7 @@ export default function EthicsPage() {
                     <span className="font-semibold">NHREC-registered</span>
                   </div>
                 </div>
-                <p className="mt-6 text-sm text-white/75">Questions? Contact the ethics secretariat at ethics@tau.edu.ng</p>
+                <p className="mt-6 text-sm text-white/75">Questions? Contact the ethics secretariat at registrar@unizik.edu.ng</p>
               </div>
             </Reveal>
           </div>

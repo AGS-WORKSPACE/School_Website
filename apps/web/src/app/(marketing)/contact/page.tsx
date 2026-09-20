@@ -13,7 +13,7 @@ import { publishedPrograms } from "@/data/programs";
 export const metadata: Metadata = generatePageMetadata({
   title: "Contact Us",
   description:
-    "Get in touch with Transatlantic University — admissions, research, careers, and general enquiries.",
+    "Get in touch with Nnamdi Azikiwe University — admissions, research, careers, and general enquiries.",
   path: "/contact",
 });
 
@@ -26,7 +26,7 @@ const offices = [
   },
   {
     title: "Research Office",
-    email: "research@tau.edu.ng",
+    email: "registrar@unizik.edu.ng",
     phone: siteConfig.contact.phoneAlt,
     hours: "Mon – Fri, 9:00 AM – 4:00 PM",
   },

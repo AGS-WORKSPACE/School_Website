@@ -15,17 +15,17 @@ export function Welcome() {
             <div className="relative">
               <PlaceholderImage
                 src="/images/placeholders/faculty-medicine.jpg"
-                alt="The Transatlantic University of Medicine and Health Sciences"
+                alt="The Nnamdi Azikiwe University"
                 aspect="video"
                 className="shadow-2xl shadow-navy/20"
               />
               <div className="absolute -bottom-6 -right-4 hidden rounded-2xl border border-border bg-card p-5 shadow-xl sm:block lg:-right-8">
-                <p className="font-display text-3xl font-extrabold text-medical">2015</p>
-                <p className="text-xs font-semibold text-muted-foreground">Founded in Umuchukwu</p>
+                <p className="font-display text-3xl font-extrabold text-medical">Awka</p>
+                <p className="text-xs font-semibold text-muted-foreground">Anambra State</p>
               </div>
               <div className="absolute -top-5 -left-4 hidden rounded-2xl bg-navy p-4 text-white shadow-xl lg:block">
-                <p className="font-display text-2xl font-extrabold text-gold">8000+</p>
-                <p className="text-xs font-semibold text-white/70">Students & Counting</p>
+                <p className="font-display text-2xl font-extrabold text-gold">49,000+</p>
+                <p className="text-xs font-semibold text-white/70">Students</p>
               </div>
             </div>
           </Reveal>
@@ -33,9 +33,9 @@ export function Welcome() {
           <div className="order-1 lg:order-2">
             <SectionHeader
               align="left"
-              eyebrow="Welcome to TAU"
-              title="A World-Class Medical University Rooted in Nigeria"
-              description="Founded by Dr. Godwin Maduka, Transatlantic University combines rigorous academics, modern simulation, global partnerships, and compassionate care to prepare the health leaders of tomorrow."
+              eyebrow="Welcome to NAU"
+              title="A University for Learning and Discovery"
+              description="Nnamdi Azikiwe University brings together students, educators and researchers in Awka, Anambra State."
               className="mb-8"
             />
 

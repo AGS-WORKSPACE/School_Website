@@ -13,7 +13,7 @@ import { CalendarCheck2, FileSearch, FlaskConical, Languages, ShieldCheck, Timer
 export const metadata: Metadata = generatePageMetadata({
   title: "AI Assistant",
   description:
-    "Meet the TAU Virtual Assistant — 24/7 answers on admissions, programmes, tuition, campus life, and research.",
+    "Meet the NAU Virtual Assistant — 24/7 answers on admissions, programmes, tuition, campus life, and research.",
   path: "/ai-assistant",
 });
 
@@ -33,7 +33,7 @@ export default function AiAssistantPage() {
         image="/images/placeholders/innovation-center.jpg"
         eyebrow="AI Assistant"
         title="Your Questions, Answered Instantly"
-        description="Ask anything about TAU — from admissions deadlines to research funding — and get a clear answer, day or night."
+        description="Ask anything about NAU — from admissions deadlines to research funding — and get a clear answer, day or night."
         crumbs={[{ label: "AI Assistant" }]}
       >
         <div className="flex flex-wrap gap-3">
@@ -47,7 +47,7 @@ export default function AiAssistantPage() {
         <Container>
           <SectionHeader
             eyebrow="Try It Below"
-            title="Ask the TAU Virtual Assistant"
+            title="Ask the NAU Virtual Assistant"
             description="Type a question or tap a suggested prompt to begin a conversation."
           />
           <AiAssistantChat />
@@ -58,7 +58,7 @@ export default function AiAssistantPage() {
         <Container>
           <SectionHeader
             eyebrow="What It Can Do"
-            title="A Smarter Way to Explore TAU"
+            title="A Smarter Way to Explore NAU"
             description="The assistant is trained on official university information so every answer is accurate and up to date."
           />
           <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -110,7 +110,7 @@ export default function AiAssistantPage() {
               <div className="rounded-3xl bg-gradient-to-br from-navy to-medical p-8 text-white sm:p-10">
                 <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-light">Privacy First</span>
                 <p className="mt-4 text-balance font-display text-2xl font-extrabold leading-snug">
-                  &ldquo;Ask freely. Your questions stay between you and TAU.&rdquo;
+                  &ldquo;Ask freely. Your questions stay between you and NAU.&rdquo;
                 </p>
                 <p className="mt-4 text-sm leading-relaxed text-white/75">
                   Conversations are never used for advertising, never sold, and are kept only to improve the accuracy of
@@ -124,7 +124,7 @@ export default function AiAssistantPage() {
 
       <CTASection
         title="Still Have a Question?"
-        description="Speak directly with the admissions team about your application, your programme, or your future at TAU."
+        description="Speak directly with the admissions team about your application, your programme, or your future at NAU."
         primary={{ label: "Contact Admissions", href: "/contact" }}
         secondary={{ label: "Browse Programmes", href: "/undergraduate-programs" }}
       />

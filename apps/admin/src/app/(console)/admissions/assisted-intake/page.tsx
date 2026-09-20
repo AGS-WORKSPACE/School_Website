@@ -60,7 +60,7 @@ export default function AssistedIntakePage() {
     };
 
     const newAppId = `app-walkin-${Date.now()}`;
-    const newAppNumber = `TAU/${new Date().getFullYear()}/${routeCode}/${Math.floor(1000 + Math.random() * 9000)}`;
+    const newAppNumber = `NAU/${new Date().getFullYear()}/${routeCode}/${Math.floor(1000 + Math.random() * 9000)}`;
     const now = new Date().toISOString();
 
     const application: ApplicationCase = {
@@ -139,7 +139,7 @@ export default function AssistedIntakePage() {
         routeCode,
         amount: 15000,
         currency: "NGN",
-        invoiceReference: `TAU-APP-${new Date().getFullYear()}-${Math.floor(10000 + Math.random() * 90000)}`,
+        invoiceReference: `NAU-APP-${new Date().getFullYear()}-${Math.floor(10000 + Math.random() * 90000)}`,
         issuedAt: now,
         status: "Verified",
         paymentMethod: "Bank Draft / Physical POS (Desk Receipt)",

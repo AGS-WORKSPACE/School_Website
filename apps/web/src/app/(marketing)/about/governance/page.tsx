@@ -12,7 +12,7 @@ import { Users, Scale, BookOpen, ShieldCheck } from "lucide-react";
 export const metadata: Metadata = generatePageMetadata({
   title: "Governance & Policies",
   description:
-    "The governance structure, policies, and committees of Transatlantic University of Medicine and Health Sciences.",
+    "The governance structure, policies, and committees of Nnamdi Azikiwe University.",
   path: "/about/governance",
 });
 
@@ -30,7 +30,7 @@ export default function GovernancePage() {
         eyebrow="Governance"
         title="Transparent Governance, Clear Policies"
         description="The committees, structures, and policies that ensure accountability and academic integrity at every level of the University."
-        crumbs={[{ label: "About TAU", href: "/about" }, { label: "Governance & Policies" }]}
+        crumbs={[{ label: "About NAU", href: "/about" }, { label: "Governance & Policies" }]}
       />
 
       <Section>
@@ -100,8 +100,8 @@ export default function GovernancePage() {
               <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
                 Full copies of the University&apos;s statutes, ordinances, and regulations are available on request
                 from the Office of the Registrar. Please direct policy enquiries to{" "}
-                <a href="mailto:registrar@tau.edu.ng" className="font-semibold text-medical hover:underline">
-                  registrar@tau.edu.ng
+                <a href="mailto:registrar@unizik.edu.ng" className="font-semibold text-medical hover:underline">
+                  registrar@unizik.edu.ng
                 </a>
                 .
               </p>

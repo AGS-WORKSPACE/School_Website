@@ -11,7 +11,7 @@ import { siteConfig } from "@/constants/site";
 export const metadata: Metadata = generatePageMetadata({
   title: "Sustainability",
   description:
-    "Transatlantic University's commitment to environmental sustainability across its campus and operations.",
+    "Nnamdi Azikiwe University's commitment to environmental sustainability across its campus and operations.",
   path: "/about/sustainability",
 });
 
@@ -28,8 +28,8 @@ export default function SustainabilityPage() {
       <PageHero image="/images/placeholders/hero-campus.jpg"
         eyebrow="Sustainability"
         title="A Campus That Cares for Tomorrow"
-        description="From solar power to water stewardship, TAU is building sustainability into the way the University operates."
-        crumbs={[{ label: "About TAU", href: "/about" }, { label: "Sustainability" }]}
+        description="From solar power to water stewardship, NAU is building sustainability into the way the University operates."
+        crumbs={[{ label: "About NAU", href: "/about" }, { label: "Sustainability" }]}
       />
 
       <Section>
@@ -39,7 +39,7 @@ export default function SustainabilityPage() {
               <SectionHeader align="left" eyebrow="Our Charter" title="Sustainability at the Core" className="mb-4" />
               <div className="prose-brand text-sm leading-relaxed sm:text-base">
                 <p>
-                  The TAU Sustainability Charter commits the University to measurable reductions in energy use,
+                  The NAU Sustainability Charter commits the University to measurable reductions in energy use,
                   water consumption, and waste — while embedding environmental thinking in teaching, research,
                   and campus operations.
                 </p>

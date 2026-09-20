@@ -25,7 +25,7 @@ export function ProgramsSection() {
         <SectionHeader
           eyebrow="Programmes"
           title="Choose Your Path in the Health Sciences"
-          description="From your first degree to doctoral research and specialist residency — TAU supports your entire journey."
+          description="From your first degree to doctoral research and specialist residency — NAU supports your entire journey."
         />
 
         <Tabs

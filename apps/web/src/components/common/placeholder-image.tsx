@@ -5,7 +5,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 const KNOWN_LABELS: Record<string, string> = {
-  "hero-campus.jpg": "Transatlantic University Campus",
+  "hero-campus.jpg": "Nnamdi Azikiwe University Campus",
   "hero-students.jpg": "Students on Campus",
   "faculty-medicine.jpg": "Faculty of Medicine",
   "faculty-dentistry.jpg": "Faculty of Dentistry",
@@ -30,17 +30,17 @@ const KNOWN_LABELS: Record<string, string> = {
   "event-conference.jpg": "International Conference",
   "event-graduation.jpg": "Graduation Ceremony",
   "event-orientation.jpg": "Orientation Week",
-  "student-1.jpg": "TAU Student",
-  "student-2.jpg": "TAU Student",
-  "student-3.jpg": "TAU Student",
+  "student-1.jpg": "NAU Student",
+  "student-2.jpg": "NAU Student",
+  "student-3.jpg": "NAU Student",
   "clinical-trial.jpg": "Clinical Trial Research",
   "innovation-center.jpg": "Innovation Centre",
 };
 
 export function imageLabel(src: string | undefined) {
-  if (!src) return "Transatlantic University";
+  if (!src) return "Nnamdi Azikiwe University";
   const filename = src.split("/").pop() ?? "";
-  return KNOWN_LABELS[filename] ?? "Transatlantic University";
+  return KNOWN_LABELS[filename] ?? "Nnamdi Azikiwe University";
 }
 
 interface PlaceholderImageProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -104,11 +104,11 @@ export function PlaceholderImage({
           <div className="absolute -bottom-20 -left-16 size-56 rounded-full bg-gold/20 blur-3xl" />
           <div className="relative flex size-14 items-center justify-center rounded-2xl border border-white/15 bg-white/10 backdrop-blur-sm">
             {icon ?? (
-              <span className="font-display text-lg font-extrabold tracking-wider text-white">{initials || "TAU"}</span>
+              <span className="font-display text-lg font-extrabold tracking-wider text-white">{initials || "NAU"}</span>
             )}
           </div>
           <span className="relative font-display text-sm font-semibold text-white/90">{label}</span>
-          <span className="relative text-xs uppercase tracking-widest text-gold-light/90">Transatlantic University</span>
+          <span className="relative text-xs uppercase tracking-widest text-gold-light/90">Nnamdi Azikiwe University</span>
         </div>
       )}
     </div>

@@ -14,12 +14,12 @@ import { testimonials } from "@/data/events";
 export const metadata: Metadata = generatePageMetadata({
   title: "Alumni",
   description:
-    "The TAU alumni network — a lifelong community of healers, leaders, and innovators across the world.",
+    "The NAU alumni network — a lifelong community of healers, leaders, and innovators across the world.",
   path: "/alumni",
 });
 
 const services = [
-  { Icon: Network, title: "TAU Alumni Network", description: "A global directory and digital community connecting alumni across continents and cohorts." },
+  { Icon: Network, title: "NAU Alumni Network", description: "A global directory and digital community connecting alumni across continents and cohorts." },
   { Icon: Handshake, title: "Mentorship Programme", description: "Current students are matched with alumni mentors in clinical, academic, and industry careers." },
   { Icon: BookOpen, title: "Lifelong Learning", description: "Free access to select online courses, lectures, and journal resources for life." },
   { Icon: Megaphone, title: "Career Services", description: "Job boards, interview coaching, and alumni-exclusive opportunities from partner employers." },
@@ -33,8 +33,8 @@ export default function AlumniPage() {
     <>
       <PageHero image="/images/placeholders/hero-students.jpg"
         eyebrow="Alumni"
-        title="The TAU Family, Forever"
-        description="Our graduates are practising on every continent. Stay connected, give back, and grow with TAU."
+        title="The NAU Family, Forever"
+        description="Our graduates are practising on every continent. Stay connected, give back, and grow with NAU."
         crumbs={[{ label: "Alumni" }]}
       />
 
@@ -43,7 +43,7 @@ export default function AlumniPage() {
           <SectionHeader
             eyebrow="Why Stay Connected"
             title="Benefits of the Network"
-            description="Membership is automatic and lifelong — the moment you graduate, you become part of the TAU family."
+            description="Membership is automatic and lifelong — the moment you graduate, you become part of the NAU family."
           />
           <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {services.map(({ Icon, title, description }) => (
@@ -78,8 +78,8 @@ export default function AlumniPage() {
         <Container>
           <SectionHeader
             eyebrow="Alumni Stories"
-            title="Where TAU Graduates Are"
-            description="From Lagos to London, Houston to the Hague — hear from the people flying the TAU flag."
+            title="Where NAU Graduates Are"
+            description="From Lagos to London, Houston to the Hague — hear from the people flying the NAU flag."
           />
           <StaggerContainer className="grid gap-6 md:grid-cols-2">
             {alumniStories.map((testimonial) => (
@@ -105,7 +105,7 @@ export default function AlumniPage() {
       </Section>
 
       <CTASection
-        title="Give Back to TAU"
+        title="Give Back to NAU"
         description="Support scholarships, research, and the next generation of healers."
         primary={{ label: "Make a Gift", href: "/giving" }}
         secondary={{ label: "Upcoming Events", href: "/events" }}

@@ -10,7 +10,7 @@ export const events: UniversityEvent[] = [
     category: "Conference",
     date: "2026-10-15",
     time: "9:00 AM – 5:00 PM",
-    location: "TAU Main Auditorium, Umuchukwu",
+    location: "NAU Main Auditorium, Awka",
     image: "/images/placeholders/event-conference.jpg",
     capacity: "1,200 participants",
     price: "Free for students",
@@ -32,11 +32,11 @@ export const events: UniversityEvent[] = [
     slug: "matriculation-ceremony-2026",
     title: "Matriculation Ceremony — 2026 Intake",
     description:
-      "A formal ceremony welcoming the new class of students to the Transatlantic University community. Families are warmly invited to attend.",
+      "A formal ceremony welcoming the new class of students to the Nnamdi Azikiwe University community. Families are warmly invited to attend.",
     category: "Ceremony",
     date: "2026-09-05",
     time: "10:00 AM",
-    location: "TAU Convocation Grounds",
+    location: "NAU Convocation Grounds",
     image: "/images/placeholders/event-graduation.jpg",
     capacity: "Open to all new students",
   },
@@ -45,7 +45,7 @@ export const events: UniversityEvent[] = [
     slug: "orientation-week-2026",
     title: "Freshman Orientation Week",
     description:
-      "A week of campus tours, faculty meet-and-greets, library orientation, and club fairs to help new students find their home at TAU.",
+      "A week of campus tours, faculty meet-and-greets, library orientation, and club fairs to help new students find their home at NAU.",
     category: "Student Life",
     date: "2026-09-08",
     time: "All day",
@@ -82,7 +82,7 @@ export const events: UniversityEvent[] = [
     category: "Alumni",
     date: "2026-12-19",
     time: "Weekend programme",
-    location: "TAU Campus",
+    location: "NAU Campus",
     image: "/images/placeholders/event-graduation.jpg",
   },
   {
@@ -112,7 +112,7 @@ export const testimonials: Testimonial[] = [
     role: "Final Year Medical Student",
     type: "Student",
     quote:
-      "From the first week, we were in the simulation lab, not just the lecture hall. TAU teaches you to think like a doctor before you ever step into the wards.",
+      "From the first week, we were in the simulation lab, not just the lecture hall. NAU teaches you to think like a doctor before you ever step into the wards.",
     rating: 5,
   },
   {
@@ -121,7 +121,7 @@ export const testimonials: Testimonial[] = [
     role: "Dean, Faculty of Dentistry",
     type: "Faculty",
     quote:
-      "What makes TAU special is the conviction that Nigerian students deserve world-class facilities and internationally benchmarked curricula — and we deliver both.",
+      "What makes NAU special is the conviction that Nigerian students deserve world-class facilities and internationally benchmarked curricula — and we deliver both.",
     rating: 5,
   },
   {
@@ -130,7 +130,7 @@ export const testimonials: Testimonial[] = [
     role: "Parent of an MBBS Student",
     type: "Parent",
     quote:
-      "I chose TAU because of the transparent admissions process and the calibre of the teaching staff. Watching my daughter grow into a confident clinician has been remarkable.",
+      "I chose NAU because of the transparent admissions process and the calibre of the teaching staff. Watching my daughter grow into a confident clinician has been remarkable.",
     rating: 5,
   },
   {
@@ -139,7 +139,7 @@ export const testimonials: Testimonial[] = [
     role: "MBBS Class of 2020, Resident in Houston",
     type: "Alumni",
     quote:
-      "TAU prepared me not just for Nigerian practice but for the global stage. My clinical rotations and research mentorship gave me confidence anywhere in the world.",
+      "NAU prepared me not just for Nigerian practice but for the global stage. My clinical rotations and research mentorship gave me confidence anywhere in the world.",
     rating: 5,
   },
   {

@@ -15,7 +15,7 @@ export function TestimonialsSection() {
         <SectionHeader
           eyebrow="Testimonials"
           title="What Our Community Says"
-          description="Students, faculty, parents, and alumni on the TAU experience."
+          description="Students, faculty, parents, and alumni on the NAU experience."
         />
 
         <Carousel
