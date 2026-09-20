@@ -1,0 +1,27 @@
+@import "tailwindcss";
+@import "../../../../packages/ui/src/styles/theme.css";
+
+/* Workspace packages live outside this app, so Tailwind needs them declared. */
+@source "../../../../packages/ui/src";
+
+@theme inline {
+  /* LMS portal accents from the Figma design (LMS-Unizik): a brighter blue for
+     links/CTAs and a deep red for enrolment actions, both close cousins of the
+     institutional navy/medical-red already in the shared theme. */
+  --color-lms-blue: #0947aa;
+  --color-lms-red: #ba1a1a;
+  --color-lms-mist: #f5f5fe;
+  --color-lms-ink: #040415;
+  --color-lms-muted: #5a5a75;
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#123158"/><stop offset="1" stop-color="#0b1f3a"/></linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e0c47c"/><stop offset="1" stop-color="#c8a24a"/></linearGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <circle cx="640" cy="120" r="200" fill="#0057a8" opacity="0.35"/>
+  <circle cx="120" cy="860" r="220" fill="#c8a24a" opacity="0.14"/>
+  <circle cx="0" cy="0" r="120" fill="#2f7fc4" opacity="0.25"/>
+  <g transform="translate(400 470)">
+    <circle cx="0" cy="-120" r="130" fill="#e8ecf3" opacity="0.96"/>
+    <path d="M-180 -10 C-180 -130 -240 -150 -120 -60 C-210 -160 210 -160 120 -60 C240 -150 180 -130 180 -10 C210 120 -210 120 -180 -10 Z" fill="#e8ecf3" opacity="0.96"/>
+    <circle cx="0" cy="-128" r="24" fill="#0b1f3a" opacity="0.9"/>
+    <path d="M-56 -120 Q0 -86 56 -120" stroke="#0b1f3a" stroke-width="6" fill="none" opacity="0.7" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(400 850)">
+    <rect x="-190" y="-60" width="380" height="120" rx="22" fill="rgba(255,255,255,0.1)" stroke="#c8a24a" stroke-opacity="0.5" stroke-width="2"/>
+    <circle cx="0" cy="0" r="34" fill="url(#gold)"/>
+    <text x="0" y="8" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="800" fill="#0b1f3a">P</text>
+    <text x="0" y="42" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" letter-spacing="4" fill="#e0c47c">TAU</text>
+  </g>
+</svg>
+</svg>

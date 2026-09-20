@@ -11,6 +11,7 @@
     "dev": "npm run dev --workspace @tau/web",
     "dev:web": "npm run dev --workspace @tau/web",
     "dev:admin": "npm run dev --workspace @tau/admin",
+    "dev:lms": "npm run dev --workspace @tau/lms-app",
     "build": "npm run build --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
