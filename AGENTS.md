@@ -19,3 +19,11 @@ shared package needs an `@source` line in each app's `globals.css`.
 
 Access rules belong in `packages/identity/src/policy` and are enforced in the
 service layer, never only in a form. Add tests there alongside them.
+
+# Git workflow
+
+Never run `git commit` (or `git push`) on this repo unless the user explicitly
+asks for that commit in the same request. Branching, staging and leaving
+changes uncommitted in the working tree is fine and expected — the user
+reviews the diff and commits it themselves. This overrides the general
+instruction to commit when a task implies it.
