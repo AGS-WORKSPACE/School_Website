@@ -223,6 +223,29 @@ export const navigation: NavGroup[] = [
     ],
   },
   {
+    label: "Registration & Advising",
+    items: [
+      {
+        href: "/registration/offerings",
+        label: "Course offerings",
+        description: "Department offerings with lecturer, capacity and delivery mode.",
+        icon: BookOpenCheck,
+      },
+      {
+        href: "/registration/advising",
+        label: "Exception review",
+        description: "Adviser review of late changes, credit limits, waivers and capacity overrides.",
+        icon: UserCheck,
+      },
+      {
+        href: "/registration/statements",
+        label: "Registration statements",
+        description: "Freeze each term's approved registration and record amendments.",
+        icon: FileLock2,
+      },
+    ],
+  },
+  {
     label: "Graduation",
     items: [
       {

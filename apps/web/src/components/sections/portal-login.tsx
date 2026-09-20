@@ -93,6 +93,22 @@ export function PortalLogin({ variant, identifierLabel, identifierPlaceholder, s
                     Open Downloads
                   </Link>
                 </Button>
+                {variant === "student" ? (
+                  <>
+                    <Button asChild variant="outline" className="w-full">
+                      <Link href="/student-portal/registration">
+                        <BookOpenCheck aria-hidden="true" />
+                        Course Registration
+                      </Link>
+                    </Button>
+                    <Button asChild variant="outline" className="w-full">
+                      <Link href="/student-portal/degree-audit">
+                        <GraduationCap aria-hidden="true" />
+                        Degree Audit
+                      </Link>
+                    </Button>
+                  </>
+                ) : null}
                 <Button variant="outline" className="w-full" onClick={signOut}>
                   <LogOut aria-hidden="true" />
                   Sign Out

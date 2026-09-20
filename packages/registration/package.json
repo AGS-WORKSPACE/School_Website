@@ -1,0 +1,31 @@
+{
+  "name": "@tau/registration",
+  "version": "0.1.0",
+  "private": true,
+  "description": "EP-10 course offering, registration and advising: semester offerings, eligibility proposals, add/drop, adviser exception review, frozen registration statements and degree-progress audits.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./domain": "./src/domain/index.ts",
+    "./policy": "./src/policy/index.ts",
+    "./mock": "./src/mock/index.ts",
+    "./react": "./src/react/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test \"src/**/*.test.ts\""
+  },
+  "dependencies": {
+    "@tau/curriculum": "*",
+    "@tau/students": "*"
+  },
+  "peerDependencies": {
+    "react": "^19"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "tsx": "^4.20.6",
+    "typescript": "^5"
+  }
+}
