@@ -200,7 +200,7 @@ function person(
 }
 
 export const seedPersons: Person[] = [
-  person("per-adeyemi", "Prof.", "Olusegun", "Adeyemi", "o.adeyemi@tau.edu.ng", "inst-tau", [
+  person("per-adeyemi", "Prof.", "Olusegun", "Adeyemi", "o.adeyemi@example.com", "inst-tau", [
     {
       id: "aff-adeyemi-staff",
       type: "staff",
@@ -211,7 +211,7 @@ export const seedPersons: Person[] = [
       endedAt: null,
     },
   ]),
-  person("per-ngozi", "Dr.", "Ngozi", "Okafor", "n.okafor@tau.edu.ng", "inst-tau", [
+  person("per-ngozi", "Dr.", "Ngozi", "Okafor", "n.okafor@example.com", "inst-tau", [
     {
       id: "aff-ngozi-staff",
       type: "staff",
@@ -222,7 +222,7 @@ export const seedPersons: Person[] = [
       endedAt: null,
     },
   ]),
-  person("per-grace", "Mrs.", "Grace", "Eze", "g.eze@tau.edu.ng", "inst-tau", [
+  person("per-grace", "Mrs.", "Grace", "Eze", "g.eze@example.com", "inst-tau", [
     {
       id: "aff-grace-staff",
       type: "staff",
@@ -233,7 +233,7 @@ export const seedPersons: Person[] = [
       endedAt: null,
     },
   ]),
-  person("per-tunde", "Mr.", "Tunde", "Alabi", "t.alabi@tau.edu.ng", "inst-tau", [
+  person("per-tunde", "Mr.", "Tunde", "Alabi", "t.alabi@example.com", "inst-tau", [
     {
       id: "aff-tunde-staff",
       type: "staff",
@@ -244,7 +244,7 @@ export const seedPersons: Person[] = [
       endedAt: null,
     },
   ]),
-  person("per-emeka", "Mr.", "Emeka", "Obi", "e.obi@tau.edu.ng", "inst-tau", [
+  person("per-emeka", "Mr.", "Emeka", "Obi", "e.obi@example.com", "inst-tau", [
     {
       id: "aff-emeka-staff",
       type: "staff",
@@ -255,7 +255,7 @@ export const seedPersons: Person[] = [
       endedAt: null,
     },
   ]),
-  person("per-zainab", "Mrs.", "Zainab", "Mohammed", "z.mohammed@tau.edu.ng", "inst-tau", [
+  person("per-zainab", "Mrs.", "Zainab", "Mohammed", "z.mohammed@example.com", "inst-tau", [
     {
       id: "aff-zainab-staff",
       type: "staff",
@@ -266,7 +266,7 @@ export const seedPersons: Person[] = [
       endedAt: null,
     },
   ]),
-  person("per-chidi", "Mr.", "Chidi", "Nwankwo", "c.nwankwo@tau.edu.ng", "fac-health", [
+  person("per-chidi", "Mr.", "Chidi", "Nwankwo", "c.nwankwo@example.com", "fac-health", [
     {
       id: "aff-chidi-staff",
       type: "staff",
@@ -277,7 +277,7 @@ export const seedPersons: Person[] = [
       endedAt: null,
     },
   ]),
-  person("per-fatima", "Ms.", "Fatima", "Yusuf", "f.yusuf@tau.edu.ng", "fac-eng", [
+  person("per-fatima", "Ms.", "Fatima", "Yusuf", "f.yusuf@example.com", "fac-eng", [
     {
       id: "aff-fatima-staff",
       type: "staff",
@@ -289,7 +289,7 @@ export const seedPersons: Person[] = [
     },
   ]),
   // One person, four relationships with the university over seven years (IAM-01).
-  person("per-amina", "Ms.", "Amina", "Bello", "a.bello@tau.edu.ng", "dept-nursing", [
+  person("per-amina", "Ms.", "Amina", "Bello", "a.bello@example.com", "dept-nursing", [
     {
       id: "aff-amina-applicant",
       type: "applicant",
@@ -327,7 +327,7 @@ export const seedPersons: Person[] = [
       endedAt: null,
     },
   ]),
-  person("per-kemi", "Dr.", "Kemi", "Balogun", "k.balogun@tau.edu.ng", "fac-health", [
+  person("per-kemi", "Dr.", "Kemi", "Balogun", "k.balogun@example.com", "fac-health", [
     {
       id: "aff-kemi-staff",
       type: "staff",
@@ -338,7 +338,7 @@ export const seedPersons: Person[] = [
       endedAt: null,
     },
   ]),
-  person("per-samuel", "Dr.", "Samuel", "Okonkwo", "s.okonkwo@tau.edu.ng", "dept-computer", [
+  person("per-samuel", "Dr.", "Samuel", "Okonkwo", "s.okonkwo@example.com", "dept-computer", [
     {
       id: "aff-samuel-staff",
       type: "staff",
@@ -349,7 +349,7 @@ export const seedPersons: Person[] = [
       endedAt: null,
     },
   ]),
-  person("per-hauwa", "Ms.", "Hauwa", "Abdullahi", "h.abdullahi@tau.edu.ng", "dept-computer", [
+  person("per-hauwa", "Ms.", "Hauwa", "Abdullahi", "h.abdullahi@example.com", "dept-computer", [
     {
       id: "aff-hauwa-staff",
       type: "staff",
@@ -360,7 +360,7 @@ export const seedPersons: Person[] = [
       endedAt: null,
     },
   ]),
-  person("per-blessing", "Mrs.", "Blessing", "Adeyinka", "b.adeyinka@tau.edu.ng", "inst-tau", [
+  person("per-blessing", "Mrs.", "Blessing", "Adeyinka", "b.adeyinka@example.com", "inst-tau", [
     {
       id: "aff-blessing-staff",
       type: "staff",
@@ -371,7 +371,7 @@ export const seedPersons: Person[] = [
       endedAt: null,
     },
   ]),
-  person("per-ibrahim", "Mr.", "Ibrahim", "Sani", "i.sani@tau.edu.ng", "inst-tau", [
+  person("per-ibrahim", "Mr.", "Ibrahim", "Sani", "i.sani@example.com", "inst-tau", [
     {
       id: "aff-ibrahim-staff",
       type: "staff",
@@ -382,7 +382,7 @@ export const seedPersons: Person[] = [
       endedAt: null,
     },
   ]),
-  person("per-david", "Mr.", "David", "Ojo", "d.ojo@tau.edu.ng", "inst-tau", [
+  person("per-david", "Mr.", "David", "Ojo", "d.ojo@example.com", "inst-tau", [
     {
       id: "aff-david-staff",
       type: "staff",
@@ -394,7 +394,7 @@ export const seedPersons: Person[] = [
     },
   ]),
   // Left the university: the account is disabled, which is what ends access.
-  person("per-lawal", "Mr.", "Lawal", "Danjuma", "l.danjuma@tau.edu.ng", "fac-mgmt", [
+  person("per-lawal", "Mr.", "Lawal", "Danjuma", "l.danjuma@example.com", "fac-mgmt", [
     {
       id: "aff-lawal-staff",
       type: "staff",

@@ -91,52 +91,7 @@ export default function GivingPage() {
                   </div>
                 </dl>
                 <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
-                  Please reference your gift (e.g. &ldquo;SCHOLARSHIP&rdquo;) and notify us so we can acknowledge it.
-                </p>
-              </div>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <div className="h-full rounded-3xl border border-border bg-card p-8 sm:p-10">
-                <span className="flex size-12 items-center justify-center rounded-xl bg-medical/10 text-medical">
-                  <HeartHandshake className="size-6" aria-hidden="true" />
-                </span>
-                <h2 className="mt-5 font-display text-2xl font-extrabold tracking-tight">Other Ways to Give</h2>
-                <ul className="mt-5 space-y-4 text-sm leading-relaxed text-muted-foreground">
-                  <li className="flex items-start gap-3">
-                    <Badge variant="accent" className="mt-0.5 shrink-0">Monthly</Badge>
-                    Set up a monthly giving plan from as little as ₦10,000.
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Badge variant="accent" className="mt-0.5 shrink-0">Planned</Badge>
-                    Include NAU in your will, trust, or as a beneficiary of life insurance.
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Badge variant="accent" className="mt-0.5 shrink-0">In-Kind</Badge>
-                    Donate equipment, books, or medical supplies to our faculties and research laboratories.
-                  </li>
-                </ul>
-                <Button asChild className="mt-7">
-                  <Link href="/contact">
-                    Talk to Our Giving Team
-                    <ArrowRight aria-hidden="true" />
-                  </Link>
-                </Button>
-              </div>
-            </Reveal>
-          </div>
-        </Container>
-      </Section>
-
-      <Section className="py-16 sm:py-20">
-        <Container>
-          <Reveal>
-            <div className="rounded-3xl bg-gradient-to-br from-navy to-medical p-8 text-center text-white sm:p-12">
-              <h2 className="text-balance font-display text-3xl font-extrabold tracking-tight sm:text-4xl">
-                A Promise to the Next Generation
-              </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-pretty text-base leading-relaxed text-white/75">
-                &ldquo;What we build today will heal Nigeria for generations.&rdquo; — Dr. Godwin Maduka, Founder.
-                Every gift, whatever its size, moves that promise forward.
+                  Please reference your gift (e.g. Every gift, whatever its size, supports students, research and community service.
               </p>
             </div>
           </Reveal>

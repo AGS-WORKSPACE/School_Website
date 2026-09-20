@@ -39,7 +39,7 @@ export function Stat({
       className={cn(
         "h-full transition-all duration-150",
         toneRing[tone],
-        href && "hover:-translate-y-0.5 hover:border-[#b6c7d9] hover:shadow-card-hover",
+        href && "hover:-translate-y-0.5 hover:border-[#b8b6be] hover:shadow-card-hover",
       )}
     >
       <CardContent className="flex h-full items-start gap-3 p-4">
