@@ -12,16 +12,16 @@ import { publicAnnouncements } from "@/data/announcements";
 test("metadata uses deterministic canonical URLs without duplicating the site title", () => {
   const metadata = generatePageMetadata({ title: "Programme discovery", path: "/undergraduate-programs" });
   assert.equal(metadata.title, "Programme discovery");
-  assert.equal(metadata.alternates?.canonical, "https://tau.edu.ng/undergraduate-programs");
-  assert.equal(metadata.openGraph?.url, "https://tau.edu.ng/undergraduate-programs");
+  assert.equal(metadata.alternates?.canonical, "https://www.unizik.edu.ng/undergraduate-programs");
+  assert.equal(metadata.openGraph?.url, "https://www.unizik.edu.ng/undergraduate-programs");
 });
 
 test("sitemap contains public content only", () => {
   const urls = sitemap().map((entry) => entry.url);
-  for (const program of publishedPrograms) assert.ok(urls.includes(`https://tau.edu.ng/programs/${program.slug}`));
+  for (const program of publishedPrograms) assert.ok(urls.includes(`https://www.unizik.edu.ng/programs/${program.slug}`));
   assert.equal(urls.some((url) => url.includes("/student-portal") || url.includes("/staff-portal") || url.includes("/admin")), false);
-  assert.equal(urls.includes("https://tau.edu.ng/announcements/2026-campus-maintenance-notice"), false);
-  assert.equal(urls.includes(`https://tau.edu.ng/announcements/${publicAnnouncements[0].slug}`), true);
+  assert.equal(urls.includes("https://www.unizik.edu.ng/announcements/2026-campus-maintenance-notice"), false);
+  assert.equal(urls.includes(`https://www.unizik.edu.ng/announcements/${publicAnnouncements[0].slug}`), true);
 });
 
 test("structured data reflects the page records", () => {

@@ -12,7 +12,7 @@ import { Biohazard, Dna, FlaskRound, Images, Microscope, Radio } from "lucide-re
 export const metadata: Metadata = generatePageMetadata({
   title: "Core Facilities & Labs",
   description:
-    "Shared research infrastructure at Transatlantic University — molecular labs, imaging suites, and the Clinical Simulation Centre.",
+    "Shared research infrastructure at Nnamdi Azikiwe University — molecular labs, imaging suites, and the Clinical Simulation Centre.",
   path: "/research/facilities",
 });
 
@@ -71,10 +71,10 @@ export default function ResearchFacilitiesPage() {
             <div className="rounded-3xl bg-gradient-to-br from-navy to-medical p-8 text-white sm:p-10">
               <h2 className="font-display text-2xl font-extrabold">Access & Booking</h2>
               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/75 sm:text-base">
-                Facilities are open to TAU researchers, students, and external collaborators through the core
+                Facilities are open to NAU researchers, students, and external collaborators through the core
                 facility booking system. Instrument training is provided by our scientific officers.
               </p>
-              <p className="mt-5 text-sm font-semibold text-gold">researchfacilities@tau.edu.ng</p>
+              <p className="mt-5 text-sm font-semibold text-gold">registrar@unizik.edu.ng</p>
             </div>
           </Reveal>
         </Container>

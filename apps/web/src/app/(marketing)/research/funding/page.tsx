@@ -12,14 +12,14 @@ import { Award, Banknote, FlaskConical, HandCoins, Rocket } from "lucide-react";
 export const metadata: Metadata = generatePageMetadata({
   title: "Research Funding",
   description:
-    "Internal grants, fellowships, and award support for researchers at Transatlantic University.",
+    "Internal grants, fellowships, and award support for researchers at Nnamdi Azikiwe University.",
   path: "/research/funding",
 });
 
 const opportunities = [
   { Icon: Banknote, name: "Seed Research Grant", amount: "Up to ₦10,000,000", description: "Starter funding for early-career faculty and new research directions, renewable for one additional year.", open: "Open now" },
   { Icon: Rocket, name: "Innovation Acceleration Fund", amount: "Up to ₦20,000,000", description: "Bridges the gap between research and product for promising devices, diagnostics, and software.", open: "Rolling" },
-  { Icon: Award, name: "PhD & Postdoctoral Fellowships", amount: "Stipend + research costs", description: "Structured fellowships supporting doctoral candidates and early-career researchers at TAU.", open: "Open now" },
+  { Icon: Award, name: "PhD & Postdoctoral Fellowships", amount: "Stipend + research costs", description: "Structured fellowships supporting doctoral candidates and early-career researchers at NAU.", open: "Open now" },
   { Icon: FlaskConical, name: "Collaborative Research Awards", amount: "Up to ₦15,000,000", description: "Joint awards supporting interdisciplinary and international collaboration with partner institutions.", open: "Open now" },
   { Icon: HandCoins, name: "Undergraduate Research Awards", amount: "Up to ₦1,500,000", description: "Supporting student-led projects with mentorship from a faculty supervisor.", open: "Semester-based" },
 ];
@@ -30,7 +30,7 @@ export default function ResearchFundingPage() {
       <PageHero image="/images/placeholders/research-lab.jpg"
         eyebrow="Research Funding"
         title="Fuel Your Discovery"
-        description="From seed grants to full fellowships, TAU invests in ideas before they become breakthroughs."
+        description="From seed grants to full fellowships, NAU invests in ideas before they become breakthroughs."
         crumbs={[{ label: "Research", href: "/research" }, { label: "Funding Opportunities" }]}
       />
 

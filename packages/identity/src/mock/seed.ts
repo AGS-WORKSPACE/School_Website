@@ -29,8 +29,8 @@ const days = (count: number) => count * 24 * 60;
 export const seedUnits: OrgUnit[] = [
   {
     id: "inst-tau",
-    name: "Thomas Adewumi University",
-    shortName: "TAU",
+    name: "Nnamdi Azikiwe University",
+    shortName: "NAU",
     dimension: "institution",
     parentId: null,
     effectiveFrom: "2018-09-01",

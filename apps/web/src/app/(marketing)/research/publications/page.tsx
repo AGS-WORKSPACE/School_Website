@@ -13,7 +13,7 @@ import { BookOpen, FileText, Quote } from "lucide-react";
 export const metadata: Metadata = generatePageMetadata({
   title: "Publications",
   description:
-    "Peer-reviewed publications from Transatlantic University researchers — research shaping global health practice.",
+    "Peer-reviewed publications from Nnamdi Azikiwe University researchers — research shaping global health practice.",
   path: "/research/publications",
 });
 
@@ -31,7 +31,7 @@ export default function PublicationsPage() {
       <PageHero image="/images/placeholders/research-lab.jpg"
         eyebrow="Research Outputs"
         title="Publications & Scholarship"
-        description="Peer-reviewed research from TAU investigators, published in leading international journals."
+        description="Peer-reviewed research from NAU investigators, published in leading international journals."
         crumbs={[{ label: "Research", href: "/research" }, { label: "Publications" }]}
       />
 

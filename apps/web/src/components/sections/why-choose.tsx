@@ -47,9 +47,9 @@ export function WhyChoose() {
     <Section className="bg-ice dark:bg-background">
       <Container>
         <SectionHeader
-          eyebrow="Why Choose TAU"
-          title="The TAU Advantage"
-          description="Every element of the TAU experience is designed with one goal — producing the most capable, compassionate, and confident health professionals in Africa."
+          eyebrow="Why Choose NAU"
+          title="The NAU Advantage"
+          description="Every element of the NAU experience is designed with one goal — producing the most capable, compassionate, and confident health professionals in Africa."
         />
 
         <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

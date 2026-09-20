@@ -207,7 +207,7 @@ export default async function ProgramDetailPage({ params }: Props) {
                       <School className="mt-0.5 size-4 shrink-0 text-medical" aria-hidden="true" />
                       <div>
                         <dt className="font-bold">Faculty</dt>
-                        <dd className="text-muted-foreground">{faculty ? faculty.name : "Transatlantic University"}</dd>
+                        <dd className="text-muted-foreground">{faculty ? faculty.name : "Nnamdi Azikiwe University"}</dd>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">

@@ -114,7 +114,7 @@ const groups: { value: string; label: string; Icon: typeof FileText; items: Down
     items: [
       {
         title: "Campus Map",
-        description: "Every building, hostel, and facility across the Umuchukwu campus.",
+        description: "Every building, hostel, and facility across the Awka campus.",
         meta: "PDF · 1.8 MB · Printable A3",
         badge: "Map",
         Icon: Map,
@@ -147,7 +147,7 @@ export function DownloadsClient() {
   return (
     <div className="mx-auto w-full max-w-5xl">
       <div className="mb-8 rounded-3xl border border-gold/30 bg-gold/5 p-6 sm:p-8">
-        <h2 className="font-display text-xl font-extrabold tracking-tight">Official TAU documents</h2>
+        <h2 className="font-display text-xl font-extrabold tracking-tight">Official NAU documents</h2>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
           Browse the official 2026/2027 forms, schedules, and guides. Documents are issued securely on request — each
           download link is emailed to you and expires after 24 hours.

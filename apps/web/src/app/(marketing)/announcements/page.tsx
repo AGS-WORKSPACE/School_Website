@@ -9,7 +9,7 @@ import { announcementCategories, publicAnnouncements } from "@/data/announcement
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Announcements",
-  description: "Official announcements and time-sensitive updates from Transatlantic University.",
+  description: "Official announcements and time-sensitive updates from Nnamdi Azikiwe University.",
   path: "/announcements",
 });
 

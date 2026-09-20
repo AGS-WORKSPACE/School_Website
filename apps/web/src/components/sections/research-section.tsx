@@ -21,7 +21,7 @@ const researchHighlights = [
   {
     Icon: FlaskConical,
     title: "Ethics-First Research",
-    description: "Every study passes rigorous review by the TAU Research Ethics Board.",
+    description: "Every study passes rigorous review by the NAU Research Ethics Board.",
   },
 ];
 
@@ -37,7 +37,7 @@ export function ResearchSection() {
           light
           eyebrow="Research & Innovation"
           title="Discovery That Changes Lives"
-          description="TAU researchers are addressing the health challenges that matter most — from neglected tropical diseases to affordable medical technology."
+          description="NAU researchers are addressing the health challenges that matter most — from neglected tropical diseases to affordable medical technology."
         />
 
         <StaggerContainer className="grid gap-4 sm:grid-cols-3">

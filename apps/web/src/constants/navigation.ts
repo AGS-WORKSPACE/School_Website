@@ -57,7 +57,7 @@ export const utilityNav = [
 
 export const mainNav: NavGroup[] = [
   {
-    label: "About TAU",
+    label: "About NAU",
     href: "/about",
     description: "Who we are, our history, and how we are governed.",
     icon: "landmark",
@@ -67,7 +67,7 @@ export const mainNav: NavGroup[] = [
       { label: "Leadership", href: "/leadership", icon: "users", description: "Meet the University's leaders." },
       { label: "Governance & Policies", href: "/about/governance", icon: "shield-check", description: "Our governance framework and policies." },
       { label: "Accreditations & Rankings", href: "/about/accreditations", icon: "badge-check", description: "Recognition by national and global bodies." },
-      { label: "Campus Map & Facilities", href: "/about/campus-map", icon: "map", description: "Explore our Umuchukwu campus." },
+      { label: "Campus Map & Facilities", href: "/about/campus-map", icon: "map", description: "Explore our Awka campus." },
       { label: "Campuses", href: "/campuses", icon: "map", description: "Find locations, facilities, and visitor information." },
       { label: "Facilities Directory", href: "/facilities", icon: "building", description: "Explore spaces for learning, research, and student life." },
       { label: "Diversity & Inclusion", href: "/about/diversity", icon: "users-round", description: "A community that belongs to everyone." },
@@ -85,7 +85,7 @@ export const mainNav: NavGroup[] = [
       { label: "Postgraduate School", href: "/postgraduate", icon: "flask", description: "MSc, MD, PhD and fellowships." },
       { label: "Faculties", href: "/faculties", icon: "building", description: "Six faculties of the health sciences." },
       { label: "Departments", href: "/departments", icon: "folder-tree", description: "Academic departments and research groups." },
-      { label: "Admissions", href: "/admissions", icon: "file-text", description: "How to join TAU." },
+      { label: "Admissions", href: "/admissions", icon: "file-text", description: "How to join NAU." },
       { label: "Tuition & Scholarships", href: "/tuition", icon: "coins", description: "Fees, aid, and scholarships." },
       { label: "International Students", href: "/international", icon: "globe", description: "Support for students from abroad." },
       { label: "Student Life", href: "/student-life", icon: "users", description: "Campus community and activities." },
@@ -98,7 +98,7 @@ export const mainNav: NavGroup[] = [
     icon: "flask",
     children: [
       { label: "Research Centres & Institutes", href: "/research/centres", icon: "flask", description: "Hubs of discovery and collaboration." },
-      { label: "Publications", href: "/research/publications", icon: "file-text", description: "Peer-reviewed scholarship from TAU." },
+      { label: "Publications", href: "/research/publications", icon: "file-text", description: "Peer-reviewed scholarship from NAU." },
       { label: "Core Facilities & Labs", href: "/research/facilities", icon: "microscope", description: "State-of-the-art research infrastructure." },
       { label: "Funding Opportunities", href: "/research/funding", icon: "hand-coins", description: "Grants, fellowships, and awards." },
       { label: "Innovation Partnerships", href: "/research/innovation", icon: "lightbulb", description: "Translate ideas into impact." },
@@ -108,14 +108,14 @@ export const mainNav: NavGroup[] = [
   {
     label: "Community",
     href: "/news",
-    description: "News, events, and ways to connect with TAU.",
+    description: "News, events, and ways to connect with NAU.",
     icon: "users",
     children: [
-      { label: "News", href: "/news", icon: "newspaper", description: "Stories and updates from TAU." },
+      { label: "News", href: "/news", icon: "newspaper", description: "Stories and updates from NAU." },
       { label: "Announcements", href: "/announcements", icon: "newspaper", description: "Official notices and time-sensitive updates." },
       { label: "Events", href: "/events", icon: "calendar", description: "Conferences, talks, and gatherings." },
-      { label: "Alumni", href: "/alumni", icon: "users-round", description: "A lifelong network of TAU graduates." },
-      { label: "Careers", href: "/careers", icon: "briefcase", description: "Join the TAU team." },
+      { label: "Alumni", href: "/alumni", icon: "users-round", description: "A lifelong network of NAU graduates." },
+      { label: "Careers", href: "/careers", icon: "briefcase", description: "Join the NAU team." },
       { label: "Medical Library", href: "/library", icon: "library", description: "E-journals, e-books, and research help." },
       { label: "Giving & Donations", href: "/giving", icon: "gift", description: "Support the next generation of healers." },
     ],

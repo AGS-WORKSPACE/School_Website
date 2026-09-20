@@ -128,7 +128,7 @@ export default function RolesPage() {
                 <Table className="w-max min-w-full">
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="sticky left-0 z-20 w-80 min-w-80 max-w-80 bg-[#e6eef7] shadow-[1px_0_0_0_var(--border)]">
+                      <TableHead className="sticky left-0 z-20 w-80 min-w-80 max-w-80 bg-[#f0eff3] shadow-[1px_0_0_0_var(--border)]">
                         Permission
                       </TableHead>
                       {roles
@@ -145,7 +145,7 @@ export default function RolesPage() {
                   <TableBody>
                     {visiblePermissions.map((permission) => (
                       <TableRow key={permission.id}>
-                        <TableCell className="sticky left-0 z-10 w-80 min-w-80 max-w-80 bg-[#f1f6fb] shadow-[1px_0_0_0_var(--border)]">
+                        <TableCell className="sticky left-0 z-10 w-80 min-w-80 max-w-80 bg-[#f7f7fa] shadow-[1px_0_0_0_var(--border)]">
                           <span className="flex flex-wrap items-center gap-2 text-sm font-semibold">
                             {permission.label}
                             <Badge

@@ -14,7 +14,7 @@ import Link from "next/link";
 export const metadata: Metadata = generatePageMetadata({
   title: "Giving & Donations",
   description:
-    "Support Transatlantic University — fund scholarships, research, and facilities that shape the next generation of healers.",
+    "Support Nnamdi Azikiwe University — fund scholarships, research, and facilities that shape the next generation of healers.",
   path: "/giving",
 });
 
@@ -79,7 +79,7 @@ export default function GivingPage() {
                 <dl className="mt-6 space-y-3 rounded-2xl bg-muted/50 p-5 text-sm">
                   <div className="flex items-center justify-between gap-4">
                     <dt className="text-muted-foreground">Account Name</dt>
-                    <dd className="font-semibold">Transatlantic University Endowment</dd>
+                    <dd className="font-semibold">Nnamdi Azikiwe University Endowment</dd>
                   </div>
                   <div className="flex items-center justify-between gap-4">
                     <dt className="text-muted-foreground">Bank</dt>
@@ -108,7 +108,7 @@ export default function GivingPage() {
                   </li>
                   <li className="flex items-start gap-3">
                     <Badge variant="accent" className="mt-0.5 shrink-0">Planned</Badge>
-                    Include TAU in your will, trust, or as a beneficiary of life insurance.
+                    Include NAU in your will, trust, or as a beneficiary of life insurance.
                   </li>
                   <li className="flex items-start gap-3">
                     <Badge variant="accent" className="mt-0.5 shrink-0">In-Kind</Badge>

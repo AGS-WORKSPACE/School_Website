@@ -26,7 +26,7 @@ export function OfferResponse({ verificationCode }: { verificationCode: string }
   }
 
   return <main className="bg-muted/25 py-12 sm:py-20"><div className="container-site max-w-5xl">
-    <div className="mb-8 flex items-center gap-3"><div className="grid size-11 place-items-center rounded-xl bg-primary text-primary-foreground"><GraduationCap className="size-6" /></div><div><div className="text-xs font-bold uppercase tracking-[0.18em] text-primary">Verified admission offer</div><div className="text-sm text-muted-foreground">Thomas Adewumi University</div></div></div>
+    <div className="mb-8 flex items-center gap-3"><div className="grid size-11 place-items-center rounded-xl bg-primary text-primary-foreground"><GraduationCap className="size-6" /></div><div><div className="text-xs font-bold uppercase tracking-[0.18em] text-primary">Verified admission offer</div><div className="text-sm text-muted-foreground">Nnamdi Azikiwe University</div></div></div>
     {message && <div role="status" className="mb-6 rounded-xl border border-primary/20 bg-primary/5 p-4 text-sm font-medium">{message}</div>}
     <div className="grid gap-6 lg:grid-cols-[1fr_20rem]">
       <Card><CardHeader className="border-b"><div className="flex flex-wrap items-center justify-between gap-3"><div><Badge variant="outline">{offer.kind} offer</Badge><CardTitle className="mt-3 text-2xl">Congratulations, {offer.applicantName}</CardTitle></div><div className="flex items-center gap-2 text-sm font-semibold text-emerald-700"><ShieldCheck className="size-5" />Authentic offer</div></div></CardHeader><CardContent className="space-y-6 pt-6">

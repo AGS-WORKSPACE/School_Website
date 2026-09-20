@@ -8,7 +8,7 @@ import { DownloadsClient } from "@/components/sections/downloads-client";
 export const metadata: Metadata = generatePageMetadata({
   title: "Downloads",
   description:
-    "Download official TAU forms and documents — application forms, tuition and fee schedules, library guides, and the campus map.",
+    "Download official NAU forms and documents — application forms, tuition and fee schedules, library guides, and the campus map.",
   path: "/downloads",
   noIndex: true,
 });

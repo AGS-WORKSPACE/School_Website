@@ -5,10 +5,10 @@ export const campuses: Campus[] = [
   {
     id: "main-campus",
     slug: "umuchukwu-main-campus",
-    name: "Umuchukwu Main Campus",
-    location: "Umuchukwu, Anambra State, Nigeria",
+    name: "Awka Main Campus",
+    location: "Awka, Anambra State, Nigeria",
     description:
-      "TAU's main campus brings teaching, research, clinical simulation, student life, and residential facilities together in one connected setting.",
+      "NAU's main campus brings teaching, research, clinical simulation, student life, and residential facilities together in one connected setting.",
     image: "/images/placeholders/hero-campus.jpg",
     facilities: [
       "Medical Library",
@@ -24,7 +24,7 @@ export const campuses: Campus[] = [
       "Campus tours available Monday to Friday",
       "Regular shuttle connections to major transport hubs",
     ],
-    contactEmail: "info@tau.edu.ng",
+    contactEmail: "registrar@unizik.edu.ng",
     contactPhone: "+234 700 828 6337",
     accessibility:
       "Step-free routes are available across the principal public buildings. Contact the University before visiting so access arrangements can be confirmed.",

@@ -183,7 +183,7 @@ export function PortalLogin({ variant, identifierLabel, identifierPlaceholder, s
                   </li>
                   <li className="rounded-2xl bg-muted/50 p-4">
                     <p className="font-semibold text-foreground">Account issues</p>
-                    Email the IT help desk at helpdesk@tau.edu.ng — support hours are 8am–8pm, seven days a week.
+                    Email the IT help desk at support@unizik.edu.ng — support hours are 8am–8pm, seven days a week.
                   </li>
                 </ul>
               </TabsContent>

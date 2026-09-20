@@ -18,7 +18,7 @@ export function EventsSection() {
             align="left"
             eyebrow="Upcoming Events"
             title="Mark Your Calendar"
-            description="Conferences, ceremonies, symposia, and community gatherings across the TAU campus."
+            description="Conferences, ceremonies, symposia, and community gatherings across the NAU campus."
             className="mb-0"
           />
           <div className="shrink-0">

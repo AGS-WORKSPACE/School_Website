@@ -36,15 +36,15 @@ const resourceSeed: Resource[] = [
 ];
 
 const clearanceSeed: Clearance[] = [
-  { id: "clr-201", student: "TAU/CSC/23/014 · Kelechi Okoro", items: 0, fines: 0, checkpoint: "Clear", reason: "No outstanding library obligations" },
-  { id: "clr-202", student: "TAU/BUS/23/018 · Fatima Yusuf", items: 2, fines: 3500, checkpoint: "Blocked", reason: "2 overdue items; replacement assessment pending" },
-  { id: "clr-203", student: "TAU/ENG/23/007 · David Etim", items: 0, fines: 1500, checkpoint: "Blocked", reason: "Outstanding approved library charge" },
+  { id: "clr-201", student: "NAU/CSC/23/014 · Kelechi Okoro", items: 0, fines: 0, checkpoint: "Clear", reason: "No outstanding library obligations" },
+  { id: "clr-202", student: "NAU/BUS/23/018 · Fatima Yusuf", items: 2, fines: 3500, checkpoint: "Blocked", reason: "2 overdue items; replacement assessment pending" },
+  { id: "clr-203", student: "NAU/ENG/23/007 · David Etim", items: 0, fines: 1500, checkpoint: "Blocked", reason: "Outstanding approved library charge" },
 ];
 
 const outputSeed: Output[] = [
   { id: "doi:10.1000/tau.2026.14", title: "Adaptive learning systems for low-bandwidth universities", type: "Journal article", source: "Crossref import", year: 2026, status: "Unclaimed", visibility: "Public" },
   { id: "orcid:0000-0002-4411-9012:7", title: "Responsible AI adoption in West African higher education", type: "Conference paper", source: "ORCID", year: 2025, status: "Claimed", visibility: "Public" },
-  { id: "repo:tau-1842", title: "Solar microgrid optimisation dataset", type: "Dataset", source: "TAU Repository", year: 2026, status: "Verified", visibility: "Institution" },
+  { id: "repo:tau-1842", title: "Solar microgrid optimisation dataset", type: "Dataset", source: "NAU Repository", year: 2026, status: "Verified", visibility: "Institution" },
 ];
 
 const projects: Project[] = [

@@ -13,7 +13,7 @@ import Link from "next/link";
 export const metadata: Metadata = generatePageMetadata({
   title: "Campus Map & Facilities",
   description:
-    "Explore the Transatlantic University campus in Umuchukwu, Anambra State — libraries, simulation labs, hostels, sports, and research facilities.",
+    "Explore the Nnamdi Azikiwe University campus in Awka, Anambra State — libraries, simulation labs, hostels, sports, and research facilities.",
   path: "/about/campus-map",
 });
 
@@ -29,8 +29,8 @@ export default function CampusMapPage() {
       <PageHero image="/images/placeholders/hero-campus.jpg"
         eyebrow="Campus & Facilities"
         title="A Campus Built for Learning and Living"
-        description="Umuchukwu, Anambra State — a purpose-built campus where 8,000+ students learn, live, and lead."
-        crumbs={[{ label: "About TAU", href: "/about" }, { label: "Campus Map & Facilities" }]}
+        description="Awka, Anambra State — a purpose-built campus where 8,000+ students learn, live, and lead."
+        crumbs={[{ label: "About NAU", href: "/about" }, { label: "Campus Map & Facilities" }]}
       />
 
       <Section>
@@ -123,14 +123,14 @@ export default function CampusMapPage() {
             <div className="rounded-3xl border border-border bg-card p-8 sm:p-10">
               <h2 className="font-display text-2xl font-extrabold">Getting to Campus</h2>
               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-                Transatlantic University is located in Umuchukwu, Anambra State — approximately 30 minutes
+                Nnamdi Azikiwe University is located in Awka, Anambra State — approximately 30 minutes
                 from the Onitsha–Enugu expressway. Regular shuttle services run between campus and the
                 nearest major transport hubs. Contact admissions for detailed directions and transport help.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <span className="inline-flex items-center gap-2 rounded-full bg-muted px-4 py-2 text-xs font-semibold text-muted-foreground">
                   <MapPin className="size-3.5 text-medical" aria-hidden="true" />
-                  Umuchukwu, Anambra State, Nigeria
+                  Awka, Anambra State, Nigeria
                 </span>
                 <span className="inline-flex items-center gap-2 rounded-full bg-muted px-4 py-2 text-xs font-semibold text-muted-foreground">
                   <Clock className="size-3.5 text-medical" aria-hidden="true" />
@@ -143,8 +143,8 @@ export default function CampusMapPage() {
       </Section>
 
       <CTASection
-        title="Visit TAU and See It for Yourself"
-        description="Arrange a campus tour through the admissions office and experience Umuchukwu first-hand."
+        title="Visit NAU and See It for Yourself"
+        description="Arrange a campus tour through the admissions office and experience Awka first-hand."
         primary={{ label: "Book a Tour", href: "/contact" }}
         secondary={{ label: "Apply Now", href: "/admissions/apply" }}
       />

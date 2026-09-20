@@ -11,7 +11,7 @@ import { Target, Eye, HeartPulse, Users } from "lucide-react";
 export const metadata: Metadata = generatePageMetadata({
   title: "Mission & Vision",
   description:
-    "The mission and vision of Transatlantic University of Medicine and Health Sciences.",
+    "The mission and vision of Nnamdi Azikiwe University.",
   path: "/about/mission-vision",
 });
 
@@ -33,7 +33,7 @@ const strategicPillars = [
   },
   {
     title: "Global Engagement",
-    description: "Partnerships, electives, and exchange that make TAU graduates citizens of the global health community.",
+    description: "Partnerships, electives, and exchange that make NAU graduates citizens of the global health community.",
   },
   {
     title: "Community Service",
@@ -48,7 +48,7 @@ export default function MissionVisionPage() {
         eyebrow="Mission & Vision"
         title="Purpose That Guides Everything"
         description="Our mission and vision define who we are, what we do, and why it matters."
-        crumbs={[{ label: "About TAU", href: "/about" }, { label: "Mission & Vision" }]}
+        crumbs={[{ label: "About NAU", href: "/about" }, { label: "Mission & Vision" }]}
       />
 
       <Section>
@@ -88,7 +88,7 @@ export default function MissionVisionPage() {
           <SectionHeader
             eyebrow="Our Values"
             title="The Principles That Shape Us"
-            description="Four values underpin every decision at Transatlantic University."
+            description="Four values underpin every decision at Nnamdi Azikiwe University."
           />
           <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {values.map(({ Icon, title, description }) => (
@@ -111,7 +111,7 @@ export default function MissionVisionPage() {
           <SectionHeader
             eyebrow="Strategy 2026–2030"
             title="Strategic Pillars"
-            description="How TAU intends to achieve its mission over the next four years."
+            description="How NAU intends to achieve its mission over the next four years."
           />
           <div className="grid gap-6 md:grid-cols-2">
             {strategicPillars.map((pillar, index) => (
@@ -146,7 +146,7 @@ export default function MissionVisionPage() {
               <SectionHeader align="left" eyebrow="Our People" title="Purpose in Practice" className="mb-4" />
               <div className="prose-brand text-sm leading-relaxed sm:text-base">
                 <p>
-                  Mission statements only matter when they are lived. At TAU, that means early patient contact,
+                  Mission statements only matter when they are lived. At NAU, that means early patient contact,
                   simulation-based education from the first year, community health outreach as part of the
                   curriculum, and research that serves real-world health needs.
                 </p>
@@ -161,7 +161,7 @@ export default function MissionVisionPage() {
       </Section>
 
       <CTASection
-        title="Carry the TAU Mission Forward"
+        title="Carry the NAU Mission Forward"
         description="Join a community driven by compassion, integrity, excellence, and innovation."
         primary={{ label: "Apply Today", href: "/admissions/apply" }}
         secondary={{ label: "Meet the Leadership", href: "/leadership" }}

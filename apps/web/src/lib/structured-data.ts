@@ -1,5 +1,6 @@
 import type { NewsArticle, Program, UniversityEvent } from "@/types";
 import { absoluteUrl } from "@/lib/seo";
+import { siteConfig } from "@/constants/site";
 
 export function programmeStructuredData(program: Program): Record<string, unknown> {
   return {
@@ -7,7 +8,7 @@ export function programmeStructuredData(program: Program): Record<string, unknow
     "@type": "Course",
     name: program.title,
     description: program.description,
-    provider: { "@type": "CollegeOrUniversity", name: "Transatlantic University", url: absoluteUrl() },
+    provider: { "@type": "CollegeOrUniversity", name: siteConfig.name, url: absoluteUrl() },
     educationalLevel: program.type,
     timeRequired: program.duration,
     url: absoluteUrl(`/programs/${program.slug}`),
@@ -23,7 +24,7 @@ export function articleStructuredData(article: NewsArticle): Record<string, unkn
     image: absoluteUrl(article.image),
     datePublished: article.publishedAt,
     author: { "@type": "Organization", name: article.author },
-    publisher: { "@type": "CollegeOrUniversity", name: "Transatlantic University", url: absoluteUrl() },
+    publisher: { "@type": "CollegeOrUniversity", name: siteConfig.name, url: absoluteUrl() },
     mainEntityOfPage: absoluteUrl(`/news/${article.slug}`),
   };
 }
@@ -37,7 +38,7 @@ export function eventStructuredData(event: UniversityEvent): Record<string, unkn
     image: absoluteUrl(event.image),
     startDate: event.date,
     location: { "@type": "Place", name: event.location },
-    organizer: { "@type": "CollegeOrUniversity", name: "Transatlantic University", url: absoluteUrl() },
+    organizer: { "@type": "CollegeOrUniversity", name: siteConfig.name, url: absoluteUrl() },
     url: absoluteUrl(`/events/${event.slug}`),
   };
 }

@@ -11,7 +11,7 @@ export function PartnersSection() {
         <SectionHeader
           eyebrow="Global Network"
           title="Trusted by Partners Worldwide"
-          description="Academic, clinical, and research partnerships that extend TAU's reach across four continents."
+          description="Academic, clinical, and research partnerships that extend NAU's reach across four continents."
           className="mb-10"
         />
       </Container>

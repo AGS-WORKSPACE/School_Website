@@ -16,7 +16,7 @@ import { ProgramCard } from "@/components/cards/program-card";
 export const metadata: Metadata = generatePageMetadata({
   title: "Postgraduate School",
   description:
-    "Advanced study at Transatlantic University — MSc, MD, Residency, Fellowship, PhD, and postdoctoral opportunities.",
+    "Advanced study at Nnamdi Azikiwe University — MSc, MD, Residency, Fellowship, PhD, and postdoctoral opportunities.",
   path: "/postgraduate",
 });
 
@@ -155,7 +155,7 @@ export default function PostgraduatePage() {
 
       <CTASection
         title="Take Your Career Further"
-        description="Postgraduate study at TAU opens doors to leadership, research, and specialist practice."
+        description="Postgraduate study at NAU opens doors to leadership, research, and specialist practice."
         primary={{ label: "Apply Now", href: "/admissions/apply" }}
         secondary={{ label: "Research & Innovation", href: "/research" }}
       />

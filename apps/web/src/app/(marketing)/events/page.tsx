@@ -13,7 +13,7 @@ import Link from "next/link";
 export const metadata: Metadata = generatePageMetadata({
   title: "Events",
   description:
-    "Conferences, ceremonies, webinars, and community events at Transatlantic University — join us.",
+    "Conferences, ceremonies, webinars, and community events at Nnamdi Azikiwe University — join us.",
   path: "/events",
 });
 
@@ -39,7 +39,7 @@ export default async function EventsPage({ searchParams }: Props) {
       <PageHero image="/images/placeholders/event-conference.jpg"
         eyebrow="Events"
         title="Mark Your Calendar"
-        description="Conferences, ceremonies, webinars, and community gatherings — there's always something happening at TAU."
+        description="Conferences, ceremonies, webinars, and community gatherings — there's always something happening at NAU."
         crumbs={[{ label: "Events" }]}
       />
 
@@ -116,7 +116,7 @@ export default async function EventsPage({ searchParams }: Props) {
       </Section>
 
       <CTASection
-        title="Host Your Event at TAU"
+        title="Host Your Event at NAU"
         description="Our auditoria, conference halls, and seminar rooms are available for academic and community events."
         primary={{ label: "Contact Us", href: "/contact" }}
         secondary={{ label: "Student Life", href: "/student-life" }}

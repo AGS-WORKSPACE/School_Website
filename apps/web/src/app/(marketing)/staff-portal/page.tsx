@@ -8,7 +8,7 @@ import { PortalLogin, staffStats } from "@/components/sections/portal-login";
 export const metadata: Metadata = generatePageMetadata({
   title: "Staff Portal",
   description:
-    "Sign in to the TAU Staff Portal for HR records, payroll and payslips, leave management, and professional development.",
+    "Sign in to the NAU Staff Portal for HR records, payroll and payslips, leave management, and professional development.",
   path: "/staff-portal",
   noIndex: true,
 });
@@ -20,7 +20,7 @@ export default function StaffPortalPage() {
         image="/images/placeholders/campus-library.jpg"
         eyebrow="Faculty & Staff"
         title="Staff Portal"
-        description="HR records, payroll, leave, and professional development for the people who make TAU possible."
+        description="HR records, payroll, leave, and professional development for the people who make NAU possible."
         crumbs={[{ label: "Staff Portal" }]}
       />
       <Section>
@@ -32,7 +32,7 @@ export default function StaffPortalPage() {
           />
           <PortalLogin
             variant="staff"
-            identifierLabel="Staff ID or TAU email"
+            identifierLabel="Staff ID or NAU email"
             identifierPlaceholder="e.g. STF/2020/0456"
             submitLabel="Sign in to Staff Portal"
             stats={staffStats}

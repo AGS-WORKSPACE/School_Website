@@ -19,9 +19,9 @@ export function MobileNav({ open, onOpenChange }: { open: boolean; onOpenChange:
       <SheetContent side="right" className="w-full max-w-sm overflow-y-auto bg-navy p-0 text-white sm:max-w-md">
         <SheetHeader className="border-b border-white/10 p-6">
           <SheetTitle className="font-display text-lg font-extrabold text-white">
-            Transatlantic <span className="text-gold">University</span>
+            Nnamdi Azikiwe <span className="text-gold">University</span>
           </SheetTitle>
-          <SheetDescription className="text-xs uppercase tracking-widest text-white/60">TAU</SheetDescription>
+          <SheetDescription className="text-xs uppercase tracking-widest text-white/60">NAU</SheetDescription>
         </SheetHeader>
 
         <nav aria-label="Mobile navigation" className="p-4">
@@ -112,7 +112,7 @@ export function MobileNav({ open, onOpenChange }: { open: boolean; onOpenChange:
             </Link>
           </Button>
           <div className="pt-2 text-center text-xs text-white/60">
-            Transatlantic University of Medicine and Health Sciences
+            Nnamdi Azikiwe University
           </div>
         </div>
       </SheetContent>

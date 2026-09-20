@@ -14,9 +14,9 @@ import { PartnersSection } from "@/components/sections/partners-section";
 import { CTASection } from "@/components/common/cta-section";
 
 export const metadata: Metadata = generatePageMetadata({
-  title: "Transatlantic University of Medicine and Health Sciences",
+  title: "Nnamdi Azikiwe University",
   description:
-    "Transatlantic University (TAU) — a private medical university in Umuchukwu, Anambra State, Nigeria, founded by Dr. Godwin Maduka. Explore programmes, research, and campus life.",
+    "Explore programmes, research and campus life at Nnamdi Azikiwe University in Awka, Nigeria.",
   path: "/",
 });
 
@@ -35,7 +35,7 @@ export default function Home() {
       <TestimonialsSection />
       <PartnersSection />
       <CTASection
-        title="Ready to Join TAU?"
+        title="Ready to Join NAU?"
         description="Begin your journey toward a career in medicine, dentistry, nursing, pharmacy, public health, or the biomedical sciences."
         primary={{ label: "Apply Today", href: "/admissions/apply" }}
         secondary={{ label: "Contact Admissions", href: "/contact" }}

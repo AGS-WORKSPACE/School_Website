@@ -49,7 +49,7 @@ function createUploadedDocument(req: DocumentRequirement, file: File): UploadedD
     securityScan: {
       passed: true,
       scannedAt: iso,
-      scannerEngine: 'ClamAV-TAU',
+      scannerEngine: 'ClamAV-NAU',
       signatureHash: `sha256_${ts}`,
       detectedMimeType: file.type || 'application/pdf',
       flags: [],
@@ -237,7 +237,7 @@ export function ApplicationForm({ initialProgramme }: Props) {
           routeCode: activeRoute?.code ?? 'UTME',
           applicant: {
             id: `usr-${appId}`,
-            email: email || 'draft@tau.edu.ng',
+            email: email || 'draft@example.com',
             phone: phone || '+2348000000000',
             firstName: firstName || 'Draft',
             middleName,
@@ -418,7 +418,7 @@ export function ApplicationForm({ initialProgramme }: Props) {
           Application Submitted Successfully!
         </h2>
         <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
-          Thank you, <strong className="text-slate-900 dark:text-white">{firstName} {lastName}</strong>. Your application has been logged into the Transatlantic University Admissions CRM.
+          Thank you, <strong className="text-slate-900 dark:text-white">{firstName} {lastName}</strong>. Your application has been logged into the Nnamdi Azikiwe University Admissions CRM.
         </p>
 
         <div className="mt-6 rounded-xl border border-slate-100 bg-slate-50 p-6 text-left dark:border-slate-800 dark:bg-slate-800/50">
@@ -483,7 +483,7 @@ export function ApplicationForm({ initialProgramme }: Props) {
         <form onSubmit={handleResumeDraft} className="flex items-center gap-2">
           <input
             type="text"
-            placeholder="e.g. TAU/2026/UG/0014"
+            placeholder="e.g. NAU/2026/UG/0014"
             value={resumeAppNumber}
             onChange={(e) => setResumeAppNumber(e.target.value)}
             className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"

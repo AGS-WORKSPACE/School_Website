@@ -11,7 +11,7 @@ import { publishedPrograms } from "@/data/programs";
 export const metadata: Metadata = generatePageMetadata({
   title: "Apply Now",
   description:
-    "Apply to Transatlantic University for the 2026/2027 intake. A simple, transparent online application.",
+    "Apply to Nnamdi Azikiwe University for the 2026/2027 intake. A simple, transparent online application.",
   path: "/admissions/apply",
 });
 

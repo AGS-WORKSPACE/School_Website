@@ -118,7 +118,7 @@ export function Header() {
           <div className="flex h-[72px] items-center justify-between gap-4 transition-all duration-300 lg:h-20">
             <Link
               href="/"
-              aria-label="Transatlantic University home"
+              aria-label="Nnamdi Azikiwe University home"
               className="rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <BrandMark tone={solid ? "dark" : "light"} />

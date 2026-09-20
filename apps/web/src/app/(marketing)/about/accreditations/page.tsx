@@ -13,7 +13,7 @@ import { accreditationBodies } from "@/data/leadership";
 export const metadata: Metadata = generatePageMetadata({
   title: "Accreditations & Rankings",
   description:
-    "The national accreditations, professional recognitions, and rankings of Transatlantic University of Medicine and Health Sciences.",
+    "The national accreditations, professional recognitions, and rankings of Nnamdi Azikiwe University.",
   path: "/about/accreditations",
 });
 
@@ -21,7 +21,7 @@ const recognition = [
   { Icon: BadgeCheck, title: "NUC Fully Accredited", description: "All academic programmes hold full accreditation from the National Universities Commission." },
   { Icon: ShieldCheck, title: "MDCN Recognised", description: "The MBBS and BDS programmes satisfy the Medical and Dental Council of Nigeria for licensure." },
   { Icon: FileCheck2, title: "NMCN & PCN Recognised", description: "Nursing and pharmacy programmes align with national professional licensing requirements." },
-  { Icon: Trophy, title: "Award-Winning Innovation", description: "TAU's Innovation Hub has won pan-African recognition for accessible medical technology." },
+  { Icon: Trophy, title: "Award-Winning Innovation", description: "NAU's Innovation Hub has won pan-African recognition for accessible medical technology." },
 ];
 
 export default function AccreditationsPage() {
@@ -31,7 +31,7 @@ export default function AccreditationsPage() {
         eyebrow="Accreditations & Rankings"
         title="Recognition That Opens Doors"
         description="Full accreditation by Nigeria's national and professional regulatory bodies — so our degrees count everywhere."
-        crumbs={[{ label: "About TAU", href: "/about" }, { label: "Accreditations & Rankings" }]}
+        crumbs={[{ label: "About NAU", href: "/about" }, { label: "Accreditations & Rankings" }]}
       />
 
       <Section>
@@ -39,7 +39,7 @@ export default function AccreditationsPage() {
           <SectionHeader
             eyebrow="Regulatory Recognition"
             title="Accredited by the Bodies That Matter"
-            description="TAU holds full institutional accreditation and its professional programmes are recognised by the responsible regulatory councils."
+            description="NAU holds full institutional accreditation and its professional programmes are recognised by the responsible regulatory councils."
           />
           <div className="mx-auto max-w-4xl space-y-5">
             {accreditationBodies.map((body, index) => (
@@ -94,12 +94,12 @@ export default function AccreditationsPage() {
                   Verification of Accreditation
                 </h2>
                 <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/75 sm:text-base">
-                  Employers and partner institutions can verify TAU&apos;s accreditation status directly with the
+                  Employers and partner institutions can verify NAU&apos;s accreditation status directly with the
                   National Universities Commission or through our registrar&apos;s office.
                 </p>
               </div>
               <a
-                href="mailto:registrar@tau.edu.ng"
+                href="mailto:registrar@unizik.edu.ng"
                 className="inline-flex h-12 items-center justify-center rounded-full bg-accent px-7 text-sm font-semibold text-accent-foreground transition-all hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 Request Verification

@@ -49,7 +49,7 @@ export interface EditorialHistoryEntry {
 const items: EditorialContentItem[] = [
   {
     id: "content-news-simulation-centre",
-    title: "TAU Opens Advanced Clinical Simulation Centre",
+    title: "NAU Opens Advanced Clinical Simulation Centre",
     type: "news",
     owner: "Communications Office",
     status: "published",

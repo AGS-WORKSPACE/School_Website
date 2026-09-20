@@ -11,7 +11,7 @@ export function Hero() {
       <div className="absolute inset-0" aria-hidden="true">
         <PlaceholderImage
           src="/images/placeholders/hero-campus.jpg"
-          alt="Transatlantic University campus"
+          alt="Nnamdi Azikiwe University campus"
           aspect="auto"
           className="absolute inset-0 h-full w-full rounded-none opacity-40"
         />
@@ -28,16 +28,15 @@ export function Hero() {
           </p>
 
           <h1 className="text-balance font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-[4.25rem]">
-            Advancing Medical Education, Research and{" "}
+            Learning, Research and{" "}
             <span className="bg-gradient-to-r from-gold to-gold-light bg-clip-text text-transparent">
-              Global Healthcare Excellence
+              Service to Society
             </span>
           </h1>
 
           <p className="mt-6 max-w-2xl text-pretty text-base leading-relaxed text-white/75 sm:text-lg">
-            Transatlantic University (TAU) is a private medical university in Umuchukwu, Anambra
-            State, Nigeria — developing compassionate clinicians, bold researchers, and leaders for
-            the future of global health.
+            Nnamdi Azikiwe University is a federal university in Awka, Anambra State, Nigeria.
+            Explore our programmes, research and campus community.
           </p>
 
           <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">

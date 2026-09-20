@@ -13,7 +13,7 @@ import Link from "next/link";
 export const metadata: Metadata = generatePageMetadata({
   title: "Research & Innovation",
   description:
-    "Discovery-driven research across six faculties at Transatlantic University — from infectious disease to biomedical engineering.",
+    "Discovery-driven research across six faculties at Nnamdi Azikiwe University — from infectious disease to biomedical engineering.",
   path: "/research",
 });
 
@@ -39,7 +39,7 @@ export default function ResearchPage() {
       <PageHero image="/images/placeholders/research-lab.jpg"
         eyebrow="Research & Innovation"
         title="Where Discovery Meets Care"
-        description="TAU researchers are answering the health questions that matter most to Africa and the world."
+        description="NAU researchers are answering the health questions that matter most to Africa and the world."
         crumbs={[{ label: "Research & Innovation" }]}
       />
 
@@ -59,7 +59,7 @@ export default function ResearchPage() {
           <div className="mt-16">
             <SectionHeader
               eyebrow="Our Research Areas"
-              title="Explore Research at TAU"
+              title="Explore Research at NAU"
               description="Six pillars of research excellence, each with dedicated teams, facilities, and funding."
             />
             <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -115,7 +115,7 @@ export default function ResearchPage() {
 
       <CTASection
         title="Partner With Our Researchers"
-        description="Collaborate with TAU on clinical trials, data science, and translational medicine."
+        description="Collaborate with NAU on clinical trials, data science, and translational medicine."
         primary={{ label: "Get in Touch", href: "/contact" }}
         secondary={{ label: "Research Centres", href: "/research/centres" }}
       />

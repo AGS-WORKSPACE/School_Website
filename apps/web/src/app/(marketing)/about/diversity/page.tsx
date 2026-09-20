@@ -11,7 +11,7 @@ import { CTASection } from "@/components/common/cta-section";
 export const metadata: Metadata = generatePageMetadata({
   title: "Diversity & Inclusion",
   description:
-    "Transatlantic University is committed to a community where every student belongs — regardless of background, gender, or ability.",
+    "Nnamdi Azikiwe University is committed to a community where every student belongs — regardless of background, gender, or ability.",
   path: "/about/diversity",
 });
 
@@ -19,7 +19,7 @@ const commitments = [
   { Icon: Users2, title: "Gender Equity", description: "Scholarships and mentorship specifically designed to support women in the health sciences." },
   { Icon: Globe2, title: "Pan-African Community", description: "Students from across Nigeria and the African continent, with growing international enrolment." },
   { Icon: HandHeart, title: "Access & Inclusion", description: "Admissions policies, assistive support, and financial aid that remove barriers to entry." },
-  { Icon: Landmark, title: "Host Community Covenant", description: "Deep partnerships with the communities of Umuchukwu and Anambra State." },
+  { Icon: Landmark, title: "Host Community Covenant", description: "Deep partnerships with the communities of Awka and Anambra State." },
 ];
 
 export default function DiversityPage() {
@@ -28,8 +28,8 @@ export default function DiversityPage() {
       <PageHero image="/images/placeholders/hero-students.jpg"
         eyebrow="Diversity & Inclusion"
         title="A Community Where Everyone Belongs"
-        description="At TAU, excellence is strengthened by difference. We are building a medical university that reflects — and serves — all of Africa."
-        crumbs={[{ label: "About TAU", href: "/about" }, { label: "Diversity & Inclusion" }]}
+        description="At NAU, excellence is strengthened by difference. We are building a medical university that reflects — and serves — all of Africa."
+        crumbs={[{ label: "About NAU", href: "/about" }, { label: "Diversity & Inclusion" }]}
       />
 
       <Section>
@@ -38,7 +38,7 @@ export default function DiversityPage() {
             <Reveal>
               <PlaceholderImage
                 src="/images/placeholders/hero-students.jpg"
-                alt="A diverse group of TAU students"
+                alt="A diverse group of NAU students"
                 aspect="video"
                 className="shadow-2xl shadow-navy/20"
               />
@@ -47,7 +47,7 @@ export default function DiversityPage() {
               <SectionHeader align="left" eyebrow="Our Commitment" title="Inclusion Is Part of the Curriculum" className="mb-4" />
               <div className="prose-brand text-sm leading-relaxed sm:text-base">
                 <p>
-                  Transatlantic University believes that the best healthcare is delivered by teams that reflect
+                  Nnamdi Azikiwe University believes that the best healthcare is delivered by teams that reflect
                   the populations they serve. That belief shapes who we admit, how we teach, and the way we
                   support every member of our community.
                 </p>
@@ -95,10 +95,10 @@ export default function DiversityPage() {
                 and all reports are investigated with dignity and care.
               </p>
               <a
-                href="mailto:edi@tau.edu.ng"
+                href="mailto:registrar@unizik.edu.ng"
                 className="mt-6 inline-flex h-12 items-center justify-center rounded-full bg-accent px-7 text-sm font-semibold text-accent-foreground transition-all hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                edi@tau.edu.ng
+                registrar@unizik.edu.ng
               </a>
             </div>
           </Reveal>
@@ -106,7 +106,7 @@ export default function DiversityPage() {
       </Section>
 
       <CTASection
-        title="Find Your Place at TAU"
+        title="Find Your Place at NAU"
         description="Whatever your background, there is a place for you here."
         primary={{ label: "Apply Now", href: "/admissions/apply" }}
         secondary={{ label: "Scholarships", href: "/tuition" }}

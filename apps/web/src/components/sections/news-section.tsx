@@ -17,7 +17,7 @@ export function NewsSection() {
           <SectionHeader
             align="left"
             eyebrow="News & Stories"
-            title="Latest From TAU"
+            title="Latest From NAU"
             description="Milestones, research, and voices from across the University."
             className="mb-0"
           />

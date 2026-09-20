@@ -15,17 +15,17 @@ import { Activity, Dumbbell, HeartHandshake, Music2, Newspaper, Palette, Users2 
 export const metadata: Metadata = generatePageMetadata({
   title: "Student Life",
   description:
-    "Clubs, societies, sports, and a vibrant campus community at Transatlantic University — where future healers become leaders.",
+    "Clubs, societies, sports, and a vibrant campus community at Nnamdi Azikiwe University — where future healers become leaders.",
   path: "/student-life",
 });
 
 const clubs = [
   { Icon: HeartHandshake, name: "Medical Students' Association", description: "The student voice of the Faculty of Medicine — advocacy, welfare, and mentorship across all cohorts." },
-  { Icon: Activity, name: "TAU Red Cross Society", description: "First aid training, blood drives, and community health outreaches across Anambra State." },
+  { Icon: Activity, name: "NAU Red Cross Society", description: "First aid training, blood drives, and community health outreaches across Anambra State." },
   { Icon: Microscope, name: "Biomedical Research Club", description: "Undergraduate-led research projects, journal clubs, and conference preparation." },
   { Icon: Music2, name: "Choir & Cultural Troupe", description: "Music, drama, and cultural performances that celebrate Nigeria's rich heritage." },
   { Icon: Palette, name: "Art & Design Society", description: "Visual arts, medical illustration, and design for students who think in pictures." },
-  { Icon: Newspaper, name: "TAU Press & Media", description: "The student magazine, podcast, and campus newsroom telling the TAU story." },
+  { Icon: Newspaper, name: "NAU Press & Media", description: "The student magazine, podcast, and campus newsroom telling the NAU story." },
   { Icon: Dumbbell, name: "Sports Clubs", description: "Football, basketball, athletics, volleyball, and table tennis teams that compete nationally." },
   { Icon: Users2, name: "International Students' Association", description: "A home away from home for students from across Africa and beyond." },
 ];
@@ -50,7 +50,7 @@ export default function StudentLifePage() {
     <>
       <PageHero image="/images/placeholders/hero-students.jpg"
         eyebrow="Student Life"
-        title="Campus Life at TAU"
+        title="Campus Life at NAU"
         description="Beyond the wards and lecture theatres lies a campus buzzing with sport, music, service, and friendship."
         crumbs={[{ label: "Student Life" }]}
       />
@@ -117,14 +117,14 @@ export default function StudentLifePage() {
           <SectionHeader
             eyebrow="Campus Gallery"
             title="A Glimpse of Campus"
-            description="Moments from everyday life at Transatlantic University."
+            description="Moments from everyday life at Nnamdi Azikiwe University."
           />
           <Gallery images={gallery} />
         </Container>
       </Section>
 
       <CTASection
-        title="Begin Your TAU Story"
+        title="Begin Your NAU Story"
         description="Join a community that will shape who you become — as a clinician, a leader, and a person."
         primary={{ label: "Apply Now", href: "/admissions/apply" }}
         secondary={{ label: "Campus Map", href: "/about/campus-map" }}
