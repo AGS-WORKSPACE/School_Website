@@ -18,7 +18,7 @@ const emptyUnit = (): OrganisationUnit => ({
   type: "Department",
   parentId: "UNISITE-FAC-001",
   reportingUnitId: "UNISITE-FAC-001",
-  campus: "Umuchukwu",
+  campus: "Awka",
   head: "",
   email: "",
   effectiveFrom: "2026-09-21",
@@ -66,7 +66,7 @@ export function UnitForm({ open, onOpenChange, initial }: { open: boolean; onOpe
             {field("id", "Stable unit ID", <Input id="id" value={unit.id} onChange={(event) => update("id", event.target.value.toUpperCase())} disabled={Boolean(initial)} aria-invalid={Boolean(errors.id)} />)}
             {field("type", "Unit type", <NativeSelect id="type" value={unit.type} onChange={(event) => update("type", event.target.value)}>{["Campus", "College", "Faculty", "School", "Department", "Directorate", "Administrative unit"].map((type) => <option key={type}>{type}</option>)}</NativeSelect>)}
             {field("parent", "Parent unit", <NativeSelect id="parent" value={unit.parentId} onChange={(event) => update("parentId", event.target.value)}><option value="">No parent</option>{units.filter((item) => item.id !== unit.id).map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</NativeSelect>)}
-            {field("campus", "Campus", <NativeSelect id="campus" value={unit.campus} onChange={(event) => update("campus", event.target.value)}><option>Umuchukwu</option><option>University-wide</option></NativeSelect>)}
+            {field("campus", "Campus", <NativeSelect id="campus" value={unit.campus} onChange={(event) => update("campus", event.target.value)}><option>Awka</option><option>University-wide</option></NativeSelect>)}
             {field("reportingUnit", "Reporting unit", <NativeSelect id="reportingUnit" value={unit.reportingUnitId} onChange={(event) => update("reportingUnitId", event.target.value)}><option value="">Same as parent</option>{units.filter((item) => item.id !== unit.id).map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</NativeSelect>)}
             {field("head", "Head of unit", <Input id="head" value={unit.head} onChange={(event) => update("head", event.target.value)} aria-invalid={Boolean(errors.head)} />)}
             {field("email", "Contact email", <Input id="email" type="email" value={unit.email} onChange={(event) => update("email", event.target.value)} aria-invalid={Boolean(errors.email)} />)}
