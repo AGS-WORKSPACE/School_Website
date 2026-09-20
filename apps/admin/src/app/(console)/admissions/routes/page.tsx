@@ -51,7 +51,7 @@ export default function AdmissionRoutesConfigPage() {
       <PageHeader
         eyebrow="ADM-02 · Admissions configuration"
         title="Admission Routes & Requirements"
-        description="Configurable route requirements, fees, document checklists, and referee rules without code deployments."
+        description="Manage admission routes and requirements."
         actions={<span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">Active Cycle: 2026/2027</span>}
       />
 

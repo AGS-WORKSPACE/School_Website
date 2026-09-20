@@ -78,7 +78,7 @@ export default function MarkEntryPage() {
   }
 
   return <div className="space-y-6">
-    <PageHeader eyebrow="EP-12 · RES-02" title="Mark entry workspace" description="Enter marks against the registered course roster. Validation is explicit at row level, and autosave is labelled as frontend mock persistence until a server service exists." actions={<Badge variant="outline">Frontend workflow</Badge>} />
+    <PageHeader eyebrow="EP-12 · RES-02" title="Mark entry workspace" description="Enter and validate student marks." actions={<Badge variant="outline">Preview</Badge>} />
     {message ? <div className={`flex items-start gap-2 rounded-lg border px-4 py-3 text-sm ${message.tone === "error" ? "border-destructive/30 bg-destructive/5 text-destructive" : message.tone === "success" ? "border-success/30 bg-success/5 text-success" : "border-primary/20 bg-primary/5"}`} role={message.tone === "error" ? "alert" : "status"} aria-live={message.tone === "error" ? "assertive" : "polite"} aria-atomic="true"><MessageIcon tone={message.tone} />{message.text}</div> : null}
     {!canEnter ? <PermissionDenied message="Your current role can view the workspace but cannot enter or import marks." /> : null}
 

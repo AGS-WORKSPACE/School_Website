@@ -27,7 +27,7 @@ export default function OfferingPage({ params }: { params: Promise<{ offeringId:
       <PageHeader
         eyebrow={`${offering.courseCode} · ${offering.session} semester ${offering.semester} · ${humanise(offering.deliveryMode)}`}
         title={offering.courseTitle}
-        description={`Taught by ${offering.lecturers.map((item) => item.name).join(", ")}. Built from curriculum version ${offering.courseVersionId}.`}
+          description={`Taught by ${offering.lecturers.map((item) => item.name).join(", ")}.`}
         actions={<LmsActorSwitcher />}
       />
       <Tabs defaultValue="roster">

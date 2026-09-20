@@ -42,7 +42,7 @@ export default function ProgrammesPage() {
       <PageHeader
         eyebrow="CUR-01 · Degree Programmes"
         title="Programme catalogue & accreditation"
-        description="Versioned academic programmes, degree specifications, effective cohorts and regulatory evidence."
+        description="Manage programme requirements and versions."
         actions={
           <Button asChild size="sm">
             <Link href="/curriculum/proposals">

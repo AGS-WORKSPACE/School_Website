@@ -30,7 +30,7 @@ export default function OnboardingOperationsPage() {
 
   return (
     <div className="space-y-6">
-      <PageHeader eyebrow="EP-07 · Offers & matriculation" title="Matriculation onboarding control room" description="Move approved candidates from verified offers to governed student records without re-keying their application data." />
+      <PageHeader eyebrow="EP-07 · Offers & matriculation" title="Matriculation onboarding control room" description="Complete matriculation and student setup." />
 
       {message && <div role="status" className="rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 text-sm font-medium">{message}</div>}
 

@@ -80,7 +80,7 @@ export default function BreakGlassPage() {
 
       <Section
         title="Raise a request"
-        description="Requesting grants nothing on its own. Ordinary work should go through role assignment and approval instead."
+        description="Request and review emergency access."
       >
         <form
           className="space-y-4"

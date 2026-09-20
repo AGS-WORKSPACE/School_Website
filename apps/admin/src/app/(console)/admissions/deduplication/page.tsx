@@ -54,7 +54,7 @@ export default function DeduplicationWorkbenchPage() {
       <PageHeader
         eyebrow="ADM-06 · Fraud & Identity Protection"
         title="Deduplication & identity discrepancy workbench"
-        description="Automated match scoring and human adjudication workbench for suspicious application records."
+        description="Review possible duplicate applications."
       />
 
       {/* Statutory Invariant Banner */}

@@ -37,7 +37,7 @@ export default function GraduationOverviewPage() {
       <PageHeader
         eyebrow="EP-18 · Graduation"
         title="Graduation and credentials"
-        description="Graduation audits against the approved curriculum and Senate-approved results, multi-unit clearance, the Senate graduand list, transcripts, certificates and verification."
+        description="Review eligibility, clearance, and awards."
         actions={<><GraduationActorSwitcher /><Button variant="outline" size="sm" className="self-end" onClick={grad.resetGraduationStore}>Reset demo data</Button></>}
       />
       <NoticeBanner notice={notice} />

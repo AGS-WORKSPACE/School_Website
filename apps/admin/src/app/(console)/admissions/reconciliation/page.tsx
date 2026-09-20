@@ -80,7 +80,7 @@ export default function FeeReconciliationPage() {
       <PageHeader
         eyebrow="ADM-05 · Admissions finance"
         title="Application Fee Payment & Reconciliation"
-        description="Automated payment reconciliation via verified provider webhooks with HMAC signatures and idempotent receipts."
+        description="Match payments to applications."
         actions={<span className="inline-flex items-center rounded-full bg-success/10 px-3 py-1 text-xs font-semibold text-success">Zero Browser-Redirect Trust</span>}
       />
 

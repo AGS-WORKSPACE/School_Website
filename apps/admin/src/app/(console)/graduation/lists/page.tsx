@@ -29,7 +29,7 @@ export default function GraduandListsPage() {
       <PageHeader
         eyebrow="EP-18 · GRD-03"
         title="Senate graduand lists"
-        description="Versioned lists built only from eligible, cleared graduands. Totals by programme, award and classification must reconcile, and approval by a different person freezes the exact list."
+        description="Prepare and approve graduand lists."
         actions={<><GraduationActorSwitcher /><NativeSelect value={session} onChange={(e) => setSession(e.target.value)} aria-label="Graduation session" className="w-40 self-end">{sessions.map((item) => <option key={item}>{item}</option>)}</NativeSelect></>}
       />
       <NoticeBanner notice={notice} />

@@ -54,6 +54,23 @@ export interface RoleAssignment {
   lastReviewedBy: string | null;
 }
 
+export interface RoleAssignmentRequest {
+  id: string;
+  personId: string;
+  roleId: string;
+  scope: Scope;
+  reason: string;
+  validFrom: string;
+  validUntil: string | null;
+  preparedBy: string;
+  preparedAt: string;
+  status: "pending" | "approved" | "rejected";
+  decidedBy: string | null;
+  decidedAt: string | null;
+  decisionReason: string | null;
+  assignmentId: string | null;
+}
+
 export function assignmentStatus(assignment: RoleAssignment, now: Date): AssignmentStatus {
   if (assignment.revokedAt) return "revoked";
   const at = now.getTime();

@@ -27,7 +27,7 @@ export default function CertificatesPage() {
       <PageHeader
         eyebrow="EP-18 · GRD-06"
         title="Certificate custody"
-        description="Every received serial is accounted for as blank, printed, void or issued. Printing needs an approved, intact graduand list; release needs clearance and an identified collector."
+        description="Track certificate printing and collection."
         actions={<GraduationActorSwitcher />}
       />
       <NoticeBanner notice={notice} />

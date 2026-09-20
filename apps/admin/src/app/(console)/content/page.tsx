@@ -70,7 +70,7 @@ export default function ContentWorkflowPage() {
       <PageHeader
         eyebrow="Content"
         title="Editorial workflow"
-        description="Manage public content through the existing content permissions. This demonstration workflow is not a CMS and does not replace server-side authorization."
+        description="Draft, review, and publish website content."
         actions={<Badge variant={canPublish ? "success" : canDraft ? "warning" : "muted"}>{canPublish ? "Approver access" : canDraft ? "Editor access" : "Read-only access"}</Badge>}
       />
 

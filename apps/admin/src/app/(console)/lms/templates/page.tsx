@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertTriangle, CheckCircle2 } from "lucide-react";
-import { requiredSectionKinds, templateFor, useLms, validateTemplate, type DeliveryMode } from "@tau/lms";
+import { templateFor, useLms, validateTemplate, type DeliveryMode } from "@tau/lms";
 import { Badge } from "@tau/ui/badge";
 import { PageHeader } from "@/components/console/page-header";
 import { Section } from "@/components/console/section";
@@ -18,7 +18,7 @@ export default function TemplatesPage() {
       <PageHeader
         eyebrow="EP-14 · LMS-02"
         title="Course templates"
-        description={`Every template carries the same six sections — ${requiredSectionKinds.map((kind) => humanise(kind).toLowerCase()).join(", ")} — so learners always know where to look. New shells use the newest approved template for their delivery mode.`}
+        description="Manage reusable course templates."
       />
 
       <Section title="Template used for new shells">

@@ -166,7 +166,7 @@ export default function AssistedIntakePage() {
       <PageHeader
         eyebrow="ADM-04 · Admissions Operations"
         title="Capture assisted walk-in intake"
-        description="Capture offline or in-person walk-in applications at designated campus admissions pavilions."
+        description="Record in-person and offline applications."
       />
 
       {submittedApp && (

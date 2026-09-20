@@ -50,7 +50,7 @@ export function createPersonaSwitcher<P extends { personId: string; name: string
     return (
       <label className="flex min-w-[16rem] flex-col gap-1 text-xs font-semibold text-muted-foreground">
         <span className="flex items-center gap-1.5">
-          <UserCog className="size-3.5" aria-hidden /> Acting as (demo)
+          <UserCog className="size-3.5" aria-hidden /> Acting as
         </span>
         <NativeSelect value={persona.personId} onChange={(event) => write(event.target.value)} aria-label="Acting as">
           {personas.map((item) => (

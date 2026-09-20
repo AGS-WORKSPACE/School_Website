@@ -46,7 +46,7 @@ export default function ScreeningWorkspacePage() {
       <PageHeader
         eyebrow="EP-06 · Screening foundation"
         title="Candidate screening workspace"
-        description="Review application readiness and evidence before eligibility, scoring and admission decisions."
+        description="Review applications before admission decisions."
         actions={canScore ? <Button size="sm"><ShieldCheck className="mr-1.5 size-4" />Record screening review</Button> : undefined}
       />
 

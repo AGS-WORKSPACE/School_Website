@@ -54,7 +54,7 @@ export default function LmsOverviewPage() {
       <PageHeader
         eyebrow="EP-14 · Learning"
         title="Course delivery"
-        description="Course shells built from approved curriculum versions, rostered from SIS registration, and checked for low-bandwidth use, accessibility and coursework rules."
+        description="Manage courses, class lists, and learning activities."
         actions={<><LmsActorSwitcher /><Button variant="outline" size="sm" className="self-end" onClick={lms.resetLmsStore}>Reset demo data</Button></>}
       />
       <NoticeBanner notice={notice} />

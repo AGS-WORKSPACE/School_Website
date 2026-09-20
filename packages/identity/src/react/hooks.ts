@@ -50,6 +50,20 @@ export function useAssignments() {
   return useQuery({ queryKey: identityKeys.assignments, queryFn: identityApi.getAssignments });
 }
 
+export function useAssignmentRequests() {
+  return useQuery({ queryKey: identityKeys.assignmentRequests, queryFn: identityApi.getAssignmentRequests });
+}
+
+export function usePrepareAssignment() {
+  const invalidate = useIdentityInvalidator();
+  return useMutation({ mutationFn: identityApi.prepareAssignment, onSuccess: invalidate });
+}
+
+export function useDecideAssignment() {
+  const invalidate = useIdentityInvalidator();
+  return useMutation({ mutationFn: identityApi.decideAssignment, onSuccess: invalidate });
+}
+
 export function useDelegations() {
   return useQuery({ queryKey: identityKeys.delegations, queryFn: identityApi.getDelegations });
 }

@@ -98,7 +98,7 @@ export default function DigitalOperationsPage() {
   }
 
   return <div className="space-y-6">
-    <PageHeader eyebrow="EP-26 · Service management" title="Service desk and digital operations" description="Accountable support, privacy-safe assistance and operational control for the institution’s critical digital journeys." actions={<><Badge variant={alerts ? "warning" : "success"}><ShieldAlert />{alerts} active alert{alerts === 1 ? "" : "s"}</Badge><Button variant="outline" size="sm"><FileCheck2 />Operations evidence</Button></>} />
+    <PageHeader eyebrow="EP-26 · Service management" title="Service desk and digital operations" description="Manage support requests and service health." actions={<><Badge variant={alerts ? "warning" : "success"}><ShieldAlert />{alerts} active alert{alerts === 1 ? "" : "s"}</Badge><Button variant="outline" size="sm"><FileCheck2 />Operations evidence</Button></>} />
     <NoticeBanner notice={notice} />
     <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5"><Stat label="Open tickets" value={open} hint={`${tickets.length - open} recently resolved`} icon={ClipboardCheck} tone={open ? "warning" : "good"} /><Stat label="SLA attainment" value={`${slaAttainment}%`} hint="Paused time excluded" icon={FileClock} tone="good" /><Stat label="Service alerts" value={alerts} hint="Threshold-backed alerts" icon={Activity} tone={alerts ? "danger" : "good"} /><Stat label="Safe sessions" value={safeAssistance} hint="Consent/basis and expiry recorded" icon={UserCheck} /><Stat label="Satisfaction" value="4.4/5" hint="68% response rate" icon={ScaleIcon} tone="good" /></div>
 

@@ -25,7 +25,7 @@ export default function TranscriptsPage() {
       <PageHeader
         eyebrow="EP-18 · GRD-04, GRD-05, GRD-07"
         title="Transcripts and verification"
-        description="Requests carry identity, consent, recipient and a verified payment. Transcripts are generated only from approved results, prepared and signed by different people, and delivered with evidence."
+        description="Prepare, issue, and track transcripts."
         actions={<GraduationActorSwitcher />}
       />
       <NoticeBanner notice={notice} />

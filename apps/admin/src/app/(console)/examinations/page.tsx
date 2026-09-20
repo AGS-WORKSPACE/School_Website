@@ -187,7 +187,7 @@ export default function ExaminationsPage() {
       <PageHeader
         eyebrow="EP-13 · Examinations"
         title="Examination operations"
-        description="Plan fair assessments from frozen registrations, clear every clash, control question papers, reconcile scripts and run due-process integrity cases."
+        description="Plan exams, resolve clashes, and track scripts."
         actions={<><Badge variant={controlReadiness === 100 ? "success" : "warning"}>{controlReadiness}% control ready</Badge><Button variant="outline" size="sm" onClick={() => window.print()}><Printer />Print operations brief</Button></>}
       />
       <NoticeBanner notice={notice} />

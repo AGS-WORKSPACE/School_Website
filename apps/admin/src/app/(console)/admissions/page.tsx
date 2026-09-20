@@ -47,7 +47,7 @@ export default function AdmissionsOverviewPage() {
       <PageHeader
         eyebrow="EP-05 · Admissions & Applicant CRM"
         title="Admissions operations & applicant lifecycle"
-        description="Unified management across UTME, Direct Entry, JUPEB, Postgraduate, Transfer, and International admission streams."
+        description="Manage applications across admission routes."
         actions={
           <div className="flex items-center gap-2">
             <Button

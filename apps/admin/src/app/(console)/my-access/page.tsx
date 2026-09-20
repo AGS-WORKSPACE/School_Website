@@ -69,7 +69,7 @@ export default function MyAccessPage() {
       <PageHeader
         eyebrow="Your account"
         title="My access"
-        description="Everything you can do right now, where it applies, and which grant it came from."
+        description="View your roles, permissions, and scope."
         actions={
           <Button asChild variant="outline">
             <Link href={`/people/${actor.personId}`}>Full record</Link>

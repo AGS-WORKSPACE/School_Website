@@ -141,7 +141,7 @@ export default function DutiesPage() {
       <PageHeader
         eyebrow="Controls"
         title="Segregation of duties"
-        description="No one person should prepare and approve the same high-risk item. Conflicts are detected against effective access, so cover arranged last week counts the same as a role granted last year."
+        description="Review conflicting permissions and exceptions."
       />
 
       <Tabs defaultValue="conflicts">

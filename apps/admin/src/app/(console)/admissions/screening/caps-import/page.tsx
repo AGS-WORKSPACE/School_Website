@@ -74,7 +74,7 @@ export default function CapsImportPage() {
   return (
     <div className="space-y-6">
       <Link href="/admissions/screening" className="inline-flex items-center text-sm font-semibold text-muted-foreground hover:text-primary"><ArrowLeft className="mr-1.5 size-4" />Back to screening workspace</Link>
-      <PageHeader eyebrow="EP-06 · SCR-01" title="CAPS import and candidate association" description="Validate a CAPS export, review discrepancies, and associate clear records with existing candidate applications." actions={<Badge variant="outline">Frontend mock adapter</Badge>} />
+      <PageHeader eyebrow="EP-06 · SCR-01" title="CAPS import and candidate association" description="Import and review CAPS candidate records." actions={<Badge variant="outline">Import preview</Badge>} />
 
       {permissionError && <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm" role="alert">Permission details are unavailable. Import and association actions are hidden.</div>}
       {message && <div className="rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 text-sm" role="status">{message}</div>}

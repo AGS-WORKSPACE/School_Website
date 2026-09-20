@@ -84,8 +84,8 @@ export default function AssessmentConfigurationPage() {
       <PageHeader
         eyebrow="EP-12 · RES-01"
         title="Assessment configuration"
-        description="Configure the approved assessment structure for each course, session and semester. Existing course-version categories are used; no additional assessment types are introduced here."
-        actions={<Badge variant="outline">Frontend workflow</Badge>}
+        description="Set assessment rules for each course."
+        actions={<Badge variant="outline">Preview</Badge>}
       />
 
       {message ? <div className={`flex items-start gap-2 rounded-lg border px-4 py-3 text-sm ${message.tone === "error" ? "border-destructive/30 bg-destructive/5 text-destructive" : message.tone === "success" ? "border-success/30 bg-success/5 text-success" : "border-primary/20 bg-primary/5"}`} role={message.tone === "error" ? "alert" : "status"} aria-live={message.tone === "error" ? "assertive" : "polite"} aria-atomic="true"><StatusIcon tone={message.tone} />{message.text}</div> : null}

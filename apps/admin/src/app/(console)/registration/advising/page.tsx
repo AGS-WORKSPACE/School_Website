@@ -37,7 +37,7 @@ export default function RegistrationAdvisingPage() {
   }
 
   return <div className="space-y-6">
-    <PageHeader eyebrow="EP-10 · REG-04" title="Registration exception review" description="Review each exception with the academic risk and holds relevant to registration. Counselling, health and disciplinary detail stay with the unit that owns them." actions={<Badge variant="outline">Frontend workflow</Badge>} />
+    <PageHeader eyebrow="EP-10 · REG-04" title="Registration exception review" description="Review student registration exceptions." actions={<Badge variant="outline">Preview</Badge>} />
     {message ? <div className={`flex items-center gap-2 rounded-lg border px-4 py-3 text-sm ${message.ok ? "border-success/30 bg-success/5 text-success" : "border-destructive/30 bg-destructive/5 text-destructive"}`} role={message.ok ? "status" : "alert"}>{message.ok ? <CheckCircle2 className="size-4" aria-hidden /> : <ShieldAlert className="size-4" aria-hidden />}{message.text}</div> : null}
     <div className="grid gap-6 lg:grid-cols-[0.8fr_1.5fr]">
       <Section title="Exceptions" description="Pending requests need a decision; decided ones are read-only.">

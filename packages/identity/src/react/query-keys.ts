@@ -7,6 +7,7 @@ export const identityKeys = {
   permissions: ["identity", "permissions"] as const,
   sodRules: ["identity", "sod-rules"] as const,
   assignments: ["identity", "assignments"] as const,
+  assignmentRequests: ["identity", "assignment-requests"] as const,
   delegations: ["identity", "delegations"] as const,
   conflicts: ["identity", "conflicts"] as const,
   exceptions: ["identity", "exceptions"] as const,

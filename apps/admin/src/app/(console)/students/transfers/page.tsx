@@ -26,7 +26,7 @@ export default function TransfersPage() {
       <PageHeader
         eyebrow="EP-08 · SIS-04"
         title="Transfers and change of programme"
-        description="Eligibility, credit decisions and four separate approvals. The final Registry approval appends a Programme_Transfer event; the old programme's history stays intact."
+        description="Review and approve programme transfers."
         actions={<ActingAsSwitcher />}
       />
       <NoticeBanner notice={notice} />
