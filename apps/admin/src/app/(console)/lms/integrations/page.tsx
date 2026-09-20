@@ -24,7 +24,7 @@ export default function IntegrationsPage() {
       <PageHeader
         eyebrow="EP-14 · LMS-07"
         title="Learning-tool integrations"
-        description="LTI, OneRoster and QTI tools need a complete data contract, recorded conformance and a passed security review before activation — decided by someone other than the requester. Failures raise alerts."
+        description="Review and approve learning tool integrations."
         actions={<LmsActorSwitcher />}
       />
       <NoticeBanner notice={notice} />

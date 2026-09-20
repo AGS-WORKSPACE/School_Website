@@ -34,7 +34,7 @@ export default function StudentApprovalsPage() {
       <PageHeader
         eyebrow="EP-08 · Maker-checker"
         title="Student record approvals"
-        description="Identity corrections and lifecycle changes wait here for someone other than the person who raised them. Switch persona to see the rule refuse a self-approval."
+        description="Approve student record changes."
         actions={<ActingAsSwitcher />}
       />
       {!canViewRestrictedHistory(actor.role) && (

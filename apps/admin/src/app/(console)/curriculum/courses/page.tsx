@@ -98,7 +98,7 @@ export default function CoursesPage() {
       <PageHeader
         eyebrow="CUR-02 · Course Catalogue & Syllabi"
         title="Course registry & learning outcomes"
-        description="Statutory course definitions, credit weight allocations, prerequisites, and Bloom's taxonomy learning outcomes."
+        description="Manage courses, credits, and prerequisites."
         actions={
           <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>

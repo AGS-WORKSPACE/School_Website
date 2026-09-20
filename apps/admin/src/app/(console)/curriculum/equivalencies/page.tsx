@@ -83,7 +83,7 @@ export default function EquivalenciesPage() {
       <PageHeader
         eyebrow="CUR-06 · Course Substitutions & Teach-Out Governance"
         title="Course equivalencies & teach-out rules"
-        description="Deterministic course substitutions and phase-out schedules applied during registration and graduation degree audits."
+        description="Manage course substitutions and phase-outs."
         actions={
           <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>

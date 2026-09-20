@@ -40,7 +40,7 @@ export default function GraduandPage({ params }: { params: Promise<{ studentId: 
       <PageHeader
         eyebrow={`${graduand.matriculationNumber} · graduating ${graduand.graduationSession}`}
         title={graduand.name}
-        description={`${graduand.award}, ${graduand.programmeName}. Audited against curriculum ${audit.curriculumVersionNumber} and classification rule ${audit.classificationRuleVersion}.`}
+          description={`${graduand.award} · ${graduand.programmeName}`}
         actions={<GraduationActorSwitcher />}
       />
       <NoticeBanner notice={notice} />

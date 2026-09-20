@@ -43,7 +43,7 @@ export default function AccessPositionPage() {
       <PageHeader
         eyebrow="Overview"
         title="Access position"
-        description="Who holds what, where it came from and what needs a decision today. Every number here is the live result of the policy engine, not a stored counter."
+        description="Review access, risks, and pending decisions."
         actions={
           <Button asChild variant="outline">
             <Link href="/audit">Open audit trail</Link>

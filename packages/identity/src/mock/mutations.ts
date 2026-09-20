@@ -15,12 +15,18 @@ import { breakGlassStatus } from "../domain/break-glass";
 import type { Delegation } from "../domain/delegation";
 import { delegationStatus } from "../domain/delegation";
 import type { Scope } from "../domain/org";
+import type { RoleAssignment, RoleAssignmentRequest } from "../domain/role";
 import type { SodException } from "../domain/sod";
 import { sodExceptionStatus } from "../domain/sod";
 import type { DelegationDraft } from "../policy/delegation";
 import { validateDelegation } from "../policy/delegation";
 import { canApproveException } from "../policy/sod";
 import { getRole } from "../policy/roles";
+import { can, computeEffectiveGrants } from "../policy/access";
+import { detectConflicts } from "../policy/sod";
+import { isConflictBlocking } from "../domain/sod";
+import { validateAssignmentDraft } from "../policy/assignment";
+import type { AssignmentDraft } from "../policy/assignment";
 import { actorLabelFor, appendAudit, getStore } from "./store";
 import type { IdentityStoreData } from "./store";
 
@@ -42,6 +48,20 @@ function newId(prefix: string): string {
   return `${prefix}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
+function assignmentAuthority(store: IdentityStoreData, sessionId: string, permissionId: string, scope: Scope) {
+  const now = new Date();
+  const session = store.sessions.find((candidate) => candidate.id === sessionId);
+  const account = session && store.accounts.find((candidate) => candidate.id === session.accountId);
+  if (!session || !account || account.status !== "active" || !isSessionLive(session, now)) return null;
+  const grants = computeEffectiveGrants({
+    personId: session.personId, now, units: store.units, assignments: store.assignments,
+    delegations: store.delegations, breakGlassGrants: store.breakGlassGrants,
+  });
+  const decision = can({ grants, permissionId, targetScope: scope, units: store.units,
+    mfaSatisfied: Boolean(session.mfaSatisfiedAt), now });
+  return { session, decision };
+}
+
 async function record(
   store: IdentityStoreData,
   draft: Omit<AuditDraft, "actorLabel" | "at"> & { at?: string },
@@ -54,6 +74,95 @@ async function record(
 }
 
 export const identityMutations = {
+  async prepareAssignment(input: { draft: AssignmentDraft; sessionId: string }): Promise<MutationResult<RoleAssignmentRequest>> {
+    const store = await getStore();
+    const authority = assignmentAuthority(store, input.sessionId, "identity:role-assignment:prepare", input.draft.scope);
+    const errors = validateAssignmentDraft({ draft: input.draft, units: store.units,
+      personIds: store.persons.map((person) => person.id), assignments: store.assignments, now: new Date() });
+    if (store.assignmentRequests.some((request) => request.status === "pending" &&
+      request.personId === input.draft.personId && request.roleId === input.draft.roleId &&
+      request.scope.unitId === input.draft.scope.unitId)) {
+      errors.push("A request for this person, role and scope is already pending.");
+    }
+    if (!authority?.decision.allowed) errors.unshift(authority?.decision.reason ?? "Sign in to prepare an assignment.");
+    const actorPersonId = authority?.session.personId ?? null;
+    if (errors.length) {
+      await record(store, { actorPersonId, action: "role-assignment.prepare-refused", subjectType: "role-assignment",
+        subjectId: "—", subjectLabel: input.draft.roleId, scope: input.draft.scope,
+        channel: "web", outcome: "denied", reason: errors.join(" "), before: null, after: null, viaGrantId: null });
+      return settle({ ok: false, message: "Assignment request was refused.", errors });
+    }
+    const request: RoleAssignmentRequest = {
+      ...input.draft, reason: input.draft.reason.trim(), id: newId("asr"), preparedBy: actorPersonId!,
+      preparedAt: new Date().toISOString(), status: "pending", decidedBy: null, decidedAt: null,
+      decisionReason: null, assignmentId: null,
+    };
+    store.assignmentRequests.push(request);
+    await record(store, { actorPersonId, action: "role-assignment.prepared", subjectType: "role-assignment",
+      subjectId: request.id, subjectLabel: `${actorLabelFor(store, request.personId)} · ${getRole(request.roleId)?.name}`,
+      scope: request.scope, channel: "web", outcome: "success", reason: request.reason,
+      before: null, after: { status: "pending" }, viaGrantId: authority!.decision.grant?.source.id ?? null });
+    return settle({ ok: true, message: "Assignment sent for approval. It grants no access yet.", data: request });
+  },
+
+  async decideAssignment(input: { requestId: string; decision: "approve" | "reject"; reason: string; sessionId: string }): Promise<MutationResult<RoleAssignmentRequest>> {
+    const store = await getStore();
+    const request = store.assignmentRequests.find((candidate) => candidate.id === input.requestId);
+    if (!request) return settle({ ok: false, message: "Assignment request not found." });
+    const authority = assignmentAuthority(store, input.sessionId, "identity:role-assignment:approve", request.scope);
+    const actorPersonId = authority?.session.personId ?? null;
+    const errors: string[] = [];
+    if (!authority?.decision.allowed) errors.push(authority?.decision.reason ?? "Sign in to decide an assignment.");
+    if (request.status !== "pending") errors.push("This request has already been decided.");
+    if (actorPersonId === request.preparedBy || actorPersonId === request.personId) errors.push("A person cannot approve their own preparation or access.");
+    if (input.decision === "reject" && input.reason.trim().length < 8) errors.push("Give a reason for rejection.");
+    if (input.decision === "approve") {
+      const now = new Date();
+      errors.push(...validateAssignmentDraft({ draft: request,
+        units: store.units, personIds: store.persons.map((person) => person.id),
+        assignments: store.assignments, now }));
+      const role = getRole(request.roleId);
+      if (role) {
+        const existing = computeEffectiveGrants({ personId: request.personId, now, units: store.units,
+          assignments: store.assignments, delegations: store.delegations, breakGlassGrants: store.breakGlassGrants });
+        const proposed = role.permissionIds.map((permissionId) => ({ permissionId, scope: request.scope,
+          source: { kind: "assignment" as const, id: request.id, roleId: role.id, label: role.name },
+          requiresMfa: role.privileged, expiresAt: request.validUntil }));
+        const conflicts = detectConflicts({ personId: request.personId, grants: [...existing, ...proposed],
+          units: store.units, exceptions: store.sodExceptions.filter((entry) => entry.personId === request.personId), now });
+        if (conflicts.some((conflict) => isConflictBlocking(conflict, now) &&
+          (conflict.sourceA.id === request.id || conflict.sourceB.id === request.id))) {
+          errors.push("This assignment creates a blocking separation-of-duties conflict.");
+        }
+      }
+    }
+    if (errors.length) {
+      await record(store, { actorPersonId, action: "role-assignment.decision-refused", subjectType: "role-assignment",
+        subjectId: request.id, subjectLabel: `${actorLabelFor(store, request.personId)} · ${request.roleId}`,
+        scope: request.scope, channel: "web", outcome: "denied", reason: errors.join(" "),
+        before: { status: request.status }, after: null, viaGrantId: null });
+      return settle({ ok: false, message: "Decision was refused.", errors });
+    }
+    request.status = input.decision === "approve" ? "approved" : "rejected";
+    request.decidedBy = actorPersonId;
+    request.decidedAt = new Date().toISOString();
+    request.decisionReason = input.reason.trim() || null;
+    if (input.decision === "approve") {
+      const assignment: RoleAssignment = { id: newId("asg"), personId: request.personId,
+        roleId: request.roleId, scope: request.scope, reason: request.reason, grantedBy: actorPersonId!,
+        grantedAt: request.decidedAt, validFrom: request.validFrom, validUntil: request.validUntil,
+        revokedAt: null, revokedBy: null, lastReviewedAt: null, lastReviewedBy: null };
+      store.assignments.push(assignment);
+      request.assignmentId = assignment.id;
+    }
+    await record(store, { actorPersonId, action: `role-assignment.${request.status}`,
+      subjectType: "role-assignment", subjectId: request.id,
+      subjectLabel: `${actorLabelFor(store, request.personId)} · ${getRole(request.roleId)?.name}`,
+      scope: request.scope, channel: "web", outcome: "success", reason: request.decisionReason ?? request.reason,
+      before: { status: "pending" }, after: { status: request.status, assignmentId: request.assignmentId },
+      viaGrantId: authority!.decision.grant?.source.id ?? null });
+    return settle({ ok: true, message: input.decision === "approve" ? "Role assignment approved." : "Assignment request rejected.", data: request });
+  },
   // --- IAM-01: one identity, and disabling it ends everything ---------------
 
   /**

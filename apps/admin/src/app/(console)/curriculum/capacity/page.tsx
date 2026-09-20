@@ -48,7 +48,7 @@ export default function CapacityModelingPage() {
       <PageHeader
         eyebrow="CUR-05 · Academic Planning & Resource Governance"
         title="Carrying capacity & demand modeling"
-        description="Versioned capacity assumptions, staff-to-student ratios against NUC statutory benchmarks, and intake variance reporting."
+        description="Review teaching capacity and intake limits."
         actions={
           <div className="flex items-center gap-2">
             <span className="text-xs font-semibold text-muted-foreground">Programme:</span>

@@ -86,7 +86,7 @@ export default function DeduplicationCasePage({ params }: Props) {
       <PageHeader
         eyebrow={`ADM-06 · ${dCase.id}`}
         title="Identity Discrepancy Adjudication"
-        description="Side-by-side comparison of suspected duplicate applicants. Policy strictly forbids automatic merging on name alone."
+        description="Compare records and decide whether they match."
         actions={<div className="flex flex-wrap items-center gap-3">
           <span
             className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${

@@ -55,7 +55,7 @@ export default function ModerationPage() {
 
   const evidence = getModerationEvidence({ reviewId, permissions });
   return <div className="space-y-6">
-    <PageHeader eyebrow="EP-12 · RES-03" title="Moderation workspace" description="Review distributions, configured anomalies and supporting evidence before recording a recommendation. An anomaly is a review signal, not evidence of wrongdoing." actions={<Badge variant="outline">Frontend workflow</Badge>} />
+    <PageHeader eyebrow="EP-12 · RES-03" title="Moderation workspace" description="Review results and record moderation decisions." actions={<Badge variant="outline">Preview</Badge>} />
     {message ? <div className={`flex items-start gap-2 rounded-lg border px-4 py-3 text-sm ${message.tone === "error" ? "border-destructive/30 bg-destructive/5 text-destructive" : "border-success/30 bg-success/5 text-success"}`} role={message.tone === "error" ? "alert" : "status"} aria-live={message.tone === "error" ? "assertive" : "polite"} aria-atomic="true">{message.tone === "error" ? <ShieldAlert className="size-4" aria-hidden /> : <CheckCircle2 className="size-4" aria-hidden />}{message.text}</div> : null}
 
     <Section title="Result under review" description="The exact result version remains attached to every moderation decision.">

@@ -33,7 +33,7 @@ export default function CCMASCompliancePage() {
       <PageHeader
         eyebrow="CUR-03 · Quality Assurance & Accreditation"
         title="CCMAS 70/30 distribution & benchmark compliance"
-        description="Statutory alignment against National Universities Commission (NUC) Core Curriculum Minimum Academic Standards."
+        description="Review curriculum alignment with national standards."
         actions={
           <div className="flex items-center gap-2">
             <Button

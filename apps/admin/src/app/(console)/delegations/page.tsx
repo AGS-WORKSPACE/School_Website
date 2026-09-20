@@ -133,7 +133,7 @@ export default function DelegationsPage() {
       <PageHeader
         eyebrow="Controls"
         title="Delegated authority"
-        description={`Cover during absence, with both ends of the window fixed. A delegation draws on one assignment the delegator already holds and can never exceed it — not in actions, not in scope, and not beyond ${maxDelegationDays} days.`}
+          description={`Grant temporary cover for up to ${maxDelegationDays} days.`}
         actions={
           <Button onClick={() => setOpen((value) => !value)}>
             <Plus className="size-4" aria-hidden />

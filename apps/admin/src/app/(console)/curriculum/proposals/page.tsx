@@ -69,7 +69,7 @@ export default function ProposalsPage() {
       <PageHeader
         eyebrow="CUR-04 · Curriculum Governance & Senate Pipeline"
         title="Curriculum change proposals"
-        description="Staged maker-checker workflow: Department Board ➔ Faculty Board ➔ DAP Technical Review ➔ Senate Approval."
+        description="Review and approve curriculum changes."
         actions={
           <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>

@@ -93,7 +93,7 @@ export default function LibraryResearchPage() {
   }
 
   return <div className="space-y-6">
-    <PageHeader eyebrow="EP-25 · Library, research & innovation" title="Connected scholarly services" description="Synchronise access without exposing borrowing history, place licensed resources in learning context, and evidence research activity without rebuilding specialist systems." actions={<><Badge variant="success"><CheckCircle2 />Integration healthy</Badge><Button variant="outline" size="sm"><FileCheck2 />Export evidence</Button></>} />
+    <PageHeader eyebrow="EP-25 · Library, research & innovation" title="Connected scholarly services" description="Manage library access and research services." actions={<><Badge variant="success"><CheckCircle2 />Integration healthy</Badge><Button variant="outline" size="sm"><FileCheck2 />Export evidence</Button></>} />
     <NoticeBanner notice={notice} />
     <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5"><Stat label="Active patrons" value={activePatrons.toLocaleString()} hint={`${queued} sync events queued`} icon={Users} tone="good" /><Stat label="Entitlement SLA" value={`${slaPercent}%`} hint="Target: within 15 minutes" icon={FileClock} tone={slaPercent === 100 ? "good" : "warning"} /><Stat label="Discovery links" value={resources.length} hint={`${resources.filter((item) => item.status !== "Available").length} need attention`} icon={Link2} /><Stat label="Library obligations" value={openObligations} hint="Only library checkpoint" icon={ClipboardCheck} tone={openObligations ? "warning" : "good"} /><Stat label="Verified outputs" value={verifiedOutputs} hint={`${outputs.length} profile outputs`} icon={GraduationCap} /></div>
 

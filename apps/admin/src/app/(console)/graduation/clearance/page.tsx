@@ -22,7 +22,7 @@ export default function ClearanceBoardPage() {
       <PageHeader
         eyebrow="EP-18 · GRD-02"
         title="Graduation clearance"
-        description="One case per graduand with parallel checkpoints for Registry, Bursary, Library, Department, Student Affairs, Hostel and ICT. Overall status derives from the required checkpoints."
+        description="Review clearance from each required unit."
         actions={<GraduationActorSwitcher />}
       />
       <NoticeBanner notice={notice} />

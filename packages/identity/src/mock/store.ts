@@ -19,7 +19,7 @@ import type { Delegation } from "../domain/delegation";
 import type { OrgUnit } from "../domain/org";
 import type { Person } from "../domain/person";
 import { personDisplayName } from "../domain/person";
-import type { RoleAssignment } from "../domain/role";
+import type { RoleAssignment, RoleAssignmentRequest } from "../domain/role";
 import type { SodException } from "../domain/sod";
 import {
   breakGlassWatchList,
@@ -39,6 +39,7 @@ export interface IdentityStoreData {
   accounts: Account[];
   sessions: Session[];
   assignments: RoleAssignment[];
+  assignmentRequests: RoleAssignmentRequest[];
   delegations: Delegation[];
   breakGlassGrants: BreakGlassGrant[];
   sodExceptions: SodException[];
@@ -461,6 +462,7 @@ async function buildStore(): Promise<IdentityStoreData> {
     accounts: structuredClone(seedAccounts),
     sessions: structuredClone(seedSessions),
     assignments: structuredClone(seedAssignments),
+    assignmentRequests: [],
     delegations: structuredClone(seedDelegations),
     breakGlassGrants: structuredClone(seedBreakGlass),
     sodExceptions: structuredClone(seedSodExceptions),

@@ -85,6 +85,12 @@ export const navigation: NavGroup[] = [
         icon: KeyRound,
       },
       {
+        href: "/role-assignments",
+        label: "Role assignments",
+        description: "Prepare and approve scoped role access.",
+        icon: UserPlus,
+      },
+      {
         href: "/access-review",
         label: "Access review",
         description: "Confirm or withdraw standing access.",

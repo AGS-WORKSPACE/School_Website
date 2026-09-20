@@ -38,7 +38,7 @@ export default function OrganisationPage() {
 
   return (
     <>
-      <PageHeader eyebrow="CFG-01" title="Organisation" description="Manage the institutional hierarchy, reporting lines and effective-dated unit history without deleting the past." actions={<><Button variant="outline" onClick={exportCsv}><Download /> Export structure</Button><Button onClick={() => setEditing(null)}><Plus /> Add unit</Button></>} />
+      <PageHeader eyebrow="CFG-01" title="Organisation" description="Manage units and reporting lines." actions={<><Button variant="outline" onClick={exportCsv}><Download /> Export structure</Button><Button onClick={() => setEditing(null)}><Plus /> Add unit</Button></>} />
       <DemoNotice>Choose an effective date to reconstruct the structure used by historical records.</DemoNotice>
       <FilterPanel>
         <div className="relative min-w-60 flex-1"><Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" /><Input className="pl-9" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search unit, stable ID or head" aria-label="Search organisation units" /></div>

@@ -36,7 +36,7 @@ export default function StudentRecordPage({ params }: { params: Promise<{ id: st
       <PageHeader
         eyebrow={`${student.matriculationNumber}${placement ? ` · ${placement.status}` : ""}`}
         title={studentName(student.fields)}
-        description={placement ? `${placement.programmeName}, ${placement.level} level, ${humanise(placement.mode)}. Record created ${formatDate(student.createdAt)}${student.sourceApplicationId ? ` from admission application ${student.sourceApplicationId}` : ""}.` : "Not yet matriculated."}
+        description={placement ? `${placement.programmeName} · Level ${placement.level} · ${humanise(placement.mode)}` : "Not yet matriculated."}
         actions={<ActingAsSwitcher />}
       />
 

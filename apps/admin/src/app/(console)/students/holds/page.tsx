@@ -34,7 +34,7 @@ export default function HoldRegisterPage() {
       <PageHeader
         eyebrow="EP-08 · SIS-05"
         title="Student holds"
-        description="Holds restrict named services and are owned by one unit. They never change a student's lifecycle status."
+        description="Manage holds on student services."
         actions={<ActingAsSwitcher />}
       />
       <NoticeBanner notice={notice} />

@@ -18,7 +18,7 @@ import { delegationStatus } from "../domain/delegation";
 import type { OrgUnit, Scope } from "../domain/org";
 import type { Person } from "../domain/person";
 import { personDisplayName } from "../domain/person";
-import type { AssignmentStatus, Role, RoleAssignment } from "../domain/role";
+import type { AssignmentStatus, Role, RoleAssignment, RoleAssignmentRequest } from "../domain/role";
 import { assignmentStatus } from "../domain/role";
 import type { SodConflict, SodException } from "../domain/sod";
 import { isConflictBlocking, sodExceptionStatus } from "../domain/sod";
@@ -351,6 +351,11 @@ export const identityReads = {
 
   async getRoles(): Promise<Role[]> {
     return delay(roleCatalogue);
+  },
+
+  async getAssignmentRequests(): Promise<RoleAssignmentRequest[]> {
+    const store = await getStore();
+    return delay(store.assignmentRequests);
   },
 
   async getPermissions() {

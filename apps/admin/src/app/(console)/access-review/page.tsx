@@ -60,7 +60,7 @@ export default function AccessReviewPage() {
       <PageHeader
         eyebrow="Assurance"
         title="Access review"
-        description="Standing access is the access nobody remembers granting. Confirming keeps it and stamps who checked; withdrawing ends it immediately and records why."
+        description="Review and withdraw existing access."
         actions={
           <div className="w-full sm:w-56">
             <Label htmlFor="review-scope" className="sr-only">

@@ -42,7 +42,7 @@ export default function CurriculumOverviewPage() {
       <PageHeader
         eyebrow="EP-09 · Academic Planning & Governance"
         title="Curriculum catalogue and academic planning"
-        description="The approved curriculum is versioned, teachable and defensible during NUC and professional accreditation."
+        description="Manage programmes, courses, and approvals."
         actions={
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" onClick={resetCurriculumStore}>

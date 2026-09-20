@@ -25,7 +25,7 @@ export default function SchedulingPage() {
   function announce(result: { ok: boolean; error?: string }, success: string) { setMessage(result.ok ? success : result.error); }
 
   return <div className="space-y-6">
-    <PageHeader eyebrow="EP-11 · Scheduling operations" title="Calendar, timetable, rooms and workload" description="Coordinate teaching and examinations with visible ownership, explainable constraints and publication controls." actions={<div className="flex gap-2"><Button variant="outline" size="sm" onClick={() => mutations.reset()}><RotateCcw className="mr-1.5 size-3.5" />Reset demo</Button><Button asChild size="sm"><Link href="/scheduling/my-timetable"><CalendarClock className="mr-1.5 size-3.5" />My timetable</Link></Button></div>} />
+    <PageHeader eyebrow="EP-11 · Scheduling operations" title="Calendar, timetable, rooms and workload" description="Manage timetables, rooms, and workload." actions={<div className="flex gap-2"><Button variant="outline" size="sm" onClick={() => mutations.reset()}><RotateCcw className="mr-1.5 size-3.5" />Reset demo</Button><Button asChild size="sm"><Link href="/scheduling/my-timetable"><CalendarClock className="mr-1.5 size-3.5" />My timetable</Link></Button></div>} />
     {message && <div role="status" className="rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 text-sm font-medium">{message}</div>}
     <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
       <Metric icon={CalendarCheck} label="Academic calendar" value={`v${calendar?.version ?? "—"}`} detail={calendar ? `${calendar.status} · ${calendar.authority}` : "Not configured"} />

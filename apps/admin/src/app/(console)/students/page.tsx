@@ -56,7 +56,7 @@ export default function StudentRegisterPage() {
       <PageHeader
         eyebrow="EP-08 · Student records"
         title="Student record register"
-        description="The authoritative record for every matriculated student: provenance-backed identity, effective-dated lifecycle history, and holds kept separate from status."
+        description="Manage student records and status."
         actions={<><ActingAsSwitcher /><Button variant="outline" size="sm" className="self-end" onClick={resetStudentsStore}>Reset demo data</Button></>}
       />
 

@@ -73,7 +73,7 @@ export default function ApplicationsListPage() {
       <PageHeader
         eyebrow="EP-05 · Admissions CRM"
         title="Applicant dossiers & candidate cases"
-        description="Comprehensive records of all applicants across undergraduate and postgraduate admission streams."
+        description="View and manage applicant records."
         actions={
           <Button asChild size="sm">
             <Link href="/admissions/assisted-intake">

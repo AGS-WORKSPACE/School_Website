@@ -20,7 +20,7 @@ export default function ConfigurationOverviewPage() {
 
   return (
     <>
-      <PageHeader eyebrow="EP-02 · Configuration" title="Institutional configuration" description="One effective-dated source for the organisation, academic calendar, controlled vocabulary and policy rules used across UniSite." actions={<><Button variant="outline" onClick={resetDemo}>Reset demo data</Button><Button asChild><Link href="/configuration/activity">Review activity</Link></Button></>} />
+      <PageHeader eyebrow="EP-02 · Configuration" title="Institutional configuration" description="Manage university settings and policies." actions={<><Button variant="outline" onClick={resetDemo}>Reset demo data</Button><Button asChild><Link href="/configuration/activity">Review activity</Link></Button></>} />
       <DemoNotice>Actions update browser memory immediately for this demonstration. No production systems or databases are connected.</DemoNotice>
 
       <section aria-label="Configuration summary" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">

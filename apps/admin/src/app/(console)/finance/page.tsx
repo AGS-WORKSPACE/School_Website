@@ -220,7 +220,7 @@ export default function FinanceControlPage() {
       <PageHeader
         eyebrow="EP-17 · Financial control"
         title="Reconciliation and period close"
-        description="Match every student-money movement, preserve reversible journals, govern refunds and close each period with evidence."
+        description="Review payments, refunds, and financial records."
         actions={<><Badge variant={periodStatus === "Open" ? "success" : periodStatus === "Closed" ? "destructive" : "warning"}><Lock />October 2026 · {periodStatus.replace("_", " ")}</Badge><Button variant="outline" size="sm"><FileCheck2 />Evidence pack</Button></>}
       />
       <NoticeBanner notice={notice} />
