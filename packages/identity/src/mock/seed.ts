@@ -767,6 +767,22 @@ export const seedAssignments: RoleAssignment[] = [
     "Teaching allocation for 2026/2027 session.",
   ),
   assignment(
+    "asg-hauwa-adviser",
+    "per-hauwa",
+    "academic-adviser",
+    "department",
+    "dept-computer",
+    "Academic adviser for Computer Science registration exceptions.",
+  ),
+  assignment(
+    "asg-ngozi-registry",
+    "per-ngozi",
+    "registry-officer",
+    "institution",
+    "inst-tau",
+    "Registrar freezes and amends approved registration statements.",
+  ),
+  assignment(
     "asg-blessing-bursar",
     "per-blessing",
     "bursar",
