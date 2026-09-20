@@ -8,6 +8,7 @@
 @source "../../../../packages/lms/src";
 @source "../../../../packages/graduation/src";
 @source "../../../../packages/registration/src";
+@source "../../../../packages/odl/src";
 
 /* Presentation flourishes used only by the public site. */
 @theme inline {

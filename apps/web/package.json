@@ -19,6 +19,8 @@
     "@tau/curriculum": "*",
     "@tau/graduation": "*",
     "@tau/lms": "*",
+    "@tau/odl": "*",
+    "@tau/registration": "*",
     "@tau/students": "*",
     "@tau/ui": "*",
     "clsx": "^2.1.1",
