@@ -213,7 +213,7 @@ export default function SignInPage() {
         <CardContent>
           <form onSubmit={submitCredentials} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="username">Username or NAU email</Label>
+              <Label htmlFor="username">Username or email</Label>
               <Input
                 id="username"
                 value={username}
