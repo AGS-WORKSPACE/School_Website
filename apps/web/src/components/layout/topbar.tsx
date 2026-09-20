@@ -30,7 +30,7 @@ export function TopBar() {
           </span>
         </div>
         <nav aria-label="Utility navigation" className="flex w-full items-center justify-between gap-2 md:w-auto md:justify-end">
-          <span className="hidden text-white/70 sm:inline-flex">A private medical university of excellence</span>
+          <span className="hidden text-white/70 sm:inline-flex">Discipline · Self Reliance · Excellence</span>
           <ul className="flex items-center gap-4">
             {utilityNav.map((item) => (
               <li key={item.label}>

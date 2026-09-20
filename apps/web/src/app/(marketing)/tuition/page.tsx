@@ -14,7 +14,7 @@ import { Card, CardContent } from "@tau/ui/card";
 export const metadata: Metadata = generatePageMetadata({
   title: "Tuition & Scholarships",
   description:
-    "Tuition fees, scholarships, financial aid, and payment methods at Transatlantic University.",
+    "Tuition fees, scholarships, financial aid, and payment methods at Nnamdi Azikiwe University.",
   path: "/tuition",
 });
 
@@ -82,7 +82,7 @@ export default function TuitionPage() {
           <SectionHeader
             eyebrow="Scholarships & Aid"
             title="Funding Your Education"
-            description="TAU invests millions in scholarships every session. Find the award that fits you."
+            description="NAU invests millions in scholarships every session. Find the award that fits you."
           />
           <StaggerContainer className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {scholarships.map((scholarship) => (
@@ -150,7 +150,7 @@ export default function TuitionPage() {
 
       <CTASection
         title="Invest in Your Future"
-        description="With scholarships covering up to 100% of tuition, TAU is closer than you think."
+        description="With scholarships covering up to 100% of tuition, NAU is closer than you think."
         primary={{ label: "Apply Now", href: "/admissions/apply" }}
         secondary={{ label: "Explore Scholarships", href: "/tuition" }}
       />

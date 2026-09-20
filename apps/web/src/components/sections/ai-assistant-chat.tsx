@@ -15,40 +15,41 @@ interface Message {
 const SUGGESTED_PROMPTS = [
   "When are the application deadlines?",
   "What is the tuition fee structure?",
-  "Which programmes does TAU offer?",
+  "Which programmes does NAU offer?",
   "How can I apply for a scholarship?",
   "Tell me about campus life and hostels.",
-  "What research does TAU do?",
+  "What research does NAU do?",
 ];
 
 function answerFor(query: string) {
   const text = query.toLowerCase();
   if (/(deadline|apply|admission|entrance|jamb|requirements)/.test(text)) {
-    return "Admissions for the 2026/2027 session are open. Undergraduate applications close in two rolling batches — early decisions in February and final submissions in July — while postgraduate applications are reviewed all year round. You can start your application at /admissions/apply, and our admissions team replies within 24 hours.";
+    return "Admission dates and requirements vary by programme. Check the Admissions page or contact the Registrar for current details.";
   }
   if (/(tuition|fee|cost|scholarship|bursary|finance)/.test(text)) {
-    return "Annual tuition varies by faculty — Medicine, Dentistry, Pharmacy, Nursing, Public Health, and Biomedical Sciences each have their own schedule. Every admitted student is automatically considered for merit scholarships, and TAU runs need-based bursaries for eligible Nigerian students. See the full Tuition & Scholarships page for the breakdown.";
+    return "Fees and funding depend on the programme and session. Check the Tuition page for the latest published information.";
   }
   if (/(programme|program|course|medicine|nursing|pharmacy|degree)/.test(text)) {
-    return "TAU offers MBBS Medicine, BDS Dentistry, BSc Nursing, BSc Pharmacy, BSc Public Health, and BSc Biomedical Sciences, plus a full postgraduate school with MSc, MD, and PhD programmes. Explore all programmes under the Study menu, and I can help you find the right fit.";
+    return "Explore the Study menu for programmes and entry routes at Nnamdi Azikiwe University.";
   }
   if (/(campus|hostel|accommodation|life|sport|club|dining)/.test(text)) {
-    return "Our Umuchukwu campus has modern hostels, a medical library open 24/7, sports complex, cafeterias, and dozens of student societies. The Student Life page has the full picture — and your first-year hostel allocation is guaranteed for all admitted students.";
+    return "The main university campus is in Awka, Anambra State. See Student Life for facilities and accommodation information.";
   }
   if (/(research|lab|publication|grant|innovation)/.test(text)) {
-    return "TAU runs six research centres focused on neglected tropical diseases, cardiovascular health, and more. Our core facilities include molecular labs, imaging, and a clinical simulation centre. Explore Research & Innovation to learn about publications, grants, and partnerships.";
+    return "Visit Research & Innovation for information about research activity and opportunities.";
   }
   if (/(contact|email|phone|location|where|visit)/.test(text)) {
-    return "You can reach the admissions office at admissions@tau.edu.ng or call +234 800 TAU MEDS. Our campus is at Umuchukwu, Anambra State, Nigeria — the Contact page lists every office and department.";
+    return "Nnamdi Azikiwe University is in Awka, Anambra State. Contact the Registrar at registrar@unizik.edu.ng or +234 816 495 8768.";
   }
-  return "Thanks for your question! I can help with admissions, tuition and scholarships, programmes, campus life, and research. Try one of the suggested prompts below, or visit our Contact page to speak directly with a member of the team.";
+  return "I can help you find admissions, programmes, campus, research and contact pages. Try a suggested question below.";
 }
+
 export function AiAssistantChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: crypto.randomUUID(),
       role: "assistant",
-      text: "Hello, I am the TAU Virtual Assistant. Ask me anything about admissions, programmes, tuition, campus life, or research at TAU.",
+      text: "Hello, I am the NAU Virtual Assistant. Ask me anything about admissions, programmes, tuition, campus life, or research at NAU.",
     },
   ]);
   const [draft, setDraft] = useState("");
@@ -81,7 +82,7 @@ export function AiAssistantChat() {
             <Sparkles className="size-5 text-gold-light" aria-hidden="true" />
           </span>
           <div className="leading-tight">
-            <p className="font-display font-bold">TAU Virtual Assistant</p>
+            <p className="font-display font-bold">NAU Virtual Assistant</p>
             <p className="text-xs text-white/70">University information · Available 24/7</p>
           </div>
         </div>

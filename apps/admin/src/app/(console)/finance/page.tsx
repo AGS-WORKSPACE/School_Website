@@ -83,25 +83,25 @@ type ExportEntry = {
 const money = (value: number) => new Intl.NumberFormat("en-NG", { style: "currency", currency: "NGN", maximumFractionDigits: 0 }).format(value);
 
 const initialReconciliation: ReconciliationRow[] = [
-  { id: "rec-001", gatewayRef: "PAY-883104", bankRef: "GTB-261019-4412", platformRef: "RCT-2026-18441", student: "TAU/CSC/23/014", amount: 185000, state: "Exact", rule: "Reference + amount + date", confidence: 100 },
-  { id: "rec-002", gatewayRef: "PAY-883116", bankRef: "UBA-261019-9081", platformRef: "RCT-2026-18452", student: "TAU/BUS/23/018", amount: 125000, state: "Exact", rule: "Reference + amount + date", confidence: 100 },
-  { id: "rec-003", gatewayRef: "PAY-883121", bankRef: "ZEN-261019-1702", platformRef: "RCT-2026-18458", student: "TAU/CSC/23/031", amount: 92500, state: "Proposed", rule: "Amount + account + ±1 day", confidence: 92 },
-  { id: "rec-004", gatewayRef: "PAY-883129", bankRef: "—", platformRef: "RCT-2026-18463", student: "TAU/ENG/23/007", amount: 45000, state: "Unmatched", rule: "No bank settlement candidate", confidence: 0 },
+  { id: "rec-001", gatewayRef: "PAY-883104", bankRef: "GTB-261019-4412", platformRef: "RCT-2026-18441", student: "NAU/CSC/23/014", amount: 185000, state: "Exact", rule: "Reference + amount + date", confidence: 100 },
+  { id: "rec-002", gatewayRef: "PAY-883116", bankRef: "UBA-261019-9081", platformRef: "RCT-2026-18452", student: "NAU/BUS/23/018", amount: 125000, state: "Exact", rule: "Reference + amount + date", confidence: 100 },
+  { id: "rec-003", gatewayRef: "PAY-883121", bankRef: "ZEN-261019-1702", platformRef: "RCT-2026-18458", student: "NAU/CSC/23/031", amount: 92500, state: "Proposed", rule: "Amount + account + ±1 day", confidence: 92 },
+  { id: "rec-004", gatewayRef: "PAY-883129", bankRef: "—", platformRef: "RCT-2026-18463", student: "NAU/ENG/23/007", amount: 45000, state: "Unmatched", rule: "No bank settlement candidate", confidence: 0 },
   { id: "rec-005", gatewayRef: "—", bankRef: "FBN-261019-5529", platformRef: "—", student: "Narration: O. ADE", amount: 185000, state: "Unmatched", rule: "No gateway or platform reference", confidence: 0 },
 ];
 
 const initialJournals: Journal[] = [
-  { id: "JRN-001842", kind: "Receipt", student: "TAU/CSC/23/014", charge: "2026/27 Tuition", debit: 185000, credit: 185000, status: "Posted", postedBy: "B. Okafor", postedAt: "19 Oct · 10:42" },
-  { id: "JRN-001846", kind: "Receipt", student: "TAU/BUS/23/018", charge: "2026/27 Tuition", debit: 125000, credit: 125000, status: "Reversed", postedBy: "B. Okafor", postedAt: "19 Oct · 11:18" },
-  { id: "JRN-001851", kind: "Reversal", student: "TAU/BUS/23/018", charge: "2026/27 Tuition", debit: -125000, credit: -125000, status: "Posted", linkedTo: "JRN-001846", postedBy: "M. Ibrahim", postedAt: "19 Oct · 13:07" },
-  { id: "JRN-001852", kind: "Repost", student: "TAU/BUS/23/018", charge: "Accommodation Fee", debit: 125000, credit: 125000, status: "Posted", linkedTo: "JRN-001846", postedBy: "M. Ibrahim", postedAt: "19 Oct · 13:09" },
+  { id: "JRN-001842", kind: "Receipt", student: "NAU/CSC/23/014", charge: "2026/27 Tuition", debit: 185000, credit: 185000, status: "Posted", postedBy: "B. Okafor", postedAt: "19 Oct · 10:42" },
+  { id: "JRN-001846", kind: "Receipt", student: "NAU/BUS/23/018", charge: "2026/27 Tuition", debit: 125000, credit: 125000, status: "Reversed", postedBy: "B. Okafor", postedAt: "19 Oct · 11:18" },
+  { id: "JRN-001851", kind: "Reversal", student: "NAU/BUS/23/018", charge: "2026/27 Tuition", debit: -125000, credit: -125000, status: "Posted", linkedTo: "JRN-001846", postedBy: "M. Ibrahim", postedAt: "19 Oct · 13:07" },
+  { id: "JRN-001852", kind: "Repost", student: "NAU/BUS/23/018", charge: "Accommodation Fee", debit: 125000, credit: 125000, status: "Posted", linkedTo: "JRN-001846", postedBy: "M. Ibrahim", postedAt: "19 Oct · 13:09" },
 ];
 
 const initialRefunds: Refund[] = [
-  { id: "RFD-2026-041", student: "Kelechi Okoro", matric: "TAU/CSC/23/014", amount: 85000, reason: "Duplicate tuition payment", status: "Verification", destination: "GTBank · •••• 4412", nameCheck: "Match", evidence: ["Duplicate receipt", "Student request"] },
-  { id: "RFD-2026-039", student: "Fatima Yusuf", matric: "TAU/BUS/23/018", amount: 420000, reason: "Programme withdrawal", status: "Approval", destination: "UBA · •••• 9081", nameCheck: "Match", evidence: ["Withdrawal approval", "Fee ledger", "Bank verification"] },
-  { id: "RFD-2026-036", student: "David Etim", matric: "TAU/ENG/23/007", amount: 55000, reason: "Overpayment", status: "Rejected", destination: "FirstBank · •••• 5529", nameCheck: "Mismatch", evidence: ["Name-check response", "Rejection notice"] },
-  { id: "RFD-2026-032", student: "Zainab Bello", matric: "TAU/CSC/23/031", amount: 92500, reason: "Reversed card debit", status: "Paid", destination: "Zenith · •••• 1702", nameCheck: "Match", evidence: ["Approval", "Payment instruction", "Bank confirmation"] },
+  { id: "RFD-2026-041", student: "Kelechi Okoro", matric: "NAU/CSC/23/014", amount: 85000, reason: "Duplicate tuition payment", status: "Verification", destination: "GTBank · •••• 4412", nameCheck: "Match", evidence: ["Duplicate receipt", "Student request"] },
+  { id: "RFD-2026-039", student: "Fatima Yusuf", matric: "NAU/BUS/23/018", amount: 420000, reason: "Programme withdrawal", status: "Approval", destination: "UBA · •••• 9081", nameCheck: "Match", evidence: ["Withdrawal approval", "Fee ledger", "Bank verification"] },
+  { id: "RFD-2026-036", student: "David Etim", matric: "NAU/ENG/23/007", amount: 55000, reason: "Overpayment", status: "Rejected", destination: "FirstBank · •••• 5529", nameCheck: "Mismatch", evidence: ["Name-check response", "Rejection notice"] },
+  { id: "RFD-2026-032", student: "Zainab Bello", matric: "NAU/CSC/23/031", amount: 92500, reason: "Reversed card debit", status: "Paid", destination: "Zenith · •••• 1702", nameCheck: "Match", evidence: ["Approval", "Payment instruction", "Bank confirmation"] },
 ];
 
 const initialExports: ExportEntry[] = [
@@ -183,7 +183,7 @@ export default function FinanceControlPage() {
       announce({ ok: false, error: "Enter a valid amount and reason for the refund request." }, "");
       return;
     }
-    const item: Refund = { id: `RFD-2026-${42 + refunds.length}`, student: "Current student", matric: "TAU/CSC/23/014", amount, reason: refundReason.trim(), status: "Submitted", destination: "GTBank · •••• 4412", nameCheck: "Review", evidence: ["Student request"] };
+    const item: Refund = { id: `RFD-2026-${42 + refunds.length}`, student: "Current student", matric: "NAU/CSC/23/014", amount, reason: refundReason.trim(), status: "Submitted", destination: "GTBank · •••• 4412", nameCheck: "Review", evidence: ["Student request"] };
     setRefunds((current) => [item, ...current]);
     announce({ ok: true }, `${item.id} submitted. The student can now follow verification, approval and payment status.`);
   }

@@ -73,12 +73,12 @@ type IntegrityCase = {
 };
 
 const initialCandidates: Candidate[] = [
-  { id: "stu-201", matric: "TAU/CSC/23/014", name: "Kelechi Okoro", course: "COS 101", source: "Frozen registration", eligible: true, note: "Registration frozen" },
-  { id: "stu-202", matric: "TAU/CSC/23/031", name: "Zainab Bello", course: "COS 101", source: "Frozen registration", eligible: true, note: "Registration frozen" },
-  { id: "stu-203", matric: "TAU/CSC/23/044", name: "Tobi Adeyemi", course: "COS 101", source: "Approved late change", eligible: true, note: "EXC-2026-017 · Registrar approved" },
-  { id: "stu-204", matric: "TAU/CSC/23/052", name: "Amara Eze", course: "CSC 201", source: "Frozen registration", eligible: true, note: "Registration frozen" },
-  { id: "stu-205", matric: "TAU/CSC/23/061", name: "David Etim", course: "CSC 201", source: "Frozen registration", eligible: false, note: "Active examination hold" },
-  { id: "stu-206", matric: "TAU/BUS/23/018", name: "Fatima Yusuf", course: "GST 203", source: "Frozen registration", eligible: true, note: "Registration frozen" },
+  { id: "stu-201", matric: "NAU/CSC/23/014", name: "Kelechi Okoro", course: "COS 101", source: "Frozen registration", eligible: true, note: "Registration frozen" },
+  { id: "stu-202", matric: "NAU/CSC/23/031", name: "Zainab Bello", course: "COS 101", source: "Frozen registration", eligible: true, note: "Registration frozen" },
+  { id: "stu-203", matric: "NAU/CSC/23/044", name: "Tobi Adeyemi", course: "COS 101", source: "Approved late change", eligible: true, note: "EXC-2026-017 · Registrar approved" },
+  { id: "stu-204", matric: "NAU/CSC/23/052", name: "Amara Eze", course: "CSC 201", source: "Frozen registration", eligible: true, note: "Registration frozen" },
+  { id: "stu-205", matric: "NAU/CSC/23/061", name: "David Etim", course: "CSC 201", source: "Frozen registration", eligible: false, note: "Active examination hold" },
+  { id: "stu-206", matric: "NAU/BUS/23/018", name: "Fatima Yusuf", course: "GST 203", source: "Frozen registration", eligible: true, note: "Registration frozen" },
 ];
 
 const initialSlots: ExamSlot[] = [
@@ -96,15 +96,15 @@ const initialPapers: Paper[] = [
 ];
 
 const arrangements = [
-  { id: "arr-1", candidate: "TAU/CSC/23/031", course: "COS 101", arrangement: "25% extra time", room: "ICT Hall A", fulfilled: true },
-  { id: "arr-2", candidate: "TAU/CSC/23/052", course: "CSC 201", arrangement: "Ground-floor seating", room: "Engineering LT 2", fulfilled: true },
-  { id: "arr-3", candidate: "TAU/BUS/23/018", course: "GST 203", arrangement: "Reader and separate room", room: "Access Suite 1", fulfilled: false },
+  { id: "arr-1", candidate: "NAU/CSC/23/031", course: "COS 101", arrangement: "25% extra time", room: "ICT Hall A", fulfilled: true },
+  { id: "arr-2", candidate: "NAU/CSC/23/052", course: "CSC 201", arrangement: "Ground-floor seating", room: "Engineering LT 2", fulfilled: true },
+  { id: "arr-3", candidate: "NAU/BUS/23/018", course: "GST 203", arrangement: "Reader and separate room", room: "Access Suite 1", fulfilled: false },
 ];
 
 const initialCases: IntegrityCase[] = [
-  { id: "INT-2026-014", candidate: "TAU/CSC/23/044", course: "COS 101", category: "Unauthorised material", stage: "Response", evidence: 3, nextDue: "25 Oct 2026", owner: "Integrity Office" },
-  { id: "INT-2026-011", candidate: "TAU/BUS/23/018", course: "GST 203", category: "Suspected impersonation", stage: "Panel", evidence: 6, nextDue: "28 Oct 2026", owner: "Panel Secretariat" },
-  { id: "INT-2026-008", candidate: "TAU/CSC/23/061", course: "CSC 201", category: "Collusion", stage: "Appeal", evidence: 4, nextDue: "30 Oct 2026", owner: "Appeals Secretary" },
+  { id: "INT-2026-014", candidate: "NAU/CSC/23/044", course: "COS 101", category: "Unauthorised material", stage: "Response", evidence: 3, nextDue: "25 Oct 2026", owner: "Integrity Office" },
+  { id: "INT-2026-011", candidate: "NAU/BUS/23/018", course: "GST 203", category: "Suspected impersonation", stage: "Panel", evidence: 6, nextDue: "28 Oct 2026", owner: "Panel Secretariat" },
+  { id: "INT-2026-008", candidate: "NAU/CSC/23/061", course: "CSC 201", category: "Collusion", stage: "Appeal", evidence: 4, nextDue: "30 Oct 2026", owner: "Appeals Secretary" },
 ];
 
 const stages: IntegrityStage[] = ["Allegation", "Notice", "Response", "Panel", "Decision", "Sanction", "Appeal", "Closed"];
@@ -279,7 +279,7 @@ export default function ExaminationsPage() {
           </Section>
           <div className="grid gap-5 xl:grid-cols-2">
             <Section title="Incident evidence" description="Identity, timing and evidence remain linked to the sitting record.">
-              <div className="space-y-3"><Incident time="09:18" title="Late arrival" detail="Candidate TAU/CSC/23/044 admitted under rule 4.2; start time recorded." evidence="1 statement" /><Incident time="10:26" title="Suspected unauthorised material" detail="Material bagged, photographed and witnessed; candidate continued under instruction." evidence="3 files" /></div>
+              <div className="space-y-3"><Incident time="09:18" title="Late arrival" detail="Candidate NAU/CSC/23/044 admitted under rule 4.2; start time recorded." evidence="1 statement" /><Incident time="10:26" title="Suspected unauthorised material" detail="Material bagged, photographed and witnessed; candidate continued under instruction." evidence="3 files" /></div>
             </Section>
             <Section title="Custody chain" description="Every transfer records sender, recipient, count and acceptance.">
               <ol className="space-y-4 border-l-2 border-primary/20 pl-5 text-sm"><li><p className="font-semibold">08:34 · Sealed papers received</p><p className="text-muted-foreground">Exams vault → Dr Amina Yusuf · 170 copies</p></li><li><p className="font-semibold">11:14 · Scripts prepared for transfer</p><p className="text-muted-foreground">Dr Amina Yusuf → Scripts Office · {scriptCount} scripts</p></li><li><p className="font-semibold">{custodyAccepted ? "11:22 · Transfer accepted" : "Awaiting recipient acceptance"}</p><p className="text-muted-foreground">Count must match before the sitting reconciles.</p></li></ol>

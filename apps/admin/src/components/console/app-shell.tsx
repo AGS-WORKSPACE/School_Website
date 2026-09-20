@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import type { ReactNode } from "react";
@@ -29,19 +30,9 @@ function Brand({ compact = false }: { compact?: boolean }) {
         compact && "justify-center px-0",
       )}
     >
-      <span className="font-display grid size-11 shrink-0 place-items-center rounded-full border border-gold-light/80 bg-white/5 text-sm font-extrabold tracking-[-0.08em] text-white">
-        <span>
-          T<span className="text-gold-light">AU</span>
-        </span>
+      <span className={cn("block overflow-hidden", compact ? "w-11" : "w-[11.25rem]")}>
+        <Image src="/brand/nau-logo.png" alt="Nnamdi Azikiwe University" width={300} height={80} priority className="h-12 w-auto max-w-none" />
       </span>
-      {!compact ? (
-        <span className="min-w-0 leading-tight">
-          <span className="block truncate text-sm font-bold text-white">Identity and Access</span>
-          <span className="mt-1 block text-[0.68rem] font-semibold tracking-[0.15em] text-gold-light uppercase">
-            Digital operations
-          </span>
-        </span>
-      ) : null}
     </div>
   );
 }
@@ -81,8 +72,8 @@ function NavLinks({
                   "relative flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm font-semibold transition-colors",
                   compact && "justify-center px-0",
                   active
-                    ? "bg-primary text-white shadow-sm before:absolute before:top-1/2 before:left-0 before:h-6 before:w-[3px] before:-translate-y-1/2 before:rounded-r before:bg-gold-light"
-                    : "text-[#aebdd0] hover:bg-white/[0.07] hover:text-white",
+                    ? "bg-white/15 text-white shadow-sm before:absolute before:top-1/2 before:left-0 before:h-6 before:w-[3px] before:-translate-y-1/2 before:rounded-r before:bg-gold-light"
+                    : "text-[#b8b6be] hover:bg-white/[0.07] hover:text-white",
                 )}
               >
                 <Icon className="size-[1.125rem] shrink-0" aria-hidden />
@@ -132,13 +123,13 @@ export function AppShell({ children }: { children: ReactNode }) {
       ?.label ?? "Identity and Access";
 
   return (
-    <div className="flex min-h-full flex-col bg-[#f1f5f9]">
+    <div className="flex min-h-full flex-col bg-background">
       <BreakGlassStrip />
 
       <div className="flex flex-1">
         <aside
           className={cn(
-            "sticky top-0 z-40 hidden h-dvh shrink-0 flex-col bg-navy text-white shadow-[8px_0_30px_rgba(4,20,40,0.05)] transition-[width] duration-200 lg:flex",
+            "sticky top-0 z-40 hidden h-dvh shrink-0 flex-col bg-navy text-white shadow-[8px_0_30px_rgba(4,4,85,0.08)] transition-[width] duration-200 lg:flex",
             collapsed ? "w-[4.875rem]" : "w-[17rem]",
           )}
         >
@@ -147,7 +138,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           {!collapsed ? (
             <div className="px-5 pt-5 pb-3">
               <p className="text-xs font-bold tracking-[0.12em] text-white uppercase">Administration</p>
-              <p className="mt-1 text-xs text-[#89a0bb]">Institution-wide access</p>
+              <p className="mt-1 text-xs text-[#78767c]">Institution-wide access</p>
             </div>
           ) : (
             <div className="h-5" />
@@ -178,7 +169,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 {!collapsed ? (
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-xs font-bold">{session.displayName}</span>
-                    <span className="mt-0.5 block text-[0.68rem] text-[#9bacc0]">
+                    <span className="mt-0.5 block text-[0.68rem] text-[#96949c]">
                       {session.mfaSatisfied ? "MFA verified" : "Single-factor session"}
                     </span>
                   </span>
@@ -190,7 +181,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <button
             type="button"
             onClick={() => setCollapsed((value) => !value)}
-            className="absolute top-[3.875rem] -right-4 z-50 grid size-8 place-items-center rounded-full border border-white/20 bg-navy text-[#c8d5e5] shadow-md transition-colors hover:bg-primary hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-light focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
+            className="absolute top-[3.875rem] -right-4 z-50 grid size-8 place-items-center rounded-full border border-white/20 bg-navy text-[#d9d7df] shadow-md transition-colors hover:bg-medical hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-light focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
             aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
             aria-expanded={!collapsed}
             title={collapsed ? "Expand sidebar" : "Collapse sidebar"}

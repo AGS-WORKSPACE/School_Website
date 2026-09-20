@@ -16,7 +16,7 @@ import { faqs } from "@/data/campus";
 export const metadata: Metadata = generatePageMetadata({
   title: "Admissions",
   description:
-    "Admissions at Transatlantic University — entry requirements, deadlines, how to apply, and frequently asked questions.",
+    "Admissions at Nnamdi Azikiwe University — entry requirements, deadlines, how to apply, and frequently asked questions.",
   path: "/admissions",
 });
 
@@ -113,7 +113,7 @@ export default function AdmissionsPage() {
                   <ul className="mt-4 space-y-3 text-sm leading-relaxed text-muted-foreground">
                     <li>• Five O&apos;Level credit passes (English, Maths, Biology, Chemistry, Physics)</li>
                     <li>• Competitive UTME score with programme as first choice</li>
-                    <li>• TAU post-UTME screening and interview</li>
+                    <li>• NAU post-UTME screening and interview</li>
                     <li>• Medical fitness assessment</li>
                   </ul>
                 </CardContent>

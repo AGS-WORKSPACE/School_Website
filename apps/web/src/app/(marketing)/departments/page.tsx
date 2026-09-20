@@ -11,7 +11,7 @@ import { departments } from "@/data/departments";
 export const metadata: Metadata = generatePageMetadata({
   title: "Departments",
   description:
-    "Explore the academic departments of Transatlantic University of Medicine and Health Sciences.",
+    "Explore the academic departments of Nnamdi Azikiwe University.",
   path: "/departments",
 });
 
@@ -67,7 +67,7 @@ export default function DepartmentsPage() {
 
       <CTASection
         title="Study With Experts in Every Field"
-        description="Every department at TAU is led by specialists dedicated to your success."
+        description="Every department at NAU is led by specialists dedicated to your success."
         primary={{ label: "Apply Now", href: "/admissions/apply" }}
         secondary={{ label: "Browse Programmes", href: "/undergraduate-programs" }}
       />

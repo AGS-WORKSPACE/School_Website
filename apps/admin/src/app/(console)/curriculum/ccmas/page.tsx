@@ -129,7 +129,7 @@ export default function CCMASCompliancePage() {
             </span>
             <span className="flex items-center gap-1.5">
               <span className="size-2 rounded-full bg-emerald-500 inline-block" />
-              TAU Local Content: <strong>{distribution.localCredits} CU</strong> ({distribution.localPercentage}%)
+              NAU Local Content: <strong>{distribution.localCredits} CU</strong> ({distribution.localPercentage}%)
             </span>
           </div>
         </div>

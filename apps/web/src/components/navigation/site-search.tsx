@@ -62,7 +62,7 @@ export function SiteSearchDialog({ open, onOpenChange }: { open: boolean; onOpen
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="top-[12%] max-w-2xl -translate-y-0 p-0 sm:rounded-3xl" hideCloseButton>
         <DialogHeader className="sr-only">
-          <DialogTitle>Search Transatlantic University</DialogTitle>
+          <DialogTitle>Search Nnamdi Azikiwe University</DialogTitle>
           <DialogDescription>Search pages, programmes, news, and events.</DialogDescription>
         </DialogHeader>
 

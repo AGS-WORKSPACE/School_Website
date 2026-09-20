@@ -8,10 +8,10 @@ import { campusFacilities } from "@/data/campus";
 import type { SearchResult } from "@/types";
 
 export const staticResults: SearchResult[] = [
-  { title: "Admissions", href: "/admissions", type: "Page", description: "Apply to TAU — undergraduate and postgraduate." },
+  { title: "Admissions", href: "/admissions", type: "Page", description: "Apply to NAU — undergraduate and postgraduate." },
   { title: "Tuition & Scholarships", href: "/tuition", type: "Page", description: "Fees, financial aid, and scholarships." },
   { title: "Research & Innovation", href: "/research", type: "Page", description: "Centres, publications, and funding." },
-  { title: "About TAU", href: "/about", type: "Page", description: "History, mission, leadership, and governance." },
+  { title: "About NAU", href: "/about", type: "Page", description: "History, mission, leadership, and governance." },
   { title: "Contact Us", href: "/contact", type: "Page", description: "Find admissions and departmental contacts." },
 ];
 

@@ -12,9 +12,9 @@ import Link from "next/link";
 import { jobs } from "@/data/people";
 
 export const metadata: Metadata = generatePageMetadata({
-  title: "Careers at TAU",
+  title: "Careers at NAU",
   description:
-    "Join a community of educators, researchers, and healthcare professionals at Transatlantic University.",
+    "Join a community of educators, researchers, and healthcare professionals at Nnamdi Azikiwe University.",
   path: "/careers",
 });
 
@@ -34,7 +34,7 @@ export default function CareersPage() {
     <>
       <PageHero image="/images/placeholders/hero-students.jpg"
         eyebrow="Careers"
-        title="Build Your Career at TAU"
+        title="Build Your Career at NAU"
         description="Join Nigeria's fastest-growing university of medicine and health sciences."
         crumbs={[{ label: "Careers" }]}
       />
@@ -96,7 +96,7 @@ export default function CareersPage() {
             <Reveal>
               <div>
                 <span className="inline-flex items-center gap-2 rounded-full bg-medical/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-medical">
-                  Why TAU
+                  Why NAU
                 </span>
                 <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight sm:text-4xl">
                   A Career With Purpose

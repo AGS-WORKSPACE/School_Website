@@ -11,7 +11,7 @@ import { CheckCircle2, ClipboardList, FileText, SearchCheck } from "lucide-react
 export const metadata: Metadata = generatePageMetadata({
   title: "Undergraduate Programs",
   description:
-    "Explore undergraduate programmes at Transatlantic University — MBBS, BDS, BSc Nursing, BPharm, and more. Find entry requirements and how to apply.",
+    "Explore undergraduate programmes at Nnamdi Azikiwe University — MBBS, BDS, BSc Nursing, BPharm, and more. Find entry requirements and how to apply.",
   path: "/undergraduate-programs",
 });
 
@@ -19,7 +19,7 @@ const applySteps = [
   { Icon: ClipboardList, title: "1. Submit Application", description: "Complete the online application and pay a non-refundable application fee." },
   { Icon: SearchCheck, title: "2. Screening & Interview", description: "Sit the post-UTME screening and attend an interview with your faculty." },
   { Icon: FileText, title: "3. Admission Offer", description: "Successful candidates receive an admission letter and registration details." },
-  { Icon: CheckCircle2, title: "4. Resume & Begin", description: "Complete registration, move into halls, and begin your TAU journey." },
+  { Icon: CheckCircle2, title: "4. Resume & Begin", description: "Complete registration, move into halls, and begin your NAU journey." },
 ];
 
 export default function UndergraduateProgramsPage() {
@@ -37,7 +37,7 @@ export default function UndergraduateProgramsPage() {
           <SectionHeader
             eyebrow="Program Finder"
             title="Find Your Programme"
-            description="Search, filter, and explore every programme TAU offers."
+            description="Search, filter, and explore every programme NAU offers."
           />
           <ProgramFinder />
         </Container>
@@ -78,7 +78,7 @@ export default function UndergraduateProgramsPage() {
                 <div>
                   <h3 className="font-bold text-foreground">UTME & Screening</h3>
                   <p className="mt-2">
-                    A competitive UTME score with the programme as first choice, followed by the TAU
+                    A competitive UTME score with the programme as first choice, followed by the NAU
                     post-UTME screening and, where required, an interview and medical fitness assessment.
                   </p>
                 </div>

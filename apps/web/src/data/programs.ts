@@ -16,7 +16,7 @@ export const programs: Program[] = [
     duration: "6 Years",
     mode: "Full-time",
     description:
-      "The MBBS programme at Transatlantic University is a six-year, integrated medical curriculum combining foundational sciences, clinical skills training, and extensive rotations across our partner hospital network. Graduates are equipped for residency, global practice, and research leadership.",
+      "The MBBS programme at Nnamdi Azikiwe University is a six-year, integrated medical curriculum combining foundational sciences, clinical skills training, and extensive rotations across our partner hospital network. Graduates are equipped for residency, global practice, and research leadership.",
     highlights: [
       "Integrated systems-based curriculum",
       "High-fidelity simulation from year one",

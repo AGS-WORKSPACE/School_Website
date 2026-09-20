@@ -10,7 +10,7 @@ import { faculties } from "@/data/faculties";
 export const metadata: Metadata = generatePageMetadata({
   title: "Faculties",
   description:
-    "Explore the six faculties of Transatlantic University — Medicine, Dentistry, Nursing & Health Sciences, Pharmacy, Public Health, and Biomedical Sciences.",
+    "Explore the six faculties of Nnamdi Azikiwe University — Medicine, Dentistry, Nursing & Health Sciences, Pharmacy, Public Health, and Biomedical Sciences.",
   path: "/faculties",
 });
 

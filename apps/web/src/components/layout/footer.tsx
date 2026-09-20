@@ -9,11 +9,11 @@ import { route } from "@/constants/site";
 import { Button } from "@tau/ui/button";
 import { Input } from "@tau/ui/input";
 import { Badge } from "@tau/ui/badge";
-import { socialIcons } from "@/components/common/social-icons";
+import { BrandMark } from "@/components/common/container";
 
 const columns = [
   {
-    title: "About TAU",
+    title: "About NAU",
     links: [
       { label: "Overview & History", href: route.about.history },
       { label: "Mission & Vision", href: route.about.mission },
@@ -58,7 +58,6 @@ const columns = [
   },
 ];
 
-const socials = socialIcons;
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -70,7 +69,7 @@ export function Footer() {
     setSubscribed(true);
     setEmail("");
     toast.success("You're subscribed!", {
-      description: "Thank you for joining the Transatlantic University newsletter.",
+      description: "Thank you for joining the Nnamdi Azikiwe University newsletter.",
     });
   };
 
@@ -83,23 +82,11 @@ export function Footer() {
       <div className="container-site relative">
         <div className="grid gap-12 border-b border-white/10 py-16 lg:grid-cols-[1.3fr_2fr]">
           <div>
-            <div className="flex items-center gap-3">
-              <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-medical to-navy shadow-md ring-1 ring-white/20">
-                <svg viewBox="0 0 44 44" className="size-full p-2" aria-hidden="true">
-                  <circle cx="22" cy="22" r="16" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" />
-                  <path d="M22 14v16M14 22h16" stroke="#C8A24A" strokeWidth="3.5" strokeLinecap="round" />
-                </svg>
-              </div>
-              <div>
-                <p className="font-display text-lg font-extrabold">Transatlantic University</p>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/60">TAU · Est. 2015</p>
-              </div>
-            </div>
+            <BrandMark />
 
             <p className="mt-6 max-w-md text-sm leading-relaxed text-white/70">
-              {siteConfig.officialName}. A private medical institution in {siteConfig.location.town},{" "}
-              {siteConfig.location.state}, founded by Nigerian-American physician and philanthropist{" "}
-              <span className="font-semibold text-white">Dr. Godwin Maduka</span>.
+              {siteConfig.officialName} is a federal university in {siteConfig.location.town},{" "}
+              {siteConfig.location.state}.
             </p>
 
             <ul className="mt-7 space-y-3 text-sm text-white/70">
@@ -121,18 +108,6 @@ export function Footer() {
               </li>
             </ul>
 
-            <div className="mt-7 flex items-center gap-3">
-              {socials.map(({ label, href, Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  className="flex size-10 items-center justify-center rounded-full border border-white/15 text-white/70 transition-all hover:border-gold hover:bg-gold hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  <Icon className="size-4" aria-hidden="true" />
-                </a>
-              ))}
-            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 lg:grid-cols-4">
@@ -160,7 +135,7 @@ export function Footer() {
           <div>
             <Badge variant="accent" className="mb-4">Stay Informed</Badge>
             <h3 className="font-display text-2xl font-extrabold tracking-tight">
-              The TAU Newsletter
+              The NAU Newsletter
             </h3>
             <p className="mt-2 max-w-md text-sm leading-relaxed text-white/70">
               Admissions updates, research breakthroughs, events, and campus news — delivered monthly.
@@ -169,7 +144,7 @@ export function Footer() {
 
           {subscribed ? (
             <div className="rounded-2xl border border-gold/40 bg-gold/10 p-6 text-center">
-              <p className="font-display text-lg font-bold text-gold">Welcome to the TAU community!</p>
+              <p className="font-display text-lg font-bold text-gold">Welcome to the NAU community!</p>
               <p className="mt-1 text-sm text-white/70">Your first newsletter arrives soon.</p>
             </div>
           ) : (

@@ -14,7 +14,7 @@ import Link from "next/link";
 export const metadata: Metadata = generatePageMetadata({
   title: "International Students",
   description:
-    "Guidance, visa support, and a welcoming community for international students at Transatlantic University.",
+    "Guidance, visa support, and a welcoming community for international students at Nnamdi Azikiwe University.",
   path: "/international",
 });
 
@@ -88,7 +88,7 @@ export default function InternationalPage() {
                 <Badge variant="muted">Arrival</Badge>
               </div>
               <h2 className="mt-5 font-display text-2xl font-extrabold tracking-tight sm:text-3xl">
-                Your Journey to Umuchukwu
+                Your Journey to Awka
               </h2>
               <div className="mt-8 grid gap-8 sm:grid-cols-3">
                 {[

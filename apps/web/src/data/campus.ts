@@ -83,10 +83,10 @@ export const campusFacilities: CampusFacility[] = [
 ];
 
 export const gallery: GalleryImage[] = [
-  { id: "g1", src: "/images/placeholders/campus-library.jpg", alt: "Students studying in the TAU medical library", category: "Campus", caption: "The Medical Library" },
+  { id: "g1", src: "/images/placeholders/campus-library.jpg", alt: "Students studying in the NAU medical library", category: "Campus", caption: "The Medical Library" },
   { id: "g2", src: "/images/placeholders/simulation-lab.jpg", alt: "Students practising in the simulation laboratory", category: "Learning", caption: "Clinical Simulation Centre" },
   { id: "g3", src: "/images/placeholders/student-hostel.jpg", alt: "Modern student hostel buildings", category: "Campus", caption: "Student Hostels" },
-  { id: "g4", src: "/images/placeholders/sports-complex.jpg", alt: "Athletes at the TAU sports complex", category: "Recreation", caption: "Sports Complex" },
+  { id: "g4", src: "/images/placeholders/sports-complex.jpg", alt: "Athletes at the NAU sports complex", category: "Recreation", caption: "Sports Complex" },
   { id: "g5", src: "/images/placeholders/cafeteria.jpg", alt: "Students enjoying meals at the cafeteria", category: "Recreation", caption: "Cafeteria & Dining" },
   { id: "g6", src: "/images/placeholders/lecture-theatre.jpg", alt: "A lecture in progress at the main theatre", category: "Learning", caption: "Lecture Theatre" },
 ];
@@ -105,9 +105,9 @@ export const faqs: FAQItem[] = [
     category: "Admissions",
   },
   {
-    question: "Does TAU offer scholarships?",
+    question: "Does NAU offer scholarships?",
     answer:
-      "Yes. TAU offers merit, need-based, founder's, and community scholarships covering up to 100% of tuition. See the Tuition & Scholarships page for full details.",
+      "Yes. NAU offers merit, need-based, founder's, and community scholarships covering up to 100% of tuition. See the Tuition & Scholarships page for full details.",
     category: "Finance",
   },
   {
@@ -117,9 +117,9 @@ export const faqs: FAQItem[] = [
     category: "International",
   },
   {
-    question: "Is TAU accredited?",
+    question: "Is NAU accredited?",
     answer:
-      "TAU is fully accredited by the National Universities Commission, and its professional programmes are recognised by the MDCN, NMCN, and PCN.",
+      "NAU is fully accredited by the National Universities Commission, and its professional programmes are recognised by the MDCN, NMCN, and PCN.",
     category: "Academics",
   },
   {
@@ -138,7 +138,7 @@ export const scholarships: Scholarship[] = [
     coverage: "Full tuition for the entire programme",
     eligibility: "Top 5% of admitted students by post-UTME score",
     description:
-      "Awarded annually to the highest-performing candidates across all faculties, honouring Dr. Godwin Maduka's vision of accessible excellence.",
+      "Awarded annually to the highest-performing candidates across all faculties, supporting academic excellence.",
   },
   {
     id: "governors",
@@ -156,11 +156,11 @@ export const scholarships: Scholarship[] = [
     coverage: "Half tuition per session",
     eligibility: "Female students in medicine, biomedical sciences, and engineering-adjacent fields",
     description:
-      "Part of TAU's commitment to gender equity in the health sciences, encouraging more young women to lead in medicine and research.",
+      "Part of NAU's commitment to gender equity in the health sciences, encouraging more young women to lead in medicine and research.",
   },
   {
     id: "community",
-    name: "Umuchukwu Community Scholarship",
+    name: "Awka Community Scholarship",
     amount: "Up to 40% tuition",
     coverage: "Tuition reduction for community members",
     eligibility: "Indigenes of host communities in Anambra State",
@@ -174,7 +174,7 @@ export const scholarships: Scholarship[] = [
     coverage: "Automatic tuition discount",
     eligibility: "All international students admitted with strong academic records",
     description:
-      "An automatic award recognising the global diversity of the TAU student body.",
+      "An automatic award recognising the global diversity of the NAU student body.",
   },
   {
     id: "athletic",
@@ -183,7 +183,7 @@ export const scholarships: Scholarship[] = [
     coverage: "Tuition reduction per session",
     eligibility: "Representative athletes and student leaders",
     description:
-      "Rewards students who represent TAU in sport and lead campus life with distinction.",
+      "Rewards students who represent NAU in sport and lead campus life with distinction.",
   },
 ];
 

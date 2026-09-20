@@ -90,7 +90,7 @@ export default function ConfidentialRefereePortalPage({ params }: Props) {
               href="/"
               className="inline-flex items-center text-xs font-semibold text-primary underline"
             >
-              Return to Transatlantic University Homepage
+              Return to Nnamdi Azikiwe University Homepage
             </Link>
           </div>
         </div>
@@ -148,7 +148,7 @@ export default function ConfidentialRefereePortalPage({ params }: Props) {
           <strong className="text-foreground">
             {applicant ? `${applicant.firstName} ${applicant.lastName}` : refereeRequest.applicantName}
           </strong>{' '}
-          for admission into Transatlantic University. This report is strictly confidential and will never be shared with the applicant.
+          for admission into Nnamdi Azikiwe University. This report is strictly confidential and will never be shared with the applicant.
         </p>
       </div>
 
@@ -170,7 +170,7 @@ export default function ConfidentialRefereePortalPage({ params }: Props) {
             </div>
             <div>
               <span className="text-muted-foreground">Application:</span>{' '}
-              <strong className="font-mono text-foreground">{app?.applicationNumber ?? 'TAU-APP'}</strong>
+              <strong className="font-mono text-foreground">{app?.applicationNumber ?? 'NAU-APP'}</strong>
             </div>
             <div>
               <span className="text-muted-foreground">Referee:</span>{' '}

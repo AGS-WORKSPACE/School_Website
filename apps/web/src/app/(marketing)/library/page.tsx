@@ -13,7 +13,7 @@ import Link from "next/link";
 export const metadata: Metadata = generatePageMetadata({
   title: "Medical Library",
   description:
-    "TAU's 24/7 medical library — 80,000+ e-journals, 40,000 print volumes, research support, and quiet study spaces.",
+    "NAU's 24/7 medical library — 80,000+ e-journals, 40,000 print volumes, research support, and quiet study spaces.",
   path: "/library",
 });
 

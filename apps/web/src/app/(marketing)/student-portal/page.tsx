@@ -8,7 +8,7 @@ import { PortalLogin, studentStats } from "@/components/sections/portal-login";
 export const metadata: Metadata = generatePageMetadata({
   title: "Student Portal",
   description:
-    "Sign in to the TAU Student Portal to manage enrolments, results, tuition fees, library services, and your academic timetable.",
+    "Sign in to the NAU Student Portal to manage enrolments, results, tuition fees, library services, and your academic timetable.",
   path: "/student-portal",
   noIndex: true,
 });
@@ -32,8 +32,8 @@ export default function StudentPortalPage() {
           />
           <PortalLogin
             variant="student"
-            identifierLabel="Student ID or TAU email"
-            identifierPlaceholder="e.g. TAU/2024/0123"
+            identifierLabel="Student ID or NAU email"
+            identifierPlaceholder="e.g. NAU/2024/0123"
             submitLabel="Sign in to Student Portal"
             stats={studentStats}
           />
