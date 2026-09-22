@@ -34,22 +34,22 @@ export default async function FacultyPage({ params }: Props) {
       <section className="relative">
         <div className="absolute inset-0">
           <Image src={faculty.image} alt="" fill className="object-cover" priority />
-          <div className="absolute inset-0 bg-white/80" />
+          <div className="absolute inset-0 bg-primary/88" />
         </div>
-        <div className="relative mx-auto flex max-w-[1440px] flex-col items-center gap-6 px-6 py-16 text-center lg:px-[80px]">
-          <h1 className="text-balance font-display text-3xl font-bold uppercase text-black lg:text-4xl">{faculty.name}</h1>
-          <p className="max-w-2xl text-[15px] text-[#1e1e1e]">{faculty.description}</p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <Button asChild className="bg-lms-blue hover:bg-lms-blue/90">
+        <div className="relative mx-auto flex max-w-[1400px] flex-col items-center gap-5 px-4 py-12 text-center sm:px-6 sm:py-16 lg:px-8">
+          <h1 className="text-balance font-display text-3xl font-bold text-white sm:text-4xl">{faculty.name}</h1>
+          <p className="max-w-2xl text-sm leading-relaxed text-white/80 sm:text-base">{faculty.description}</p>
+          <div className="grid w-full max-w-2xl gap-3 sm:grid-cols-3">
+            <Button asChild variant="outlineLight" className="w-full">
               <Link href="/login/student?verify=1">
                 Account Verification
                 <ArrowRight className="size-4" />
               </Link>
             </Button>
-            <Button asChild variant="accent" className="text-primary">
+            <Button asChild variant="accent" className="w-full">
               <Link href="/login/student">Student Login</Link>
             </Button>
-            <Button asChild variant="secondary">
+            <Button asChild variant="secondary" className="w-full">
               <Link href="/login/lecturer">Lecturer Login</Link>
             </Button>
           </div>

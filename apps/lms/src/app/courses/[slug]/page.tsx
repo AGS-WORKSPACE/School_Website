@@ -29,32 +29,32 @@ export default async function CoursePage({ params }: Props) {
 
   return (
     <div>
-      <section className="bg-primary px-6 py-16 text-center lg:px-[80px]">
+      <section className="bg-primary px-4 py-12 text-center sm:px-6 sm:py-16 lg:px-8">
         <p className="text-sm font-medium uppercase tracking-wide text-white/60">{faculty?.name}</p>
-        <h1 className="mx-auto mt-3 max-w-4xl text-balance font-display text-3xl font-bold uppercase text-white lg:text-4xl">
+        <h1 className="mx-auto mt-3 max-w-4xl text-balance font-display text-3xl font-bold text-white sm:text-4xl">
           {course.title}
         </h1>
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
-          <Button asChild className="bg-lms-blue hover:bg-lms-blue/90">
+        <div className="mx-auto mt-6 grid w-full max-w-2xl gap-3 sm:grid-cols-3">
+          <Button asChild variant="outlineLight" className="w-full">
             <Link href="/login/student?verify=1">
               Account Verification
               <ArrowRight className="size-4" />
             </Link>
           </Button>
-          <Button asChild variant="accent" className="text-primary">
+          <Button asChild variant="accent" className="w-full">
             <Link href="/login/student">Student Login</Link>
           </Button>
-          <Button asChild variant="secondary">
+          <Button asChild variant="secondary" className="w-full">
             <Link href="/login/lecturer">Lecturer Login</Link>
           </Button>
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-[1440px] gap-10 px-6 py-16 lg:grid-cols-[1fr_270px] lg:px-[80px]">
+      <section className="mx-auto grid max-w-[1400px] gap-8 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-[minmax(0,1fr)_280px] lg:px-8 lg:py-16">
         <CourseLessonTabs course={course} />
 
         <aside className="flex h-fit flex-col gap-6">
-          <div className="flex flex-col gap-4 rounded-2xl border border-border/60 p-6">
+          <div className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-5 shadow-card sm:p-6">
             <span className="font-display text-2xl font-semibold text-lms-blue">
               {course.price === "Free" ? "Free" : `₦${course.price.toLocaleString()}`}
             </span>
@@ -66,7 +66,7 @@ export default async function CoursePage({ params }: Props) {
             </Button>
           </div>
 
-          <div className="rounded-2xl border border-border/60 p-6">
+          <div className="rounded-2xl border border-border bg-card p-5 shadow-card sm:p-6">
             <h3 className="border-b border-lms-blue pb-3 font-display text-lg font-bold text-black">Requirements</h3>
             <ul className="mt-4 flex flex-col gap-2.5">
               {course.requirements.map((item) => (
@@ -78,7 +78,7 @@ export default async function CoursePage({ params }: Props) {
             </ul>
           </div>
 
-          <div className="rounded-2xl border border-border/60 p-6">
+          <div className="rounded-2xl border border-border bg-card p-5 shadow-card sm:p-6">
             <h3 className="border-b border-lms-blue pb-3 font-display text-lg font-bold text-black">Audience</h3>
             <ul className="mt-4 flex flex-col gap-2.5">
               {course.audience.map((item) => (
@@ -90,7 +90,7 @@ export default async function CoursePage({ params }: Props) {
             </ul>
           </div>
 
-          <div className="flex flex-col items-center gap-4 rounded-2xl border border-border/60 p-6 text-center">
+          <div className="flex flex-col items-center gap-4 rounded-2xl border border-border bg-card p-5 text-center shadow-card sm:p-6">
             <h3 className="font-display text-lg font-bold text-black">Lecturer</h3>
             <div className="flex size-24 items-center justify-center rounded-full border border-border bg-muted font-display text-lg font-bold text-primary">
               {course.lecturer.name

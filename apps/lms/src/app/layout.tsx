@@ -16,10 +16,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${fontSans.variable} ${fontDisplay.variable} antialiased`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${fontSans.variable} ${fontDisplay.variable} antialiased`}>
       <body className="flex min-h-screen flex-col bg-white text-foreground">
         <SiteHeader />
-        <main className="flex-1">{children}</main>
+        <main id="main-content" className="flex-1">{children}</main>
         <SiteFooter />
       </body>
     </html>

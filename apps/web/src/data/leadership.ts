@@ -1,3 +1,5 @@
+export const leadership = [] as const;
+
 export const governanceBodies = [
   {
     name: "University Council",

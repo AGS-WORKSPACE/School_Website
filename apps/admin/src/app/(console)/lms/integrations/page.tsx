@@ -66,8 +66,8 @@ function IntegrationCard({ integration, announce }: { integration: Integration; 
               <p className="text-xs text-muted-foreground">{review.reviewedByName} · {formatDateTime(review.reviewedAt)}</p>
             </div>
           ) : <p className="text-sm text-muted-foreground">No security review recorded yet.</p>}
-          <div className="flex flex-wrap gap-2">
-            <Input className="max-w-sm" placeholder="Review findings or suspension reason" value={notes} onChange={(e) => setNotes(e.target.value)} aria-label={`Notes for ${integration.name}`} />
+          <div className="grid gap-2 sm:flex sm:flex-wrap">
+            <Input className="w-full sm:max-w-sm" placeholder="Review findings or suspension reason" value={notes} onChange={(e) => setNotes(e.target.value)} aria-label={`Notes for ${integration.name}`} />
             {integration.status !== "Active" && <>
               <Button size="sm" variant="outline" onClick={() => { if (announce(mutations.reviewIntegration(integration.id, "Approved", notes, actor), "Security review recorded as passed.")) setNotes(""); }}>Pass review</Button>
               <Button size="sm" variant="outline" onClick={() => { if (announce(mutations.reviewIntegration(integration.id, "Rejected", notes, actor), "Security review recorded as failed.")) setNotes(""); }}>Fail review</Button>
@@ -80,8 +80,9 @@ function IntegrationCard({ integration, announce }: { integration: Integration; 
 
       <h3 className="mt-6 mb-2 text-sm font-semibold">Health · last {healthWindowHours} hours</h3>
       {health.length === 0 ? <EmptyState message="No traffic in this window." /> : (
-        <div className="overflow-x-auto">
-          <Table>
+        <>
+        <div className="hidden overflow-x-auto md:block">
+          <Table className="min-w-[48rem]">
             <TableHeader><TableRow><TableHead>Event</TableHead><TableHead>Calls</TableHead><TableHead>Failures</TableHead><TableHead>Consecutive failures</TableHead><TableHead>Last error</TableHead><TableHead>Status</TableHead></TableRow></TableHeader>
             <TableBody>
               {health.map((row) => (
@@ -97,6 +98,23 @@ function IntegrationCard({ integration, announce }: { integration: Integration; 
             </TableBody>
           </Table>
         </div>
+        <div className="grid gap-3 md:hidden">
+          {health.map((row) => (
+            <div key={row.kind} className="rounded-xl border bg-card p-4 shadow-card">
+              <div className="flex items-start justify-between gap-3">
+                <p className="font-semibold">{humanise(row.kind)}</p>
+                {row.alert ? <Badge variant="destructive">Alert</Badge> : <Badge variant="success">Healthy</Badge>}
+              </div>
+              <dl className="mt-3 grid grid-cols-3 gap-2 text-xs">
+                <div><dt className="text-muted-foreground">Calls</dt><dd className="mt-1 text-base font-bold">{row.total}</dd></div>
+                <div><dt className="text-muted-foreground">Failures</dt><dd className="mt-1 text-base font-bold">{row.failures}</dd></div>
+                <div><dt className="text-muted-foreground">Consecutive</dt><dd className="mt-1 text-base font-bold">{row.consecutiveFailures}</dd></div>
+              </dl>
+              {row.lastError ? <p className="mt-3 rounded-lg bg-destructive/5 p-2 text-xs text-destructive">{row.lastError}</p> : null}
+            </div>
+          ))}
+        </div>
+        </>
       )}
     </Section>
   );

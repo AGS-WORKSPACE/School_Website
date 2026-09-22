@@ -22,8 +22,8 @@ export function SignInCard({
   const accent = role === "student" ? "bg-accent text-primary hover:bg-accent/90" : "bg-secondary hover:bg-secondary/90";
 
   return (
-    <div className="w-full max-w-md rounded-2xl border border-border/60 bg-white p-8 shadow-card-hover">
-      <h1 className="font-display text-2xl font-bold text-black">
+    <div className="w-full max-w-md rounded-2xl border border-border bg-card p-5 shadow-card-hover sm:p-8">
+      <h1 className="font-display text-2xl font-bold text-foreground">
         {verifying ? "Account Verification" : `${role === "student" ? "Student" : "Lecturer"} Login`}
       </h1>
       <p className="mt-2 text-sm text-lms-muted">
@@ -58,7 +58,7 @@ export function SignInCard({
           </p>
         ) : null}
 
-        <Button type="submit" className={accent}>
+        <Button type="submit" className={accent} size="lg">
           Continue
           <ArrowRight className="size-4" />
         </Button>

@@ -1,35 +1,46 @@
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Eye, Target } from "lucide-react";
+import { Button } from "@tau/ui/button";
+import { SectionHeader } from "@/components/common/section-header";
 
 export function AboutSection() {
   return (
-    <section className="bg-white">
-      <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-12 px-6 py-20 lg:flex-row lg:px-[80px]">
-        <div className="relative shrink-0">
-          <div className="relative h-[420px] w-[340px] overflow-hidden rounded-xl bg-muted lg:h-[437px] lg:w-[345px]">
-            <Image src="/images/provost.svg" alt="Office of the Vice-Chancellor" fill className="object-cover" />
+    <section className="overflow-hidden py-20 sm:py-24 lg:py-28">
+      <div className="container-site">
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="relative order-2 lg:order-1">
+            <div className="relative">
+              <div className="relative aspect-video overflow-hidden rounded-2xl shadow-2xl shadow-navy/20">
+                <Image src="/images/lecture-theatre.jpg" alt="Students learning at Nnamdi Azikiwe University" fill className="object-cover" />
+              </div>
+              <div className="absolute -bottom-6 -right-4 hidden rounded-2xl border border-border bg-card p-5 shadow-xl sm:block lg:-right-8">
+                <p className="font-display text-3xl font-extrabold text-medical">24/7</p>
+                <p className="text-xs font-semibold text-muted-foreground">Learning access</p>
+              </div>
+              <div className="absolute -left-4 -top-5 hidden rounded-2xl bg-navy p-4 text-white shadow-xl lg:block">
+                <p className="font-display text-2xl font-extrabold text-gold">One portal</p>
+                <p className="text-xs font-semibold text-white/70">All your courses</p>
+              </div>
+            </div>
           </div>
-          <div className="absolute -bottom-6 left-6 w-[280px] rounded-lg border-l-4 border-primary bg-white p-5 shadow-card-hover">
-            <p className="font-display text-sm font-black text-black">OFFICE OF THE VICE-CHANCELLOR</p>
-            <p className="mt-1 text-sm text-lms-red">Nnamdi Azikiwe University</p>
-          </div>
-        </div>
 
-        <div className="flex flex-1 flex-col items-start gap-6 pt-6">
-          <span className="rounded-full bg-[#c0c2ff] px-5 py-1.5 text-sm font-medium text-[#030454]">About Us</span>
-          <h2 className="text-balance font-display text-4xl font-bold leading-tight text-black lg:text-5xl">
-            Shaping Knowledge Powering the Future.
-          </h2>
-          <div className="space-y-4 text-justify text-base font-light leading-relaxed text-[#1e1e1e]">
-            <p>
-              Founded on a rich history of academic excellence, Nnamdi Azikiwe University, Awka, stands at the
-              forefront of e-learning innovation. Our university blends a legacy of knowledge with cutting-edge
-              technology, creating a dynamic online learning environment.
-            </p>
-            <p>
-              We are committed to providing accessible, flexible, and high-quality education to students worldwide.
-              Whether you&apos;re pursuing a diploma, undergraduate degree, or professional certification, we equip
-              you with the skills you need for success in a digital future.
-            </p>
+          <div className="order-1 lg:order-2">
+            <SectionHeader align="left" eyebrow="Welcome to NAU LMS" title="Learning built around your day" description="Access your registered courses, materials and academic updates from one place." className="mb-8" />
+            <div className="space-y-6">
+              <div className="flex gap-4">
+                <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-medical/10 text-medical"><Target className="size-6" /></span>
+                <div><h3 className="font-display text-lg font-bold">Stay organised</h3><p className="mt-1 text-sm leading-relaxed text-muted-foreground">See course materials, assignments and deadlines together.</p></div>
+              </div>
+              <div className="flex gap-4">
+                <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-gold/10 text-gold"><Eye className="size-6" /></span>
+                <div><h3 className="font-display text-lg font-bold">Learn at your pace</h3><p className="mt-1 text-sm leading-relaxed text-muted-foreground">Review available lessons and readings whenever you need them.</p></div>
+              </div>
+            </div>
+            <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
+              <Button asChild size="lg"><Link href="/faculties">Browse courses <ArrowRight /></Link></Button>
+              <Button asChild size="lg" variant="outline"><Link href="/support">Get LMS support</Link></Button>
+            </div>
           </div>
         </div>
       </div>
