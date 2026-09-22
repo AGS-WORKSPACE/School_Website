@@ -22,11 +22,11 @@ export default function TemplatesPage() {
       />
 
       <Section title="Template used for new shells">
-        <ul className="grid gap-3 sm:grid-cols-3">
+        <ul className="grid gap-3 md:grid-cols-3">
           {modes.map((mode) => {
             const template = templateFor(templates, mode);
             return (
-              <li key={mode} className="rounded-lg border p-3">
+              <li key={mode} className="rounded-xl border bg-muted/20 p-4 shadow-card">
                 <div className="text-xs font-semibold uppercase text-muted-foreground">{humanise(mode)}</div>
                 <div className="font-semibold">{template ? `${template.name} v${template.version}` : "No approved template"}</div>
               </li>
@@ -50,9 +50,9 @@ export default function TemplatesPage() {
             ) : (
               <ul className="mb-3 space-y-1">{verdict.errors.map((error) => <li key={error} className="flex items-center gap-1.5 text-sm text-destructive"><AlertTriangle className="size-4" aria-hidden />{error}</li>)}</ul>
             )}
-            <ol className="grid gap-2 md:grid-cols-3">
+            <ol className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
               {template.sections.map((section) => (
-                <li key={section.kind} className="rounded-lg border p-3">
+                <li key={section.kind} className="rounded-xl border bg-card p-4 shadow-card">
                   <Badge variant="outline">{humanise(section.kind)}</Badge>
                   <div className="mt-1 font-semibold">{section.title}</div>
                   {section.guidance && <p className="text-xs text-muted-foreground">{section.guidance}</p>}

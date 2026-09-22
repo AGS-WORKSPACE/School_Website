@@ -91,10 +91,29 @@ export default function GivingPage() {
                   </div>
                 </dl>
                 <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
-                  Please reference your gift (e.g. Every gift, whatever its size, supports students, research and community service.
-              </p>
-            </div>
-          </Reveal>
+                  Include your name and preferred giving priority in the transfer reference.
+                </p>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <div className="flex h-full flex-col rounded-3xl border border-border bg-card p-8 sm:p-10">
+                <Badge variant="accent" className="w-fit">Giving Support</Badge>
+                <h2 className="mt-5 font-display text-2xl font-extrabold tracking-tight">Plan Your Gift</h2>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  Speak with the University team about scholarships, research support and other giving priorities.
+                </p>
+                <div className="mt-auto pt-8">
+                  <Button asChild>
+                    <Link href="/contact">
+                      Contact the Giving Team
+                      <ArrowRight aria-hidden="true" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </Reveal>
+          </div>
         </Container>
       </Section>
 
