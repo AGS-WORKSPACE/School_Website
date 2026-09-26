@@ -33,6 +33,8 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", update);
   }, []);
 
+  if (pathname.startsWith("/dashboard")) return null;
+
   return (
     <>
       <a href="#main-content" className="sr-only z-[100] rounded-full bg-primary px-5 py-3 font-semibold text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4">

@@ -4,6 +4,7 @@
 /* Workspace packages live outside this app, so Tailwind needs them declared. */
 @source "../../../../packages/ui/src";
 @source "../../../../packages/students/src";
+@source "../../../../packages/curriculum/src";
 @source "../../../../packages/lms/src";
 @source "../../../../packages/odl/src";
 @source "../../../../packages/scheduling/src";
