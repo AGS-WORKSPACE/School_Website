@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { BookOpen, Mail, MapPin } from "lucide-react";
 
 const columns = [
@@ -32,6 +35,9 @@ const columns = [
 ];
 
 export function SiteFooter() {
+  const pathname = usePathname();
+  if (pathname.startsWith("/dashboard")) return null;
+
   return (
     <footer className="relative overflow-hidden bg-navy text-white">
       <div className="bg-grid absolute inset-0 opacity-40" aria-hidden="true" />
