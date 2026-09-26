@@ -11,6 +11,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@tau/identity": "*",
+    "@tau/lms": "*",
+    "@tau/odl": "*",
+    "@tau/scheduling": "*",
+    "@tau/student-dashboard": "*",
+    "@tau/students": "*",
     "@tau/ui": "*",
     "clsx": "^2.1.1",
     "lucide-react": "^1.28.0",

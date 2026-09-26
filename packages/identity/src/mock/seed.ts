@@ -327,6 +327,41 @@ export const seedPersons: Person[] = [
       endedAt: null,
     },
   ]),
+  // Students who hold a record in the SIS (EP-08). The person id is the link:
+  // `Student.personId` in @tau/students points back to these identities.
+  person("per-ngozi-eze", "Ms.", "Ngozi", "Eze", "ngozi.eze@students.example.com", "dept-computer", [
+    {
+      id: "aff-ngozi-student",
+      type: "student",
+      reference: "TAU/25/SCI/0150",
+      status: "active",
+      sourceModule: "sis",
+      startedAt: "2025-10-06",
+      endedAt: null,
+    },
+  ]),
+  person("per-chinedu-okonkwo", "Mr.", "Chinedu", "Okonkwo", "chinedu.okonkwo@students.example.com", "dept-computer", [
+    {
+      id: "aff-chinedu-student",
+      type: "student",
+      reference: "TAU/23/ENG/0117",
+      status: "active",
+      sourceModule: "sis",
+      startedAt: "2023-10-02",
+      endedAt: null,
+    },
+  ]),
+  person("per-ibrahim-musa", "Mr.", "Ibrahim", "Musa", "ibrahim.musa@students.example.com", "fac-eng", [
+    {
+      id: "aff-ibrahim-student",
+      type: "student",
+      reference: "TAU/24/ENG/0061",
+      status: "active",
+      sourceModule: "sis",
+      startedAt: "2024-10-07",
+      endedAt: null,
+    },
+  ]),
   person("per-kemi", "Dr.", "Kemi", "Balogun", "k.balogun@example.com", "fac-health", [
     {
       id: "aff-kemi-staff",
@@ -501,6 +536,13 @@ export const seedAccounts: Account[] = [
   account("acc-chidi", "per-chidi", "c.nwankwo"),
   account("acc-fatima", "per-fatima", "f.yusuf"),
   account("acc-amina", "per-amina", "a.bello", { lastSignInAt: at(-15) }),
+  // Students sign in to the LMS with their matriculation number.
+  account("acc-ngozi-eze", "per-ngozi-eze", "TAU/25/SCI/0150", { lastSignInAt: at(-300) }),
+  account("acc-chinedu-okonkwo", "per-chinedu-okonkwo", "TAU/23/ENG/0117", { lastSignInAt: at(-2400) }),
+  account("acc-ibrahim-musa", "per-ibrahim-musa", "TAU/24/ENG/0061", {
+    status: "disabled",
+    statusReason: "Studentship suspended by the Student Disciplinary Committee (SDC/2026/019).",
+  }),
   account("acc-kemi", "per-kemi", "k.balogun", {
     mfaEnrolments: [totp("acc-kemi", "Authenticator app", 150)],
     recoveryCodes: recoveryBatch("acc-kemi", 0),
