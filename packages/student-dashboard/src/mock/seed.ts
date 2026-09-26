@@ -34,3 +34,27 @@ export const initialStudentLinks: StudentLink[] = [
 
 /** Where the student's existing journeys live. The dashboard links out; it does not reimplement them. */
 export const defaultStudentPortalBase = "http://localhost:3000";
+
+/**
+ * The matriculation numbers this demonstration build ships with, so whoever is
+ * trying the dashboard is not left guessing — the admin console offers the same
+ * courtesy on its sign-in page.
+ *
+ * Only the one-line summary lives here. The student's name and account status
+ * are read from identity at render time, so this list cannot drift away from
+ * the accounts that actually exist.
+ */
+export const demoStudentAccounts: { matriculationNumber: string; shows: string }[] = [
+  {
+    matriculationNumber: "TAU/25/SCI/0150",
+    shows: "The full dashboard: classes, a live clinic, a moved laboratory and an open request.",
+  },
+  {
+    matriculationNumber: "TAU/23/ENG/0117",
+    shows: "A blocking financial hold from the Bursary, restricting registration and transcripts.",
+  },
+  {
+    matriculationNumber: "TAU/24/ENG/0061",
+    shows: "A disabled account: refused, with the reason kept off the page.",
+  },
+];

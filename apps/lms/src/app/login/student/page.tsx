@@ -8,7 +8,7 @@ export default function StudentLoginPage() {
   return (
     <div className="flex min-h-[70vh] items-center justify-center bg-lms-mist px-6 py-16">
       <Suspense>
-        <SignInCard role="student" identifierLabel="Matriculation number" identifierPlaceholder="TAU/26/SCI/0101" />
+        <SignInCard role="student" identifierLabel="Matriculation number" identifierPlaceholder="TAU/25/SCI/0150" />
       </Suspense>
     </div>
   );
