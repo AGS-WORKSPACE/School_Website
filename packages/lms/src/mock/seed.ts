@@ -154,9 +154,18 @@ export const initialGroups: CourseGroup[] = [
   { id: "grp-101-b", offeringId: COS, name: "Lab group B", memberIds: ["student-2026-203", "student-2025-150"] },
 ];
 
+/** The next occurrence of a weekday at a given hour, so live sessions stay ahead of today. */
+function nextWeekday(weekday: number, hour: number, seededAt = Date.now()): string {
+  const date = new Date(seededAt);
+  date.setUTCHours(hour, 0, 0, 0);
+  const shift = (weekday - date.getUTCDay() + 7) % 7 || 7;
+  date.setUTCDate(date.getUTCDate() + shift);
+  return date.toISOString();
+}
+
 export const initialLiveSessions: LiveSession[] = [
-  { id: "live-101-1", offeringId: COS, title: "Weekly live clinic: number bases", startsAt: "2026-09-22T16:00:00Z", durationMinutes: 60, joinUrl: "https://meet.tau.edu.ng/cos101-clinic", recording: "Recorded_With_Notice", captioned: true },
-  { id: "live-201-1", offeringId: CSC, title: "Online tutorial: class design review", startsAt: "2026-09-24T17:00:00Z", durationMinutes: 45, joinUrl: "https://meet.tau.edu.ng/csc201-tutorial", recording: "Not_Recorded", captioned: false },
+  { id: "live-101-1", offeringId: COS, title: "Weekly live clinic: number bases", startsAt: nextWeekday(2, 16), durationMinutes: 60, joinUrl: "https://meet.tau.edu.ng/cos101-clinic", recording: "Recorded_With_Notice", captioned: true },
+  { id: "live-201-1", offeringId: CSC, title: "Online tutorial: class design review", startsAt: nextWeekday(4, 17), durationMinutes: 45, joinUrl: "https://meet.tau.edu.ng/csc201-tutorial", recording: "Not_Recorded", captioned: false },
 ];
 
 export const initialOfficeHours: OfficeHours[] = [

@@ -3,6 +3,11 @@
 
 /* Workspace packages live outside this app, so Tailwind needs them declared. */
 @source "../../../../packages/ui/src";
+@source "../../../../packages/students/src";
+@source "../../../../packages/lms/src";
+@source "../../../../packages/odl/src";
+@source "../../../../packages/scheduling/src";
+@source "../../../../packages/student-dashboard/src";
 
 @theme inline {
   --color-lms-blue: #040455;

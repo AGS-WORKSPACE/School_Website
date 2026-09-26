@@ -8,6 +8,7 @@ import { ChevronDown, Mail, MapPin, Menu, Search, X } from "lucide-react";
 import { Button } from "@tau/ui/button";
 import { cn } from "@/lib/utils";
 import { faculties } from "@/data/faculties";
+import { useStudentSession } from "@/components/dashboard/use-session";
 
 const navLinks = [
   { label: "Programs", href: "/programs" },
@@ -17,6 +18,8 @@ const navLinks = [
 
 export function SiteHeader() {
   const pathname = usePathname();
+  // A signed-in student goes to their dashboard rather than back to the login page.
+  const { session } = useStudentSession();
   const [scrolled, setScrolled] = React.useState(false);
   const [facultiesOpen, setFacultiesOpen] = React.useState(false);
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -94,7 +97,7 @@ export function SiteHeader() {
               <Button asChild variant="ghost" size="icon" className={solid ? "text-navy hover:bg-muted" : "text-white hover:bg-white hover:text-navy"}>
                 <Link href="/faculties" aria-label="Search courses"><Search className="size-5" /></Link>
               </Button>
-              <Button asChild variant="accent"><Link href="/login/student">Student Login</Link></Button>
+              <Button asChild variant="accent"><Link href={session ? "/dashboard" : "/login/student"}>{session ? "My Dashboard" : "Student Login"}</Link></Button>
               <Button asChild variant={solid ? "secondary" : "outlineLight"}><Link href="/login/lecturer">Lecturer Login</Link></Button>
             </div>
 
@@ -117,7 +120,7 @@ export function SiteHeader() {
               <div className="my-3 border-t border-white/10" />
               {navLinks.map((link) => <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)} className="block rounded-xl px-4 py-3 text-sm font-semibold hover:bg-white/10">{link.label}</Link>)}
               <div className="mt-4 grid gap-3 border-t border-white/10 pt-5 sm:grid-cols-2">
-                <Button asChild variant="accent" size="lg"><Link href="/login/student" onClick={() => setMobileOpen(false)}>Student Login</Link></Button>
+                <Button asChild variant="accent" size="lg"><Link href={session ? "/dashboard" : "/login/student"} onClick={() => setMobileOpen(false)}>{session ? "My Dashboard" : "Student Login"}</Link></Button>
                 <Button asChild variant="outlineLight" size="lg"><Link href="/login/lecturer" onClick={() => setMobileOpen(false)}>Lecturer Login</Link></Button>
               </div>
             </nav>

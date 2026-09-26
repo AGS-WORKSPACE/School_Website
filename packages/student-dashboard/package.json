@@ -1,0 +1,35 @@
+{
+  "name": "@tau/student-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SD-01/SD-02 student dashboard: session and student context, home summary, agenda, prioritised tasks, change alerts and source freshness. An orchestration layer only \u2014 it holds no authoritative state.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./domain": "./src/domain/index.ts",
+    "./policy": "./src/policy/index.ts",
+    "./mock": "./src/mock/index.ts",
+    "./react": "./src/react/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test \"src/**/*.test.ts\""
+  },
+  "dependencies": {
+    "@tau/curriculum": "*",
+    "@tau/identity": "*",
+    "@tau/lms": "*",
+    "@tau/odl": "*",
+    "@tau/scheduling": "*",
+    "@tau/students": "*"
+  },
+  "peerDependencies": {
+    "react": "^19"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "tsx": "^4.20.6",
+    "typescript": "^5"
+  }
+}
