@@ -12,6 +12,7 @@ import {
   Home,
   LibraryBig,
   ListTodo,
+  LifeBuoy,
   MonitorCheck,
   Settings,
   UserRound,
@@ -20,7 +21,7 @@ import type { LucideIcon } from "lucide-react";
 import type { StudentContext } from "@tau/student-dashboard";
 import { cn } from "@/lib/utils";
 
-export type DashboardView = "overview" | "academics" | "timetable" | "learning" | "coursework" | "exams" | "results";
+export type DashboardView = "overview" | "academics" | "timetable" | "learning" | "coursework" | "exams" | "results" | "services";
 
 interface LocalItem {
   label: string;
@@ -44,13 +45,14 @@ const localItems: LocalItem[] = [
   { label: "Coursework", icon: ListTodo, view: "coursework" },
   { label: "CBT & examinations", icon: MonitorCheck, view: "exams" },
   { label: "Results & standing", icon: LibraryBig, view: "results" },
+  { label: "Finance & services", icon: LifeBuoy, view: "services" },
 ];
 
 const portalBase = process.env.NEXT_PUBLIC_STUDENT_PORTAL_URL ?? "http://localhost:3000";
 const serviceItems: LinkItem[] = [
   { label: "Registration", icon: ClipboardCheck, href: `${portalBase}/student-portal/registration` },
   { label: "Degree progress", icon: GraduationCap, href: `${portalBase}/student-portal/degree-audit` },
-  { label: "Fees & payments", icon: CircleDollarSign, href: `${portalBase}/student-portal/finance`, note: "Coming soon" },
+  { label: "Fees & payments", icon: CircleDollarSign, href: `${portalBase}/student-portal/finance`, note: "External service" },
 ];
 
 export function DashboardSidebar({ activeView, context, onViewChange }: { activeView: DashboardView; context: StudentContext; onViewChange: (view: DashboardView) => void }) {

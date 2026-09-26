@@ -23,6 +23,24 @@ export interface StudentResultRecord {
   gradePoint: number | null;
   status: StudentResultStatus;
   resultVersion: string;
+  studentFacingMessage?: string;
+  ownerUnit?: string;
+  nextAction?: string;
+  actionDeadline?: string;
+}
+
+export interface StudentResultCalculationLine {
+  courseCode: string;
+  creditUnits: number;
+  gradePoint: number;
+  weightedPoints: number;
+}
+
+export interface StudentResultStatement {
+  available: boolean;
+  designation: "Official" | "Unofficial";
+  downloadUrl?: string;
+  unavailableReason?: string;
 }
 
 export interface StudentAcademicSummary {
@@ -39,5 +57,11 @@ export interface StudentAcademicSummary {
   semesterGpa: number | null;
   cumulativeGpa: number | null;
   academicStanding: "Good standing" | "Probation" | "Withdrawal review" | "Not available";
+  standingExplanation?: string;
+  standingEffectivePeriod?: string;
+  standingNextAction?: string;
+  calculationLines?: StudentResultCalculationLine[];
+  totalRegisteredCredits?: number;
+  resultStatement?: StudentResultStatement;
   calculationIsAuthoritative: boolean;
 }

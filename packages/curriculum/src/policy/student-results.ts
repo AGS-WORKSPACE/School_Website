@@ -26,5 +26,27 @@ export function calculateStudentAcademicSummary(input: {
   const semesterGpa = totalCredits ? weightedPoints / totalCredits : null;
   const cumulativeGpa = cumulativeCredits ? cumulativePoints / cumulativeCredits : null;
   const academicStanding = cumulativeGpa === null ? "Not available" : cumulativeGpa >= 2 ? "Good standing" : cumulativeGpa >= 1.5 ? "Probation" : "Withdrawal review";
-  return { studentId: input.studentId, studentName: input.studentName, programme: input.programme, academicSession: input.academicSession, semester: input.semester, calculationVersion: input.calculationVersion, gradingPolicy: input.policy, results: input.results, creditsAttempted, creditsEarned, semesterGpa, cumulativeGpa, academicStanding, calculationIsAuthoritative: false };
+  const calculationLines = released.map((result) => ({ courseCode: result.courseCode, creditUnits: result.creditUnits, gradePoint: result.gradePoint ?? 0, weightedPoints: (result.gradePoint ?? 0) * result.creditUnits }));
+  return {
+    studentId: input.studentId,
+    studentName: input.studentName,
+    programme: input.programme,
+    academicSession: input.academicSession,
+    semester: input.semester,
+    calculationVersion: input.calculationVersion,
+    gradingPolicy: input.policy,
+    results: input.results,
+    creditsAttempted,
+    creditsEarned,
+    semesterGpa,
+    cumulativeGpa,
+    academicStanding,
+    standingExplanation: academicStanding === "Good standing" ? "Your released cumulative result meets the progression requirement recorded for this period." : "Review the student-facing next action with your academic records team.",
+    standingEffectivePeriod: `${input.academicSession} · Semester ${input.semester}`,
+    standingNextAction: academicStanding === "Good standing" ? "Continue with your approved registration." : "Contact Academic Records for guidance.",
+    calculationLines,
+    totalRegisteredCredits: creditsAttempted,
+    resultStatement: { available: true, designation: "Unofficial", unavailableReason: "Official statements are issued by Records." },
+    calculationIsAuthoritative: false,
+  };
 }

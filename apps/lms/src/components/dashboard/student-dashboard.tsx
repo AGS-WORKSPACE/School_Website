@@ -13,6 +13,7 @@ import { ExamPanels } from "@/components/dashboard/exam-panels";
 import { AgendaPanel, AlertPanel, SourcePanel, SummaryPanel, TaskPanel } from "@/components/dashboard/home-panels";
 import { LearningPanels } from "@/components/dashboard/learning-panels";
 import { ResultsPanels } from "@/components/dashboard/results-panels";
+import { ServicesPanels } from "@/components/dashboard/services-panels";
 import { TimetablePanels } from "@/components/dashboard/timetable-panels";
 import { useStudentSession } from "@/components/dashboard/use-session";
 
@@ -55,7 +56,7 @@ export function StudentDashboard() {
     );
   }
 
-  const title = activeView === "overview" ? "Welcome back" : activeView === "academics" ? "Academic record" : activeView === "timetable" ? "Timetable & classes" : activeView === "learning" ? "My learning" : activeView === "coursework" ? "Coursework" : activeView === "exams" ? "CBT & examinations" : "Results & standing";
+  const title = activeView === "overview" ? "Welcome back" : activeView === "academics" ? "Academic record" : activeView === "timetable" ? "Timetable & classes" : activeView === "learning" ? "My learning" : activeView === "coursework" ? "Coursework" : activeView === "exams" ? "CBT & examinations" : activeView === "results" ? "Results & standing" : "Finance & services";
 
   return (
     <div className="min-h-screen bg-[#f5f6fa] lg:flex">
@@ -78,7 +79,7 @@ export function StudentDashboard() {
                   <div className="space-y-6"><SummaryPanel home={home} /><section aria-label="Your services" className="rounded-2xl border border-border bg-card p-4 shadow-card sm:p-5"><h2 className="font-display text-lg font-bold text-foreground">Quick access</h2><p className="mt-0.5 text-sm text-lms-muted">Open the service that owns each record.</p><ul className="mt-4 space-y-2">{services.map((service) => <li key={service.label}><a href={service.href} className="flex items-start gap-3 rounded-xl border border-border p-3 transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><service.icon className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden /><span className="min-w-0"><span className="block text-sm font-semibold text-foreground">{service.label}</span><span className="block text-xs text-lms-muted">{service.description}</span></span></a></li>)}</ul></section><SourcePanel sources={home.sources} generatedAt={home.generatedAt} /></div>
                 </div>
               </div>
-            ) : activeView === "academics" ? <AcademicPanels context={context} /> : activeView === "timetable" ? <TimetablePanels agenda={home.agenda} alerts={home.alerts} /> : activeView === "learning" ? <LearningPanels context={context} /> : activeView === "coursework" ? <CourseworkPanels context={context} /> : activeView === "exams" ? <ExamPanels context={context} sources={home.sources} /> : <ResultsPanels context={context} sources={home.sources} />}
+            ) : activeView === "academics" ? <AcademicPanels context={context} /> : activeView === "timetable" ? <TimetablePanels agenda={home.agenda} alerts={home.alerts} /> : activeView === "learning" ? <LearningPanels context={context} /> : activeView === "coursework" ? <CourseworkPanels context={context} /> : activeView === "exams" ? <ExamPanels context={context} sources={home.sources} /> : activeView === "results" ? <ResultsPanels context={context} sources={home.sources} /> : <ServicesPanels context={context} />}
           </div>
         </main>
       </div>
