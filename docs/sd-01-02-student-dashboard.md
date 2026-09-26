@@ -44,6 +44,9 @@ Cross-epic rule 1 says the dashboard must not become a second source of truth. I
 ## Demonstration accounts
 
 Students sign in with their matriculation number; any password is accepted in this build, as in the rest of the demo.
+The student login page lists these accounts under **Accounts in this demonstration** — pick one to fill the form — the way
+the admin console does. The names and statuses shown there are read from identity, so the list cannot drift. It is
+demonstration scaffolding: a real deployment names nobody, which is why the refusals themselves still disclose nothing.
 
 | Sign in as | Shows |
 |---|---|
