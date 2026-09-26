@@ -1,11 +1,22 @@
 import type { StudentGradingPolicy, StudentResultRecord } from "../domain/student-result";
 
-export const demoStudentId = "TAU/2024/0123";
+export const demoStudentId = "TAU/25/SCI/0150";
 export const demoStudentResults: StudentResultRecord[] = [
   { id: "student-result-csc201", academicSession: "2025/2026", semester: 2, courseCode: "CSC 201", courseTitle: "Computer Programming I", creditUnits: 3, mark: 78, grade: "A", gradePoint: 5, status: "Released", resultVersion: "v1.0" },
   { id: "student-result-anat201", academicSession: "2025/2026", semester: 2, courseCode: "ANA 201", courseTitle: "Gross Anatomy II", creditUnits: 4, mark: 64, grade: "B", gradePoint: 4, status: "Released", resultVersion: "v1.0" },
   { id: "student-result-phy201", academicSession: "2025/2026", semester: 2, courseCode: "PHY 201", courseTitle: "Human Physiology II", creditUnits: 3, mark: null, grade: null, gradePoint: null, status: "Withheld", resultVersion: "v1.0" },
   { id: "student-result-bch201", academicSession: "2025/2026", semester: 2, courseCode: "BCH 201", courseTitle: "Biochemistry II", creditUnits: 3, mark: null, grade: null, gradePoint: null, status: "Pending", resultVersion: "v1.1" },
+];
+
+/** A richer released record used by the student-facing dashboard demo. */
+export const availableStudentResults: StudentResultRecord[] = [
+  ...demoStudentResults.filter((result) => result.id === "student-result-csc201"),
+  { id: "student-result-mth202", academicSession: "2025/2026", semester: 2, courseCode: "MTH 202", courseTitle: "Linear Algebra", creditUnits: 3, mark: 71, grade: "A", gradePoint: 5, status: "Released", resultVersion: "v1.0" },
+  { id: "student-result-gst212", academicSession: "2025/2026", semester: 2, courseCode: "GST 212", courseTitle: "Peace and Conflict Resolution", creditUnits: 2, mark: 64, grade: "B", gradePoint: 4, status: "Released", resultVersion: "v1.0" },
+  { id: "student-result-csc205", academicSession: "2025/2026", semester: 2, courseCode: "CSC 205", courseTitle: "Computer Architecture", creditUnits: 3, mark: 58, grade: "C", gradePoint: 3, status: "Released", resultVersion: "v1.0" },
+  { id: "student-result-csc207", academicSession: "2025/2026", semester: 2, courseCode: "CSC 207", courseTitle: "Web Application Development", creditUnits: 3, mark: 82, grade: "A", gradePoint: 5, status: "Released", resultVersion: "v1.0" },
+  { id: "student-result-csc209", academicSession: "2025/2026", semester: 2, courseCode: "CSC 209", courseTitle: "Programming Laboratory", creditUnits: 3, mark: null, grade: null, gradePoint: null, status: "Pending", resultVersion: "v1.0", studentFacingMessage: "This result is being prepared for official publication.", nextAction: "Check again after the publication notice." },
+  { id: "student-result-sta211", academicSession: "2025/2026", semester: 2, courseCode: "STA 211", courseTitle: "Probability I", creditUnits: 3, mark: null, grade: null, gradePoint: null, status: "Withheld", resultVersion: "v1.0", studentFacingMessage: "This result is temporarily withheld by the academic records service.", nextAction: "Contact Academic Records if it remains withheld after publication." },
 ];
 
 export const undergraduateGradingPolicy: StudentGradingPolicy = {

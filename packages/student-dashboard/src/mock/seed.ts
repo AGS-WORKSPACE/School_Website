@@ -16,8 +16,7 @@ export const initialStudentLinks: StudentLink[] = [
   {
     personId: "per-ngozi-eze",
     sisStudentId: "student-2025-150",
-    // Registration and released results hold no record for her yet; the
-    // dashboard says so rather than showing an empty registration.
+    recordsStudentId: "TAU/25/SCI/0150",
     timetableCohortIds: ["cohort-computing-100"],
   },
   {

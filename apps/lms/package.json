@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@tau/curriculum": "*",
+    "@tau/graduation": "*",
     "@tau/identity": "*",
     "@tau/lms": "*",
     "@tau/odl": "*",
