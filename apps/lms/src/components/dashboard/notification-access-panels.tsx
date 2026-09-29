@@ -59,11 +59,13 @@ export function NotificationAccessPanels({
   sources,
   onOpenLearning,
   onRetrySource,
+  mode,
 }: {
   context: StudentContext;
   sources: SourceHealth[];
   onOpenLearning: () => void;
   onRetrySource: (source: SourceHealth["source"]) => void;
+  mode: "inbox" | "settings";
 }) {
   const lms = useLms();
   const preference = lms.preferences.find(
@@ -105,18 +107,19 @@ export function NotificationAccessPanels({
     <div className="space-y-6">
       <header>
         <p className="text-xs font-bold uppercase tracking-[0.16em] text-primary">
-          Notification centre
+          {mode === "inbox" ? "Notification centre" : "Communication preferences"}
         </p>
         <h2 className="mt-1 font-display text-2xl font-bold sm:text-3xl">
-          Your notifications
+          {mode === "inbox" ? "Your notifications" : "Notification settings"}
         </h2>
         <p className="mt-2 max-w-3xl text-sm text-lms-muted">
-          Read authorised course and service updates here. Channel preferences
-          are available below the inbox.
+          {mode === "inbox"
+            ? "Read authorised course and service updates and open the source item for full context."
+            : "Choose how routine messages reach you and review delivery, privacy and service-resilience controls."}
         </p>
       </header>
 
-      {message ? (
+      {mode === "settings" && message ? (
         <p
           role="status"
           aria-live="polite"
@@ -127,8 +130,9 @@ export function NotificationAccessPanels({
       ) : null}
 
       <div className="grid gap-6">
-        <section
-          className="order-2 rounded-2xl border border-border bg-card p-5 shadow-card"
+        {mode === "settings" ? (
+          <section
+          className="rounded-2xl border border-border bg-card p-5 shadow-card"
           aria-labelledby="preference-title"
         >
           <div className="flex items-start gap-3">
@@ -198,10 +202,12 @@ export function NotificationAccessPanels({
               </p>
             </div>
           </div>
-        </section>
+          </section>
+        ) : null}
 
-        <section
-          className="order-1 rounded-2xl border border-border bg-card p-5 shadow-card"
+        {mode === "inbox" ? (
+          <section
+          className="rounded-2xl border border-border bg-card p-5 shadow-card"
           aria-labelledby="privacy-title"
         >
           <div className="flex flex-wrap items-start justify-between gap-3">
@@ -290,10 +296,12 @@ export function NotificationAccessPanels({
               </li>
             )}
           </ul>
-        </section>
+          </section>
+        ) : null}
       </div>
 
-      <section
+      {mode === "settings" ? (
+        <section
         className="rounded-2xl border border-border bg-card p-5 shadow-card"
         aria-labelledby="resilience-title"
       >
@@ -370,7 +378,8 @@ export function NotificationAccessPanels({
           Source services remain authoritative. Retrying never invents a result,
           payment, request status or examination state.
         </p>
-      </section>
+        </section>
+      ) : null}
     </div>
   );
 }

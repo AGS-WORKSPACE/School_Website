@@ -79,6 +79,8 @@ function shell(id: string, courseId: string, deliveryMode: CourseOffering["deliv
 
 export const initialOfferings: CourseOffering[] = [
   shell("off-cos101-2026-1", "c-cos101", "Blended", lmsActors[0], initialTemplates[0]),
+  shell("off-mth101-2026-1", "c-mth101", "Online", lmsActors[1], initialTemplates[1]),
+  shell("off-gst111-2026-1", "c-gst111", "Blended", lmsActors[0], initialTemplates[0]),
   shell("off-csc201-2026-1", "c-csc201", "Online", lmsActors[1], initialTemplates[1]),
 ];
 
@@ -89,6 +91,8 @@ export const initialRegistrationFeed: RegistrationEvent[] = [
   reg("reg-2026-0002", "off-cos101-2026-1", "student-2026-202", "TAU/26/SCI/0102", "Zainab Umar", "Add", "2026-09-07T09:05:00Z"),
   reg("reg-2026-0003", "off-cos101-2026-1", "student-2026-203", "TAU/26/SCI/0103", "David Afolabi", "Add", "2026-09-07T09:10:00Z"),
   reg("reg-2026-0004", "off-cos101-2026-1", "student-2025-150", "TAU/25/SCI/0150", "Ngozi Eze", "Add", "2026-09-07T09:20:00Z"),
+  reg("reg-2026-0004-mth", "off-mth101-2026-1", "student-2025-150", "TAU/25/SCI/0150", "Ngozi Eze", "Add", "2026-09-07T09:21:00Z"),
+  reg("reg-2026-0004-gst", "off-gst111-2026-1", "student-2025-150", "TAU/25/SCI/0150", "Ngozi Eze", "Add", "2026-09-07T09:22:00Z"),
   reg("reg-2026-0005", "off-cos101-2026-1", "student-2026-204", "TAU/26/SCI/0104", "Hauwa Garba", "Add", "2026-09-07T09:30:00Z"),
   reg("reg-2026-0101", "off-csc201-2026-1", "student-2025-160", "TAU/25/SCI/0160", "Ifeoma Chukwu", "Add", "2026-09-07T10:00:00Z"),
   reg("reg-2026-0102", "off-csc201-2026-1", "student-2025-161", "TAU/25/SCI/0161", "Samuel Bassey", "Add", "2026-09-07T10:02:00Z"),
@@ -108,6 +112,8 @@ export const initialProcessedEventIds = seededRoster.processed;
 const KB = 1024;
 const MB = 1024 * 1024;
 const COS = "off-cos101-2026-1";
+const MTH = "off-mth101-2026-1";
+const GST = "off-gst111-2026-1";
 const CSC = "off-csc201-2026-1";
 
 export const initialContent: ContentItem[] = [
@@ -120,6 +126,14 @@ export const initialContent: ContentItem[] = [
   { id: "cnt-101-algo-reading", offeringId: COS, module: "Week 2 · Algorithms", title: "Reading: tracing algorithms step by step", kind: "Page", format: "HTML", sizeBytes: 46 * KB, essential: true, alternatives: [], outcomeIds: ["clo-cos101-2"] },
   { id: "cnt-101-quiz", offeringId: COS, module: "Week 2 · Algorithms", title: "Practice quiz: trace the loop", kind: "Quiz", format: "QTI", sizeBytes: 14 * KB, essential: true, alternatives: [], outcomeIds: ["clo-cos101-2"] },
   { id: "cnt-101-handout", offeringId: COS, module: "Week 2 · Algorithms", title: "Handout: flowchart symbols", kind: "Reading", format: "Scanned_PDF", sizeBytes: 7.8 * MB, essential: false, alternatives: [], outcomeIds: ["clo-cos101-2"] },
+  { id: "cnt-mth101-orient", offeringId: MTH, module: "Week 0 · Start here", title: "Calculus course guide and study plan", kind: "Page", format: "HTML", sizeBytes: 22 * KB, essential: true, alternatives: [], outcomeIds: [] },
+  { id: "cnt-mth101-functions", offeringId: MTH, module: "Week 1 · Functions and graphs", title: "Lecture: functions, domains and graphs", kind: "Video", format: "MP4", sizeBytes: 74 * MB, essential: true, alternatives: [{ kind: "Captions", sizeBytes: 34 * KB }, { kind: "Transcript", sizeBytes: 16 * KB }, { kind: "Low_Res_Video", sizeBytes: 8 * MB }], outcomeIds: ["clo-mth-1"] },
+  { id: "cnt-mth101-limits", offeringId: MTH, module: "Week 2 · Limits and continuity", title: "Worked examples: evaluating limits", kind: "Reading", format: "Tagged_PDF", sizeBytes: 1.1 * MB, essential: true, alternatives: [], outcomeIds: ["clo-mth-1"] },
+  { id: "cnt-mth101-quiz", offeringId: MTH, module: "Week 2 · Limits and continuity", title: "Practice quiz: limits", kind: "Quiz", format: "QTI", sizeBytes: 18 * KB, essential: false, alternatives: [], outcomeIds: ["clo-mth-1"] },
+  { id: "cnt-gst111-orient", offeringId: GST, module: "Week 0 · Start here", title: "Communication course orientation", kind: "Page", format: "HTML", sizeBytes: 20 * KB, essential: true, alternatives: [], outcomeIds: [] },
+  { id: "cnt-gst111-writing", offeringId: GST, module: "Week 1 · Academic writing", title: "Reading: building a clear academic paragraph", kind: "Reading", format: "HTML", sizeBytes: 44 * KB, essential: true, alternatives: [], outcomeIds: ["clo-gst-1"] },
+  { id: "cnt-gst111-citation", offeringId: GST, module: "Week 2 · Referencing", title: "Video: quoting, paraphrasing and citation", kind: "Video", format: "MP4", sizeBytes: 68 * MB, essential: true, alternatives: [{ kind: "Captions", sizeBytes: 32 * KB }, { kind: "Transcript", sizeBytes: 15 * KB }, { kind: "Low_Res_Video", sizeBytes: 7 * MB }], outcomeIds: ["clo-gst-1"] },
+  { id: "cnt-gst111-template", offeringId: GST, module: "Week 2 · Referencing", title: "Academic essay template", kind: "Reading", format: "DOCX", sizeBytes: 210 * KB, essential: false, alternatives: [], outcomeIds: ["clo-gst-1"] },
   { id: "cnt-201-orient", offeringId: CSC, module: "Unit 0 · Orientation", title: "Orientation and readiness check", kind: "Page", format: "HTML", sizeBytes: 31 * KB, essential: true, alternatives: [], outcomeIds: [] },
   { id: "cnt-201-oop-video", offeringId: CSC, module: "Unit 1 · Classes and objects", title: "Lecture: designing class hierarchies", kind: "Video", format: "MP4", sizeBytes: 122 * MB, essential: true, alternatives: [{ kind: "Captions", sizeBytes: 55 * KB }, { kind: "Transcript", sizeBytes: 20 * KB }, { kind: "Low_Res_Video", sizeBytes: 14 * MB }], outcomeIds: ["clo-csc201-1"] },
   { id: "cnt-201-oop-notes", offeringId: CSC, module: "Unit 1 · Classes and objects", title: "Notes: inheritance and composition", kind: "Reading", format: "HTML", sizeBytes: 58 * KB, essential: true, alternatives: [], outcomeIds: ["clo-csc201-1"] },
@@ -134,6 +148,8 @@ export const initialProgress: ProgressEntry[] = [
 export const initialAnnouncements: Announcement[] = [
   { id: "ann-101-1", offeringId: COS, title: "Welcome to COS 101", body: "Start with the orientation page. Every lecture video has notes you can read offline.", priority: "Normal", postedBy: "usr-lect-okonkwo", postedByName: "Dr. Samuel Okonkwo", postedAt: "2026-09-07T12:00:00Z" },
   { id: "ann-101-2", offeringId: COS, title: "Lab 1 moves to Friday", body: "Because of the power maintenance on Thursday, Lab 1 now runs Friday 10:00 in CS-Lab 2.", priority: "Critical", postedBy: "usr-lect-okonkwo", postedByName: "Dr. Samuel Okonkwo", postedAt: "2026-09-09T15:30:00Z" },
+  { id: "ann-mth101-1", offeringId: MTH, title: "Welcome to MTH 101", body: "Download the worked-example sheet before the first online tutorial.", priority: "Normal", postedBy: "usr-lect-bamidele", postedByName: "Dr. Tolu Bamidele", postedAt: "2026-09-08T09:00:00Z" },
+  { id: "ann-gst111-1", offeringId: GST, title: "Writing diagnostic", body: "The first writing activity is diagnostic and helps us plan tutorial support.", priority: "Normal", postedBy: "usr-lect-okonkwo", postedByName: "Dr. Samuel Okonkwo", postedAt: "2026-09-08T10:00:00Z" },
 ];
 
 export const initialDiscussions: Discussion[] = [
@@ -172,6 +188,8 @@ export const initialLiveSessions: LiveSession[] = [
 
 export const initialOfficeHours: OfficeHours[] = [
   { id: "oh-101", offeringId: COS, staffName: "Dr. Samuel Okonkwo", weekday: "Wednesday", startTime: "14:00", endTime: "16:00", location: "Room CS-104", onlineUrl: "https://meet.tau.edu.ng/okonkwo-office" },
+  { id: "oh-mth101", offeringId: MTH, staffName: "Dr. Tolu Bamidele", weekday: "Tuesday", startTime: "15:00", endTime: "16:30", onlineUrl: "https://meet.tau.edu.ng/mth101-office" },
+  { id: "oh-gst111", offeringId: GST, staffName: "Dr. Samuel Okonkwo", weekday: "Friday", startTime: "11:00", endTime: "12:00", location: "GST Building, Room 8" },
   { id: "oh-201", offeringId: CSC, staffName: "Dr. Tolu Bamidele", weekday: "Thursday", startTime: "18:00", endTime: "19:00", onlineUrl: "https://meet.tau.edu.ng/bamidele-office" },
 ];
 
@@ -186,6 +204,8 @@ export const initialAssignments: Assignment[] = [
   { id: "asg-101-a1", offeringId: COS, title: "Assignment 1: number base conversions", component: "Continuous_Assessment", weightPercent: 15, dueAt: "2026-09-11T23:59:00Z", latePolicy: standardLate, rubric: [{ id: "a1-c1", title: "Correct conversions", maxPoints: 10, outcomeId: "clo-cos101-1" }, { id: "a1-c2", title: "Working shown", maxPoints: 5, outcomeId: "clo-cos101-1" }] },
   { id: "asg-101-lab", offeringId: COS, title: "Lab report: binary arithmetic", component: "Practical", weightPercent: 20, dueAt: "2026-09-14T23:59:00Z", latePolicy: standardLate, rubric: [{ id: "lab-c1", title: "Method", maxPoints: 10, outcomeId: "clo-cos101-1" }, { id: "lab-c2", title: "Results and reasoning", maxPoints: 10, outcomeId: "clo-cos101-2" }] },
   { id: "asg-101-a2", offeringId: COS, title: "Assignment 2: algorithm tracing", component: "Continuous_Assessment", weightPercent: 15, dueAt: "2026-09-16T23:59:00Z", latePolicy: standardLate, rubric: [{ id: "a2-c1", title: "Trace accuracy", maxPoints: 10, outcomeId: "clo-cos101-2" }, { id: "a2-c2", title: "Explanation", maxPoints: 5, outcomeId: "clo-cos101-2" }] },
+  { id: "asg-mth101-a1", offeringId: MTH, title: "Problem set 1: functions and limits", component: "Continuous_Assessment", weightPercent: 30, dueAt: "2026-10-02T23:59:00Z", latePolicy: standardLate, rubric: [{ id: "mth-a1-c1", title: "Correct method", maxPoints: 20, outcomeId: "clo-mth-1" }, { id: "mth-a1-c2", title: "Clear working", maxPoints: 10, outcomeId: "clo-mth-1" }] },
+  { id: "asg-gst111-a1", offeringId: GST, title: "Academic paragraph and citation exercise", component: "Continuous_Assessment", weightPercent: 40, dueAt: "2026-10-05T23:59:00Z", latePolicy: standardLate, rubric: [{ id: "gst-a1-c1", title: "Structure and coherence", maxPoints: 20, outcomeId: "clo-gst-1" }, { id: "gst-a1-c2", title: "Citation and language", maxPoints: 20, outcomeId: "clo-gst-1" }] },
   { id: "asg-201-a1", offeringId: CSC, title: "Project 1: shape class hierarchy", component: "Continuous_Assessment", weightPercent: 20, dueAt: "2026-09-21T23:59:00Z", latePolicy: { graceMinutes: 180, penaltyPercentPerDay: 5, maxLateDays: 5 }, rubric: [{ id: "p1-c1", title: "Design", maxPoints: 10, outcomeId: "clo-csc201-1" }, { id: "p1-c2", title: "Implementation", maxPoints: 10, outcomeId: "clo-csc201-2" }] },
 ];
 

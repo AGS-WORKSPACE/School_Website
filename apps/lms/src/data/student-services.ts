@@ -34,11 +34,15 @@ export interface FinanceProjection {
 export interface StudentRequest {
   id: string;
   type: string;
+  subject?: string;
   submittedAt: string;
   status: StudentRequestStatus;
   owner: string;
   sla: string;
   nextAction?: string;
+  urgency?: "Routine" | "Priority" | "Urgent";
+  preferredContact?: "Portal message" | "Institutional email" | "Phone call";
+  attachmentName?: string;
 }
 
 export interface StudentServiceCategory { id: string; label: string; description: string; instructions: string; }
