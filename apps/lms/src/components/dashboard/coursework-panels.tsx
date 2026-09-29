@@ -21,11 +21,25 @@ function lateVariant(state: ReturnType<typeof lateOutcome>["state"]) {
   return "destructive" as const;
 }
 
-export function CourseworkPanels({ context }: { context: StudentContext }) {
+export function CourseworkPanels({
+  context,
+  offeringId,
+  embedded = false,
+}: {
+  context: StudentContext;
+  offeringId?: string;
+  embedded?: boolean;
+}) {
   const lms = useLms();
   const [filter, setFilter] = React.useState<Filter>("all");
   const offeringIds = new Set(lms.enrolments.filter((item) => item.studentId === context.sisStudentId && item.status === "Active").map((item) => item.offeringId));
-  const assignments = lms.assignments.filter((item) => offeringIds.has(item.offeringId)).sort((a, b) => Date.parse(a.dueAt) - Date.parse(b.dueAt));
+  const assignments = lms.assignments
+    .filter(
+      (item) =>
+        offeringIds.has(item.offeringId) &&
+        (!offeringId || item.offeringId === offeringId),
+    )
+    .sort((a, b) => Date.parse(a.dueAt) - Date.parse(b.dueAt));
 
   const rows = assignments.map((assignment) => {
     const offering = lms.offerings.find((item) => item.id === assignment.offeringId);
@@ -45,16 +59,16 @@ export function CourseworkPanels({ context }: { context: StudentContext }) {
 
   return (
     <div className="space-y-6">
-      <header><p className="text-xs font-bold uppercase tracking-[0.16em] text-primary">Assignments & feedback</p><h2 className="mt-1 font-display text-2xl font-bold sm:text-3xl">Coursework centre</h2><p className="mt-2 max-w-2xl text-sm text-lms-muted">Requirements, authoritative submission evidence, late rules and student-released feedback from the LMS.</p></header>
+      <header><p className="text-xs font-bold uppercase tracking-[0.16em] text-primary">Assignments & feedback</p><h2 className={`mt-1 font-display font-bold ${embedded ? "text-xl" : "text-2xl sm:text-3xl"}`}>{embedded ? "Course assignments and coursework" : "Coursework centre"}</h2><p className="mt-2 max-w-2xl text-sm text-lms-muted">Requirements, authoritative submission evidence, late rules and student-released feedback from the LMS.</p></header>
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <SummaryCard label="Coursework items" value={`${rows.length}`} detail="Across active courses" icon={ListChecks} />
+        <SummaryCard label="Coursework items" value={`${rows.length}`} detail={offeringId ? "In this course" : "Across active courses"} icon={ListChecks} />
         <SummaryCard label="Submitted" value={`${submittedCount}`} detail={`${rows.length - submittedCount} remaining`} icon={FileCheck2} />
         <SummaryCard label="Feedback released" value={`${feedbackCount}`} detail="Draft marks stay private" icon={MessageSquareQuote} />
       </div>
 
       <section className="rounded-2xl border border-border bg-card shadow-card" aria-labelledby="coursework-title">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border p-5"><div><h3 id="coursework-title" className="font-display text-lg font-bold">All coursework</h3><p className="mt-1 text-sm text-lms-muted">Final examinations remain with Exams and Records.</p></div><div className="inline-flex rounded-xl border border-border bg-muted/30 p-1">{([ ["all", "All"], ["todo", "To do"], ["submitted", "Submitted"], ["feedback", "Feedback"] ] as const).map(([value, label]) => <button key={value} type="button" onClick={() => setFilter(value)} aria-pressed={filter === value} className={cn("rounded-lg px-3 py-2 text-xs font-semibold", filter === value ? "bg-[#10102d] text-white" : "text-lms-muted hover:bg-white")}>{label}</button>)}</div></div>
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border p-5"><div><h3 id="coursework-title" className="font-display text-lg font-bold">{offeringId ? "Coursework for this course" : "All coursework"}</h3><p className="mt-1 text-sm text-lms-muted">Final examinations remain with Exams and Records.</p></div><div className="inline-flex rounded-xl border border-border bg-muted/30 p-1">{([ ["all", "All"], ["todo", "To do"], ["submitted", "Submitted"], ["feedback", "Feedback"] ] as const).map(([value, label]) => <button key={value} type="button" onClick={() => setFilter(value)} aria-pressed={filter === value} className={cn("rounded-lg px-3 py-2 text-xs font-semibold", filter === value ? "bg-[#10102d] text-white" : "text-lms-muted hover:bg-white")}>{label}</button>)}</div></div>
         {visible.length ? <div className="divide-y divide-border">{visible.map((row) => <CourseworkRow key={row.assignment.id} {...row} />)}</div> : <p className="p-10 text-center text-sm text-lms-muted">No coursework matches this filter.</p>}
       </section>
 

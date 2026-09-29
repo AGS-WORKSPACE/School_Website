@@ -44,6 +44,12 @@ export interface LmsStoreState {
 
 const STORAGE_KEY = "tau_lms_store_v1";
 
+function mergeSeeded<T>(seeded: T[], saved: T[] | undefined, key: (item: T) => string): T[] {
+  if (!saved) return seeded;
+  const savedKeys = new Set(saved.map(key));
+  return [...saved, ...seeded.filter((item) => !savedKeys.has(key(item)))];
+}
+
 function seedState(): LmsStoreState {
   return structuredClone({
     templates: initialTemplates,
@@ -85,7 +91,22 @@ class LmsStore {
     if (typeof window !== "undefined") {
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) return { ...seedState(), ...(JSON.parse(saved) as Partial<LmsStoreState>) };
+        if (saved) {
+          const seeded = seedState();
+          const restored = JSON.parse(saved) as Partial<LmsStoreState>;
+          return {
+            ...seeded,
+            ...restored,
+            offerings: mergeSeeded(seeded.offerings, restored.offerings, (item) => item.id),
+            registrationFeed: mergeSeeded(seeded.registrationFeed, restored.registrationFeed, (item) => item.id),
+            processedEventIds: [...new Set([...(restored.processedEventIds ?? []), ...seeded.processedEventIds])],
+            enrolments: mergeSeeded(seeded.enrolments, restored.enrolments, (item) => `${item.offeringId}:${item.studentId}`),
+            content: mergeSeeded(seeded.content, restored.content, (item) => item.id),
+            announcements: mergeSeeded(seeded.announcements, restored.announcements, (item) => item.id),
+            officeHours: mergeSeeded(seeded.officeHours, restored.officeHours, (item) => item.id),
+            assignments: mergeSeeded(seeded.assignments, restored.assignments, (item) => item.id),
+          };
+        }
       } catch (err) {
         console.warn("Could not read LMS store from localStorage:", err);
       }

@@ -18,7 +18,7 @@ import { useStudentDashboard } from "@tau/student-dashboard";
 import { Button } from "@tau/ui/button";
 import { AcademicPanels } from "@/components/dashboard/academic-panels";
 import { ContextBar } from "@/components/dashboard/context-bar";
-import { CourseworkPanels } from "@/components/dashboard/coursework-panels";
+import { DepartmentPanels } from "@/components/dashboard/department-panels";
 import {
   DashboardSidebar,
   type DashboardView,
@@ -46,35 +46,41 @@ import { formatDashboardDate } from "@/lib/dashboard-format";
 /** The existing student journeys the dashboard opens, rather than rebuilding. */
 const portalBase =
   process.env.NEXT_PUBLIC_STUDENT_PORTAL_URL ?? "http://localhost:3000";
-const services = [
+const services: Array<{
+  label: string;
+  description: string;
+  icon: typeof IdCard;
+  view?: DashboardView;
+  href?: string;
+}> = [
   {
     label: "My record",
     description: "Personal details, requests and appeals",
-    href: `${portalBase}/student-portal/my-record`,
+    view: "academics",
     icon: IdCard,
   },
   {
     label: "Registration",
     description: "Course registration and statements",
-    href: `${portalBase}/student-portal/registration`,
+    view: "registration",
     icon: ClipboardList,
   },
   {
     label: "Degree progress",
     description: "Requirements satisfied and outstanding",
-    href: `${portalBase}/student-portal/degree-audit`,
+    view: "degree-progress",
     icon: GraduationCap,
   },
   {
     label: "Learning",
     description: "Course materials, coursework and discussions",
-    href: `${portalBase}/student-portal/learning`,
+    view: "learning",
     icon: BookOpen,
   },
   {
     label: "Online readiness",
-    description: "Check your device, connection and study skills",
-    href: `${portalBase}/student-portal/readiness`,
+    description: "Run the examination device and browser check",
+    view: "exams",
     icon: ListChecks,
   },
   {
@@ -135,18 +141,22 @@ export function StudentDashboard({
       ? "Welcome back"
       : activeView === "academics"
         ? "Academic record"
-        : activeView === "timetable"
-          ? "Timetable & classes"
-          : activeView === "learning"
-            ? "My learning"
-            : activeView === "coursework"
-              ? "Coursework"
+        : activeView === "department"
+          ? "My department"
+          : activeView === "timetable"
+            ? "Timetable & classes"
+            : activeView === "learning"
+              ? "My learning"
               : activeView === "exams"
                 ? "CBT & examinations"
                 : activeView === "results"
                   ? "Results & standing"
                   : activeView === "services"
                     ? "Finance & services"
+                    : activeView === "notifications"
+                      ? "Notifications"
+                      : activeView === "notification-settings"
+                        ? "Notification settings"
                     : activeView === "registration"
                       ? "Registration"
                       : activeView === "degree-progress"
@@ -221,10 +231,7 @@ export function StudentDashboard({
           <div className="mx-auto max-w-[1500px]">
             {activeView === "overview" ? (
               <div className="space-y-6">
-                <ContextBar
-                  context={context}
-                  onSignOut={() => void signOut()}
-                />
+                <ContextBar context={context} />
                 <div className="grid gap-6 xl:grid-cols-[2fr_1fr]">
                   <div className="space-y-6">
                     <AgendaPanel items={home.agenda} />
@@ -255,17 +262,10 @@ export function StudentDashboard({
                       <ul className="mt-4 space-y-2">
                         {services.map((service) => (
                           <li key={service.label}>
-                            {service.label === "Registration" ||
-                            service.label === "Degree progress" ? (
+                            {service.view ? (
                               <button
                                 type="button"
-                                onClick={() =>
-                                  changeView(
-                                    service.label === "Registration"
-                                      ? "registration"
-                                      : "degree-progress",
-                                  )
-                                }
+                                onClick={() => changeView(service.view!)}
                                 className="flex w-full items-start gap-3 rounded-xl border border-border p-3 text-left transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                               >
                                 <service.icon
@@ -282,8 +282,8 @@ export function StudentDashboard({
                                 </span>
                               </button>
                             ) : (
-                              <a
-                                href={service.href}
+                              <Link
+                                href={service.href ?? "/support"}
                                 className="flex items-start gap-3 rounded-xl border border-border p-3 transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                               >
                                 <service.icon
@@ -298,7 +298,7 @@ export function StudentDashboard({
                                     {service.description}
                                   </span>
                                 </span>
-                              </a>
+                              </Link>
                             )}
                           </li>
                         ))}
@@ -318,12 +318,12 @@ export function StudentDashboard({
                 onOpenRegistration={() => changeView("registration")}
                 onOpenDegreeProgress={() => changeView("degree-progress")}
               />
+            ) : activeView === "department" ? (
+              <DepartmentPanels context={context} />
             ) : activeView === "timetable" ? (
               <TimetablePanels agenda={home.agenda} alerts={home.alerts} />
             ) : activeView === "learning" ? (
               <LearningPanels context={context} />
-            ) : activeView === "coursework" ? (
-              <CourseworkPanels context={context} />
             ) : activeView === "exams" ? (
               <ExamPanels context={context} sources={home.sources} />
             ) : activeView === "results" ? (
@@ -334,12 +334,21 @@ export function StudentDashboard({
               <RegistrationPanels context={context} />
             ) : activeView === "degree-progress" ? (
               <DegreeAuditPanels context={context} />
+            ) : activeView === "notifications" ? (
+              <NotificationAccessPanels
+                context={context}
+                sources={home.sources}
+                onOpenLearning={() => changeView("learning")}
+                onRetrySource={(source) => mutations.setSourceOverride(source)}
+                mode="inbox"
+              />
             ) : (
               <NotificationAccessPanels
                 context={context}
                 sources={home.sources}
                 onOpenLearning={() => changeView("learning")}
                 onRetrySource={(source) => mutations.setSourceOverride(source)}
+                mode="settings"
               />
             )}
           </div>

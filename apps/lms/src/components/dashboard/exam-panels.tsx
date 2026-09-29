@@ -20,6 +20,7 @@ import {
   MonitorCheck,
   ReceiptText,
   RefreshCw,
+  PlayCircle,
   Scale,
   ShieldCheck,
   Wifi,
@@ -32,9 +33,7 @@ import { useStudents } from "@tau/students";
 import { Badge } from "@tau/ui/badge";
 import { Button } from "@tau/ui/button";
 import { Progress } from "@tau/ui/progress";
-
-const portalBase =
-  process.env.NEXT_PUBLIC_STUDENT_PORTAL_URL ?? "http://localhost:3000";
+import { PracticeQuizDialog } from "./practice-quiz-dialog";
 
 type DeviceCheck = {
   browser: boolean;
@@ -57,6 +56,7 @@ export function ExamPanels({
   const [deviceCheck, setDeviceCheck] = React.useState<DeviceCheck>();
   const [practiceStep, setPracticeStep] = React.useState(1);
   const [practiceFlagged, setPracticeFlagged] = React.useState(false);
+  const [selectedPracticeQuizId, setSelectedPracticeQuizId] = React.useState<string>();
   const examSource = sources.find((item) => item.source === "Examinations");
   const resultSource = sources.find((item) => item.source === "Results");
   const activeOfferingIds = new Set(
@@ -476,10 +476,11 @@ export function ExamPanels({
                   (offering) => offering.id === item.offeringId,
                 );
                 return (
-                  <a
+                  <button
+                    type="button"
                     key={item.id}
-                    href={`${portalBase}/student-portal/learning`}
-                    className="mt-2 flex items-center justify-between gap-3 rounded-xl border border-border p-3 hover:bg-muted/40"
+                    onClick={() => setSelectedPracticeQuizId(item.id)}
+                    className="mt-2 flex w-full items-center justify-between gap-3 rounded-xl border border-border p-3 text-left hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     <span>
                       <span className="block text-sm font-semibold">
@@ -489,8 +490,8 @@ export function ExamPanels({
                         QTI practice item · owned by the LMS course
                       </span>
                     </span>
-                    <ExternalLink className="size-4 text-primary" aria-hidden />
-                  </a>
+                    <span className="flex items-center gap-2 text-xs font-bold text-primary">Start quiz<PlayCircle className="size-4" aria-hidden /></span>
+                  </button>
                 );
               })}
             </div>
@@ -499,6 +500,12 @@ export function ExamPanels({
               No QTI practice item exists in your rostered courses.
             </p>
           )}
+          <PracticeQuizDialog
+            key={selectedPracticeQuizId ?? "closed-practice-quiz"}
+            quizId={selectedPracticeQuizId}
+            open={Boolean(selectedPracticeQuizId)}
+            onOpenChange={(open) => { if (!open) setSelectedPracticeQuizId(undefined); }}
+          />
         </section>
 
         <section

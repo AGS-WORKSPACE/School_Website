@@ -40,8 +40,11 @@ import type { StudentContext } from "@tau/student-dashboard";
 import { Badge } from "@tau/ui/badge";
 import { Button } from "@tau/ui/button";
 import { Progress } from "@tau/ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@tau/ui/tabs";
 import { formatDashboardDateTime } from "@/lib/dashboard-format";
+import { attendanceForCourse } from "@/data/student-attendance";
 import { CourseContentViewer } from "./course-content-viewer";
+import { CourseworkPanels } from "./coursework-panels";
 
 const portalBase =
   process.env.NEXT_PUBLIC_STUDENT_PORTAL_URL ?? "http://localhost:3000";
@@ -49,6 +52,10 @@ const deviceId = "lms-dashboard";
 
 function when(value: string): string {
   return formatDashboardDateTime(value);
+}
+
+function semesterLabel(semester: 1 | 2): string {
+  return semester === 1 ? "First semester" : "Second semester";
 }
 
 function contentIcon(item: ContentItem) {
@@ -111,7 +118,7 @@ export function LearningPanels({ context }: { context: StudentContext }) {
               My learning
             </p>
             <h2 className="mt-1 font-display text-2xl font-bold sm:text-3xl">
-              Courses this semester
+              {context.academicSession} · First semester courses
             </h2>
             <p className="mt-2 max-w-2xl text-sm text-lms-muted">
               Open a course to view its published modules, learning materials,
@@ -164,6 +171,9 @@ export function LearningPanels({ context }: { context: StudentContext }) {
             const version = catalogueCourse?.versions.find(
               (item) => item.id === course.courseVersionId,
             );
+            const assignmentCount = lms.assignments.filter(
+              (item) => item.offeringId === course.id,
+            ).length;
             return (
               <article
                 key={course.id}
@@ -180,9 +190,14 @@ export function LearningPanels({ context }: { context: StudentContext }) {
                         {course.courseTitle}
                       </h3>
                     </div>
-                    <Badge variant="outline">
-                      {course.deliveryMode.replaceAll("_", " ")}
-                    </Badge>
+                    <div className="flex flex-col items-end gap-2">
+                      <Badge variant="outline" className="whitespace-nowrap">
+                        {semesterLabel(course.semester)}
+                      </Badge>
+                      <Badge variant="outline">
+                        {course.deliveryMode.replaceAll("_", " ")}
+                      </Badge>
+                    </div>
                   </div>
                   <dl className="mt-5 grid grid-cols-2 gap-3 text-sm">
                     <CourseFact
@@ -193,7 +208,10 @@ export function LearningPanels({ context }: { context: StudentContext }) {
                           : "Not published"
                       }
                     />
-                    <CourseFact label="Semester" value={`${course.semester}`} />
+                    <CourseFact
+                      label="Semester"
+                      value={semesterLabel(course.semester)}
+                    />
                     <CourseFact
                       label="Lecturer"
                       value={course.lecturers
@@ -204,6 +222,10 @@ export function LearningPanels({ context }: { context: StudentContext }) {
                     <CourseFact
                       label="Materials"
                       value={`${courseContent.length} published`}
+                    />
+                    <CourseFact
+                      label="Assignments"
+                      value={`${assignmentCount} coursework item${assignmentCount === 1 ? "" : "s"}`}
                     />
                   </dl>
                   <div className="mt-5">
@@ -261,6 +283,7 @@ export function LearningPanels({ context }: { context: StudentContext }) {
   const courseVersion = catalogueCourse?.versions.find(
     (item) => item.id === selected.courseVersionId,
   );
+  const attendance = attendanceForCourse(selected.courseCode);
 
   function progressOf(item: ContentItem): ProgressEntry | undefined {
     return (
@@ -382,15 +405,20 @@ export function LearningPanels({ context }: { context: StudentContext }) {
           <div className="bg-gradient-to-r from-[#10102d] to-[#25256b] p-6 text-white">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
-                <Badge className="border-white/15 bg-white/10 text-white">
-                  {selected.deliveryMode.replaceAll("_", " ")}
-                </Badge>
+                <div className="flex flex-wrap gap-2">
+                  <Badge className="whitespace-nowrap border-white/15 bg-white/10 text-white">
+                    {semesterLabel(selected.semester)}
+                  </Badge>
+                  <Badge className="border-white/15 bg-white/10 text-white">
+                    {selected.deliveryMode.replaceAll("_", " ")}
+                  </Badge>
+                </div>
                 <h3 className="mt-3 font-display text-2xl font-bold">
                   {selected.courseCode} · {selected.courseTitle}
                 </h3>
                 <p className="mt-2 text-sm text-white/65">
                   {selected.lecturers.map((item) => item.name).join(", ")} ·{" "}
-                  {selected.session} · Semester {selected.semester}
+                  {selected.session} · {semesterLabel(selected.semester)}
                 </p>
               </div>
               <Layers3 className="size-8 text-[#e1bd55]" aria-hidden />
@@ -427,6 +455,18 @@ export function LearningPanels({ context }: { context: StudentContext }) {
             </div>
           </div>
         </section>
+
+        <Tabs defaultValue="course-details" className="w-full">
+          <TabsList className="grid h-auto w-full grid-cols-2 rounded-xl border border-border bg-card p-1 shadow-card sm:inline-grid sm:w-auto sm:min-w-[32rem]">
+            <TabsTrigger value="course-details" className="whitespace-normal py-3 text-center">
+              Course details & materials
+            </TabsTrigger>
+            <TabsTrigger value="coursework" className="whitespace-normal py-3 text-center">
+              Assignments & coursework
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="course-details" className="space-y-6">
 
         <section
           className="grid gap-5 lg:grid-cols-[1.3fr_0.7fr]"
@@ -470,6 +510,10 @@ export function LearningPanels({ context }: { context: StudentContext }) {
               <CourseFact
                 label="Course version"
                 value={courseVersion?.versionNumber ?? selected.courseVersionId}
+              />
+              <CourseFact
+                label="Released attendance"
+                value={attendance ? `${attendance.releasedRate}% · ${attendance.attended}/${attendance.sessionsHeld} sessions` : "Not published"}
               />
             </dl>
             <h4 className="mt-6 text-sm font-bold">Learning outcomes</h4>
@@ -843,6 +887,16 @@ export function LearningPanels({ context }: { context: StudentContext }) {
             </p>
           </section>
         </div>
+          </TabsContent>
+
+          <TabsContent value="coursework">
+            <CourseworkPanels
+              context={context}
+              offeringId={selected.id}
+              embedded
+            />
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );

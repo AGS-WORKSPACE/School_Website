@@ -1,20 +1,34 @@
 "use client";
 
+import * as React from "react";
 import { ArrowUpRight, BookMarked, CalendarRange, CheckCircle2, CircleAlert, Clock3, FileCheck2, IdCard, Mail, MapPin, Phone, ShieldAlert } from "lucide-react";
-import { derivePlacement, useStudents } from "@tau/students";
+import {
+  derivePlacement,
+  fieldDefinition,
+  useStudents,
+  type StudentFieldKey,
+} from "@tau/students";
 import type { StudentContext } from "@tau/student-dashboard";
 import { Badge } from "@tau/ui/badge";
 import { Button } from "@tau/ui/button";
+import { Input } from "@tau/ui/input";
+import { Label } from "@tau/ui/label";
 import { Progress } from "@tau/ui/progress";
-
-const portalBase = process.env.NEXT_PUBLIC_STUDENT_PORTAL_URL ?? "http://localhost:3000";
+import { Textarea } from "@tau/ui/textarea";
 
 function verificationVariant(state: string) {
   return state === "Verified" ? "success" as const : state === "Disputed" ? "destructive" as const : "warning" as const;
 }
 
 export function AcademicPanels({ context, onOpenRegistration, onOpenDegreeProgress }: { context: StudentContext; onOpenRegistration: () => void; onOpenDegreeProgress: () => void }) {
-  const { students, lifecycleEvents, holds, transfers } = useStudents();
+  const { students, lifecycleEvents, holds, transfers, corrections, mutations } = useStudents();
+  const [correctionOpen, setCorrectionOpen] = React.useState(false);
+  const [correctionField, setCorrectionField] = React.useState<StudentFieldKey>("surname");
+  const [correctedValue, setCorrectedValue] = React.useState("");
+  const [justification, setJustification] = React.useState("");
+  const [evidenceType, setEvidenceType] = React.useState("Sworn affidavit");
+  const [evidenceFile, setEvidenceFile] = React.useState("");
+  const [correctionMessage, setCorrectionMessage] = React.useState<{ ok: boolean; text: string }>();
   const student = students.find((item) => item.id === context.sisStudentId);
   const placement = derivePlacement(lifecycleEvents, context.sisStudentId);
   const activeHolds = holds.filter((hold) => hold.studentId === context.sisStudentId && !hold.releasedAt);
@@ -34,6 +48,50 @@ export function AcademicPanels({ context, onOpenRegistration, onOpenDegreeProgre
   const registrationBlocked = activeHolds.some((hold) => hold.effects.includes("Registration"));
   const transferStages = ["Releasing Department", "Receiving Department", "Faculty", "Registry"];
   const completedStages = transfer?.approvals.length ?? 0;
+  const correctionDefinition = fieldDefinition(correctionField);
+  const openCorrections = corrections.filter(
+    (item) => item.studentId === context.sisStudentId && item.status === "Submitted",
+  );
+
+  function submitCorrection(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!student) return;
+    const result = mutations.submitCorrection(
+      {
+        studentId: student.id,
+        field: correctionField,
+        requestedValue: correctedValue,
+        justification,
+        evidence: evidenceFile.trim()
+          ? [
+              {
+                documentType: evidenceType,
+                fileName: evidenceFile.trim(),
+              },
+            ]
+          : [],
+        origin: "Student",
+      },
+      {
+        personId: context.personId,
+        name: context.displayName,
+        role: "Student",
+        unit: "Student",
+      },
+    );
+    setCorrectionMessage({
+      ok: result.ok,
+      text: result.ok
+        ? "Correction request submitted to Registry. Your recorded value remains unchanged until it is approved."
+        : result.error ?? "The correction request could not be submitted.",
+    });
+    if (result.ok) {
+      setCorrectedValue("");
+      setJustification("");
+      setEvidenceFile("");
+      setCorrectionOpen(false);
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -50,7 +108,19 @@ export function AcademicPanels({ context, onOpenRegistration, onOpenDegreeProgre
               <h3 id="profile-title" className="font-display text-lg font-bold">Personal details</h3>
               <p className="mt-1 text-sm text-lms-muted">Releasable fields from your SIS record.</p>
             </div>
-            <Button asChild variant="outline" size="sm"><a href={`${portalBase}/student-portal/my-record`}>Request a correction <ArrowUpRight aria-hidden /></a></Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                setCorrectionOpen((open) => !open);
+                setCorrectionMessage(undefined);
+              }}
+              aria-expanded={correctionOpen}
+              aria-controls="student-correction-form"
+            >
+              Request a correction <ArrowUpRight aria-hidden />
+            </Button>
           </div>
           <dl className="grid gap-px bg-border sm:grid-cols-2">
             {details.map((detail) => {
@@ -86,6 +156,113 @@ export function AcademicPanels({ context, onOpenRegistration, onOpenDegreeProgre
           </dl>
         </section>
       </div>
+
+      {correctionMessage ? (
+        <p
+          role="status"
+          className={`rounded-xl border px-4 py-3 text-sm font-medium ${correctionMessage.ok ? "border-emerald-200 bg-emerald-50 text-emerald-900" : "border-red-200 bg-red-50 text-red-900"}`}
+        >
+          {correctionMessage.text}
+        </p>
+      ) : null}
+
+      {correctionOpen ? (
+        <section
+          id="student-correction-form"
+          className="rounded-2xl border border-border bg-card p-5 shadow-card"
+          aria-labelledby="correction-form-title"
+        >
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-primary">
+                Registry request
+              </p>
+              <h3 id="correction-form-title" className="mt-1 font-display text-lg font-bold">
+                Request a protected-record correction
+              </h3>
+              <p className="mt-1 text-sm text-lms-muted">
+                Submit the correct value and supporting evidence. This does not directly edit your record.
+              </p>
+            </div>
+            <Badge variant="outline">{openCorrections.length} awaiting decision</Badge>
+          </div>
+          <form className="mt-5 grid gap-4 sm:grid-cols-2" onSubmit={submitCorrection}>
+            <div className="space-y-2">
+              <Label htmlFor="correction-field">Field to correct</Label>
+              <select
+                id="correction-field"
+                value={correctionField}
+                onChange={(event) => {
+                  setCorrectionField(event.target.value as StudentFieldKey);
+                  setCorrectedValue("");
+                  setEvidenceType(
+                    fieldDefinition(event.target.value as StudentFieldKey)
+                      .acceptedEvidence[0],
+                  );
+                }}
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                {(["surname", "firstName", "middleName", "dateOfBirth", "sex", "nationality", "stateOfOrigin", "lga", "nin"] as StudentFieldKey[]).map((field) => (
+                  <option key={field} value={field}>{fieldDefinition(field).label}</option>
+                ))}
+              </select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="recorded-value">Current recorded value</Label>
+              <Input id="recorded-value" value={student.fields[correctionField].value} disabled />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="corrected-value">Corrected value</Label>
+              <Input
+                id="corrected-value"
+                value={correctedValue}
+                onChange={(event) => setCorrectedValue(event.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="evidence-type">Evidence type</Label>
+              <select
+                id="evidence-type"
+                value={evidenceType}
+                onChange={(event) => setEvidenceType(event.target.value)}
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                {correctionDefinition.acceptedEvidence.map((evidence) => (
+                  <option key={evidence}>{evidence}</option>
+                ))}
+              </select>
+              <Label htmlFor="evidence-file">Evidence file name</Label>
+              <Input
+                id="evidence-file"
+                value={evidenceFile}
+                onChange={(event) => setEvidenceFile(event.target.value)}
+                placeholder="e.g. nimc-record.pdf"
+                required
+              />
+              <p className="text-xs text-lms-muted">
+                Accepted evidence: {correctionDefinition.acceptedEvidence.join(", ")}.
+              </p>
+            </div>
+            <div className="space-y-2 sm:col-span-2">
+              <Label htmlFor="correction-reason">Why is the recorded value wrong?</Label>
+              <Textarea
+                id="correction-reason"
+                value={justification}
+                onChange={(event) => setJustification(event.target.value)}
+                placeholder="Explain the discrepancy in at least 10 characters."
+                required
+              />
+            </div>
+            <div className="flex flex-wrap gap-2 sm:col-span-2">
+              <Button type="submit">Submit correction request</Button>
+              <Button type="button" variant="outline" onClick={() => setCorrectionOpen(false)}>
+                Cancel
+              </Button>
+            </div>
+          </form>
+        </section>
+      ) : null}
 
       {transfer ? (
         <section className="rounded-2xl border border-blue-200 bg-blue-50/60 p-5" aria-labelledby="transfer-title">
