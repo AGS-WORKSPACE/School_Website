@@ -165,6 +165,8 @@ function nextWeekday(weekday: number, hour: number, seededAt = Date.now()): stri
 
 export const initialLiveSessions: LiveSession[] = [
   { id: "live-101-1", offeringId: COS, title: "Weekly live clinic: number bases", startsAt: nextWeekday(2, 16), durationMinutes: 60, joinUrl: "https://meet.tau.edu.ng/cos101-clinic", recording: "Recorded_With_Notice", captioned: true },
+  { id: "live-101-2", offeringId: COS, title: "Online lecture: data representation", startsAt: nextWeekday(4, 10), durationMinutes: 90, joinUrl: "https://meet.tau.edu.ng/cos101-data", recording: "Recorded_With_Notice", captioned: true },
+  { id: "live-101-3", offeringId: COS, title: "Guided online practice: conversions", startsAt: nextWeekday(5, 12), durationMinutes: 60, joinUrl: "https://meet.tau.edu.ng/cos101-practice", recording: "Not_Recorded", captioned: true },
   { id: "live-201-1", offeringId: CSC, title: "Online tutorial: class design review", startsAt: nextWeekday(4, 17), durationMinutes: 45, joinUrl: "https://meet.tau.edu.ng/csc201-tutorial", recording: "Not_Recorded", captioned: false },
 ];
 

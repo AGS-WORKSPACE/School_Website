@@ -16,6 +16,7 @@
     "@tau/identity": "*",
     "@tau/lms": "*",
     "@tau/odl": "*",
+    "@tau/registration": "*",
     "@tau/scheduling": "*",
     "@tau/student-dashboard": "*",
     "@tau/students": "*",
