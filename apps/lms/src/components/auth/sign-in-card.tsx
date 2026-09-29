@@ -65,11 +65,10 @@ export function SignInCard({
     router.push(role === "student" ? "/dashboard" : "/");
   }
 
-  async function submitCredentials(event: React.FormEvent) {
-    event.preventDefault();
+  async function authenticate(username: string) {
     setBusy(true);
     setMessage(null);
-    const result = await identityAuth.signIn({ username: identifier });
+    const result = await identityAuth.signIn({ username });
     setBusy(false);
 
     if (result.outcome === "signed-in" && result.sessionId && result.personId && result.accountId) {
@@ -88,6 +87,11 @@ export function SignInCard({
         ? "Your account needs a second factor set up before you can sign in. The ICT service desk can do this with you."
         : "We could not sign you in with those details. Check them and try again, or ask the ICT service desk to look at your account.",
     );
+  }
+
+  async function submitCredentials(event: React.FormEvent) {
+    event.preventDefault();
+    await authenticate(identifier);
   }
 
   async function submitCode(event: React.FormEvent) {
@@ -168,29 +172,42 @@ export function SignInCard({
         <section aria-label="Accounts in this demonstration" className="rounded-2xl border border-dashed border-border bg-card/60 p-4 sm:p-5">
           <h2 className="text-sm font-semibold text-foreground">Accounts in this demonstration</h2>
           <p className="mt-1 text-xs text-lms-muted">
-            Pick one to fill the form, then use any password. A real deployment shows none of this.
+            Open a state directly, or select its matriculation number to use the form. A real deployment shows none of this.
           </p>
           <ul className="mt-3 space-y-2">
             {demo.map((account) => (
               <li key={account.matriculationNumber}>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIdentifier(account.matriculationNumber);
-                    setMessage(null);
-                  }}
-                  aria-pressed={identifier === account.matriculationNumber}
-                  className="w-full rounded-xl border border-border p-3 text-left transition-colors hover:bg-muted/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring aria-pressed:border-primary aria-pressed:bg-muted/60"
-                >
-                  <span className="flex flex-wrap items-center gap-2">
-                    <span className="font-mono text-xs font-semibold text-foreground">{account.matriculationNumber}</span>
-                    <span className="text-xs text-lms-muted">{account.displayName}</span>
-                    {account.status !== "active" ? (
-                      <span className="rounded-full bg-destructive/10 px-2 py-0.5 text-[11px] font-semibold text-destructive">{account.status}</span>
-                    ) : null}
-                  </span>
-                  <span className="mt-1 block text-xs text-lms-muted">{account.shows}</span>
-                </button>
+                <div className="rounded-xl border border-border p-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIdentifier(account.matriculationNumber);
+                      setMessage(null);
+                    }}
+                    aria-pressed={identifier === account.matriculationNumber}
+                    className="w-full rounded-lg text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    <span className="flex flex-wrap items-center gap-2">
+                      <span className="font-mono text-xs font-semibold text-foreground">{account.matriculationNumber}</span>
+                      <span className="text-xs text-lms-muted">{account.displayName}</span>
+                      {account.status !== "active" ? (
+                        <span className="rounded-full bg-destructive/10 px-2 py-0.5 text-[11px] font-semibold text-destructive">{account.status}</span>
+                      ) : null}
+                    </span>
+                    <span className="mt-1 block text-xs text-lms-muted">{account.shows}</span>
+                  </button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="mt-3 w-full"
+                    disabled={busy}
+                    onClick={() => void authenticate(account.matriculationNumber)}
+                  >
+                    {account.status === "active" ? "Open this student state" : "View the protected refusal state"}
+                    <ArrowRight className="size-4" aria-hidden />
+                  </Button>
+                </div>
               </li>
             ))}
           </ul>

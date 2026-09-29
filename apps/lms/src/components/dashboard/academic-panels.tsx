@@ -13,7 +13,7 @@ function verificationVariant(state: string) {
   return state === "Verified" ? "success" as const : state === "Disputed" ? "destructive" as const : "warning" as const;
 }
 
-export function AcademicPanels({ context }: { context: StudentContext }) {
+export function AcademicPanels({ context, onOpenRegistration, onOpenDegreeProgress }: { context: StudentContext; onOpenRegistration: () => void; onOpenDegreeProgress: () => void }) {
   const { students, lifecycleEvents, holds, transfers } = useStudents();
   const student = students.find((item) => item.id === context.sisStudentId);
   const placement = derivePlacement(lifecycleEvents, context.sisStudentId);
@@ -113,7 +113,7 @@ export function AcademicPanels({ context }: { context: StudentContext }) {
             <div className="rounded-xl bg-muted/45 p-3"><p className="text-xs text-lms-muted">Registration status</p><p className="mt-1 text-sm font-bold">{hasRegistrationRecord ? "Available" : "No record"}</p></div>
             <div className="rounded-xl bg-muted/45 p-3"><p className="text-xs text-lms-muted">Applicable holds</p><p className="mt-1 text-sm font-bold">{activeHolds.filter((hold) => hold.effects.includes("Registration")).length}</p></div>
           </div>
-          <Button asChild className="mt-5 w-full"><a href={`${portalBase}/student-portal/registration`}>Open registration service <ArrowUpRight aria-hidden /></a></Button>
+          <Button className="mt-5 w-full" onClick={onOpenRegistration}>Open registration service <ArrowUpRight aria-hidden /></Button>
         </section>
 
         <section className="rounded-2xl border border-border bg-card p-5 shadow-card" aria-labelledby="progress-title">
@@ -123,7 +123,7 @@ export function AcademicPanels({ context }: { context: StudentContext }) {
           ) : (
             <div className="mt-4 rounded-xl border border-dashed border-border p-5 text-center"><FileCheck2 className="mx-auto size-6 text-lms-muted" aria-hidden /><p className="mt-2 text-sm font-semibold">No degree audit is linked yet</p><p className="mt-1 text-xs text-lms-muted">The dashboard does not calculate progress with dashboard-only rules.</p></div>
           )}
-          <Button asChild variant="outline" className="mt-5 w-full"><a href={`${portalBase}/student-portal/degree-audit`}>Open degree progress <ArrowUpRight aria-hidden /></a></Button>
+          <Button variant="outline" className="mt-5 w-full" onClick={onOpenDegreeProgress}>Open degree progress <ArrowUpRight aria-hidden /></Button>
         </section>
       </div>
 

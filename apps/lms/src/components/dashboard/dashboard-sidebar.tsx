@@ -4,8 +4,8 @@ import Link from "next/link";
 import {
   BookOpen,
   CalendarDays,
+  BellRing,
   ChevronRight,
-  CircleDollarSign,
   ClipboardCheck,
   GraduationCap,
   Headphones,
@@ -21,19 +21,12 @@ import type { LucideIcon } from "lucide-react";
 import type { StudentContext } from "@tau/student-dashboard";
 import { cn } from "@/lib/utils";
 
-export type DashboardView = "overview" | "academics" | "timetable" | "learning" | "coursework" | "exams" | "results" | "services";
+export type DashboardView = "overview" | "academics" | "timetable" | "learning" | "coursework" | "exams" | "results" | "services" | "notifications" | "registration" | "degree-progress";
 
 interface LocalItem {
   label: string;
   icon: LucideIcon;
   view: DashboardView;
-  note?: string;
-}
-
-interface LinkItem {
-  label: string;
-  icon: LucideIcon;
-  href: string;
   note?: string;
 }
 
@@ -46,13 +39,12 @@ const localItems: LocalItem[] = [
   { label: "CBT & examinations", icon: MonitorCheck, view: "exams" },
   { label: "Results & standing", icon: LibraryBig, view: "results" },
   { label: "Finance & services", icon: LifeBuoy, view: "services" },
+  { label: "Notifications & access", icon: BellRing, view: "notifications" },
 ];
 
-const portalBase = process.env.NEXT_PUBLIC_STUDENT_PORTAL_URL ?? "http://localhost:3000";
-const serviceItems: LinkItem[] = [
-  { label: "Registration", icon: ClipboardCheck, href: `${portalBase}/student-portal/registration` },
-  { label: "Degree progress", icon: GraduationCap, href: `${portalBase}/student-portal/degree-audit` },
-  { label: "Fees & payments", icon: CircleDollarSign, href: `${portalBase}/student-portal/finance`, note: "External service" },
+const serviceItems: LocalItem[] = [
+  { label: "Registration", icon: ClipboardCheck, view: "registration" },
+  { label: "Degree progress", icon: GraduationCap, view: "degree-progress" },
 ];
 
 export function DashboardSidebar({ activeView, context, onViewChange }: { activeView: DashboardView; context: StudentContext; onViewChange: (view: DashboardView) => void }) {
@@ -97,22 +89,22 @@ export function DashboardSidebar({ activeView, context, onViewChange }: { active
         <p className="hidden px-3 pb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/35 lg:block">Student services</p>
         {serviceItems.map((item) => {
           const Icon = item.icon;
-          const unavailable = Boolean(item.note);
+          const active = activeView === item.view;
           return (
-            <a
+            <button
               key={item.label}
-              href={item.href}
-              aria-disabled={unavailable || undefined}
-              onClick={unavailable ? (event) => event.preventDefault() : undefined}
+              type="button"
+              onClick={() => onViewChange(item.view)}
+              aria-current={active ? "page" : undefined}
               className={cn(
-                "hidden items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-white/65 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white lg:flex",
-                unavailable ? "cursor-not-allowed opacity-45" : "hover:bg-white/8 hover:text-white",
+                "flex shrink-0 items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white lg:w-full",
+                active ? "bg-white text-[#10102d] shadow-lg" : "text-white/65 hover:bg-white/8 hover:text-white",
               )}
             >
               <Icon className="size-[18px]" aria-hidden />
               <span className="flex-1">{item.label}</span>
-              {item.note ? <span className="text-[9px] uppercase tracking-wide">{item.note}</span> : null}
-            </a>
+              {active ? <ChevronRight className="size-4" aria-hidden /> : null}
+            </button>
           );
         })}
       </nav>

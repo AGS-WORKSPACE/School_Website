@@ -30,6 +30,24 @@ export interface DemoStudentContext {
 
 export const demoStudents: DemoStudentContext[] = [
   {
+    studentId: "student-2023-117",
+    studentName: "Chinedu Okonkwo",
+    matriculationNumber: "TAU/23/ENG/0117",
+    adviserId: "stf-musa-ibrahim",
+    adviserName: "Dr. Musa Ibrahim",
+    academicStanding: "Good_Standing",
+    cumulativeGpa: 3.44,
+    completedCourses: [
+      { courseCode: "MTH 101", grade: "B", passed: true },
+      { courseCode: "GST 111", grade: "A", passed: true },
+      { courseCode: "COS 101", grade: "B", passed: true },
+      { courseCode: "GST 112", grade: "B", passed: true },
+      { courseCode: "COS 102", grade: "C", passed: true },
+      { courseCode: "CSC 201", grade: "B", passed: true },
+      { courseCode: "COS 201", grade: "B", passed: true },
+    ],
+  },
+  {
     studentId: "TAU/2024/0123",
     studentName: "Ada Nwosu",
     matriculationNumber: "TAU/24/SCI/0123",
@@ -194,6 +212,27 @@ export const initialOfferings: CourseOffering[] = [
 
 export const initialRegistrationTerms: StudentRegistrationTerm[] = [
   {
+    id: "term-chinedu-2026-1",
+    studentId: "student-2023-117",
+    studentName: "Chinedu Okonkwo",
+    programmeId: "prog-swe",
+    programmeName: "Software Engineering",
+    curriculumVersionId: "ver-swe-2023",
+    level: 300,
+    academicSession: "2026/2027",
+    semester: 1,
+    addDropOpensAt: "2026-09-01T00:00:00Z",
+    addDropClosesAt: "2026-09-26T23:59:00Z",
+    lines: [
+      { id: "line-chinedu-csc301", offeringId: "off-csc301-2026-1", courseCode: "CSC 301", courseTitle: "Data Structures and Algorithms", creditUnits: 3, source: "Required", status: "Registered", addedAt: "2026-09-05T09:00:00Z" },
+      { id: "line-chinedu-csc303", offeringId: "off-csc303-2026-1", courseCode: "CSC 303", courseTitle: "Operating Systems Architecture", creditUnits: 3, source: "Required", status: "Registered", addedAt: "2026-09-05T09:06:00Z" },
+    ],
+    status: "Frozen",
+    submittedAt: "2026-09-20T10:00:00Z",
+    frozenAt: "2026-09-27T09:00:00Z",
+    frozenBy: "Registry officer",
+  },
+  {
     id: "term-ada-2026-1",
     studentId: "TAU/2024/0123",
     studentName: "Ada Nwosu",
@@ -314,6 +353,37 @@ export const initialHolds: StudentHold[] = [
 ];
 
 export const initialStatements: RegistrationStatement[] = [
+  {
+    id: "stmt-chinedu-2026-1",
+    termId: "term-chinedu-2026-1",
+    studentId: "student-2023-117",
+    studentName: "Chinedu Okonkwo",
+    academicSession: "2026/2027",
+    semester: 1,
+    version: "v1.1",
+    totalCredits: 6,
+    lines: [
+      { courseCode: "CSC 301", courseTitle: "Data Structures and Algorithms", creditUnits: 3, source: "Required" },
+      { courseCode: "CSC 303", courseTitle: "Operating Systems Architecture", creditUnits: 3, source: "Required" },
+    ],
+    frozenAt: "2026-09-27T09:00:00Z",
+    frozenBy: "person-registry-1",
+    frozenByName: "Registry officer",
+    amendments: [
+      {
+        id: "amend-chinedu-1",
+        summary: "Corrected CSC 303 credit weighting from 3 to 4 units.",
+        reason: "Senate-ratified curriculum correction SEN/RES/2026/012.",
+        approvedBy: "person-registry-1",
+        approvedByName: "Registry officer",
+        approvedAt: "2026-10-05T10:00:00Z",
+        linesAfter: [
+          { courseCode: "CSC 301", courseTitle: "Data Structures and Algorithms", creditUnits: 3, source: "Required" },
+          { courseCode: "CSC 303", courseTitle: "Operating Systems Architecture", creditUnits: 4, source: "Required" },
+        ],
+      },
+    ],
+  },
   {
     id: "stmt-chidinma-2026-1",
     termId: "term-chidinma-2026-1",

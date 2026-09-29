@@ -12,8 +12,8 @@ type ServicesTab = "finance" | "directory" | "requests" | "records";
 const finance = getFinanceProjection();
 const requests = getStudentRequests();
 
-export function ServicesPanels({ context }: { context: StudentContext }) {
-  const [tab, setTab] = React.useState<ServicesTab>("finance");
+export function ServicesPanels({ context, initialTab = "finance" }: { context: StudentContext; initialTab?: ServicesTab }) {
+  const [tab, setTab] = React.useState<ServicesTab>(initialTab);
   const { clearances, transcriptRequests } = useGraduation();
   const clearance = clearances.find((item) => item.studentId === context.sisStudentId);
   const transcripts = transcriptRequests.filter((item) => item.studentId === context.sisStudentId);

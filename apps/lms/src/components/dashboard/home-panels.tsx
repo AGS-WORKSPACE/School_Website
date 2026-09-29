@@ -1,13 +1,16 @@
 "use client";
 
-import { AlertTriangle, CalendarClock, CircleHelp, ExternalLink, Info, MapPin, Radio, Undo2, Video, X } from "lucide-react";
+import * as React from "react";
+import Link from "next/link";
+import { AlertTriangle, CalendarClock, CircleHelp, ExternalLink, Info, LifeBuoy, MapPin, Radio, RefreshCw, Undo2, Video, X } from "lucide-react";
 import type { AgendaItem, AlertItem, DashboardHome, SourceHealth, TaskItem } from "@tau/student-dashboard";
 import { institutionTimeZone } from "@tau/student-dashboard";
 import { Badge } from "@tau/ui/badge";
 import { Button } from "@tau/ui/button";
+import { formatDashboardDateTime, formatDashboardShortDate, formatDashboardTime } from "@/lib/dashboard-format";
 
 function when(value: string): string {
-  return new Date(value).toLocaleString("en-NG", { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+  return formatDashboardDateTime(value);
 }
 
 function Panel({ title, description, children, actions }: { title: string; description?: string; children: React.ReactNode; actions?: React.ReactNode }) {
@@ -49,7 +52,7 @@ export function AgendaPanel({ items }: { items: AgendaItem[] }) {
                     <Badge variant="outline">{item.source}</Badge>
                   </div>
                   <p className="text-sm text-lms-muted">
-                    {when(item.startsAt)}{item.endsAt ? `–${new Date(item.endsAt).toLocaleTimeString("en-NG", { hour: "2-digit", minute: "2-digit" })}` : ""} · {item.deliveryMode}
+                    {when(item.startsAt)}{item.endsAt ? `–${formatDashboardTime(item.endsAt)}` : ""} · {item.deliveryMode}
                     {item.location ? <> · <MapPin className="inline size-3.5" aria-hidden /> {item.location}</> : null}
                   </p>
                   {item.arrangements ? <p className="text-xs text-lms-muted">{item.arrangements}</p> : null}
@@ -125,7 +128,7 @@ export function AlertPanel({ items, dismissedCount, onDismiss, onRestore }: { it
                   {alert.previousValue && alert.newValue ? (
                     <p className="mt-1 text-sm">
                       <span className="line-through decoration-lms-muted">{alert.previousValue}</span> → <span className="font-semibold">{alert.newValue}</span>
-                      {alert.effectiveFrom ? <span className="text-xs text-lms-muted"> · from {new Date(alert.effectiveFrom).toLocaleDateString("en-NG", { dateStyle: "medium" })}</span> : null}
+                      {alert.effectiveFrom ? <span className="text-xs text-lms-muted"> · from {formatDashboardShortDate(alert.effectiveFrom)}</span> : null}
                     </p>
                   ) : null}
                   <p className="mt-1 text-xs text-lms-muted">Published {when(alert.changedAt)}</p>
@@ -148,17 +151,19 @@ export function AlertPanel({ items, dismissedCount, onDismiss, onRestore }: { it
 const statusBadge = { Live: "success", Delayed: "warning", Unavailable: "destructive", No_Record: "muted" } as const;
 const statusLabel = { Live: "Up to date", Delayed: "Delayed", Unavailable: "Unavailable", No_Record: "No record" } as const;
 
-export function SourcePanel({ sources, generatedAt }: { sources: SourceHealth[]; generatedAt: string }) {
+export function SourcePanel({ sources, generatedAt, onRetry }: { sources: SourceHealth[]; generatedAt: string; onRetry?: (source: SourceHealth["source"]) => void }) {
+  const [retryMessage, setRetryMessage] = React.useState<string>();
   return (
     <Panel title="Where this comes from" description={`Read at ${when(generatedAt)}. Each service owns its own information.`}>
+      {retryMessage ? <p role="status" aria-live="polite" className="mb-3 rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-xs font-medium text-blue-950">{retryMessage}</p> : null}
       <ul className="space-y-2">
         {sources.map((source) => (
-          <li key={source.source} className="flex flex-wrap items-start justify-between gap-2 border-b border-border pb-2 last:border-0 last:pb-0">
+          <li key={source.source} className="flex flex-wrap items-start justify-between gap-2 border-b border-border pb-3 last:border-0 last:pb-0">
             <div className="min-w-0">
               <span className="text-sm font-semibold text-foreground">{source.source}</span>
               <p className="text-xs text-lms-muted">{source.note}</p>
             </div>
-            <Badge variant={statusBadge[source.status]}>{statusLabel[source.status]}</Badge>
+            <div className="flex flex-wrap items-center gap-1"><Badge variant={statusBadge[source.status]}>{statusLabel[source.status]}</Badge>{source.status === "Unavailable" ? <><Button size="sm" variant="ghost" aria-label={`Retry ${source.source}`} onClick={() => { onRetry?.(source.source); setRetryMessage(`${source.source} was checked again. Its source status remains authoritative.`); }}><RefreshCw className="size-3.5" aria-hidden /> Retry</Button><Button asChild size="sm" variant="ghost"><Link href="/support" aria-label={`Get help with ${source.source}`}><LifeBuoy className="size-3.5" aria-hidden /> Help</Link></Button></> : null}</div>
           </li>
         ))}
       </ul>
