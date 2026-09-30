@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import {
+  ArrowRight,
+  BriefcaseBusiness,
   ClipboardCheck,
   FileClock,
   KeyRound,
@@ -16,7 +18,9 @@ import {
   useBreakGlassGrants,
   useConflicts,
   useDelegations,
+  usePerson,
 } from "@tau/identity/react";
+import type { PersonDetail } from "@tau/identity";
 import { Badge } from "@tau/ui/badge";
 import { Button } from "@tau/ui/button";
 import { Skeleton } from "@tau/ui/skeleton";
@@ -24,8 +28,119 @@ import { PageHeader } from "@/components/console/page-header";
 import { EmptyState, Section } from "@/components/console/section";
 import { Stat } from "@/components/console/stat";
 import { StatusBadge } from "@/components/console/status-badge";
+import { navigationForPermissions } from "@/components/console/navigation";
+import { useSession } from "@/providers/session-provider";
 
-export default function AccessPositionPage() {
+const identityOverviewPermissions = [
+  "identity:person:write",
+  "identity:delegation:manage",
+  "identity:sod-exception:approve",
+  "identity:break-glass:review",
+  "identity:audit:read",
+  "identity:access-review:conduct",
+];
+
+export default function WorkspacePage() {
+  const { session } = useSession();
+  const { data: person, isPending } = usePerson(session?.personId ?? "");
+
+  if (isPending || !person) {
+    return <Skeleton className="h-64 rounded-2xl" />;
+  }
+
+  const maySeeIdentityOverview = identityOverviewPermissions.every((permissionId) =>
+    person.permissionIds.includes(permissionId),
+  );
+
+  return (
+    <>
+      <AssignedWorkspace person={person} />
+      {maySeeIdentityOverview ? <AccessPositionDashboard /> : null}
+    </>
+  );
+}
+
+function AssignedWorkspace({ person }: { person: PersonDetail }) {
+  const assignedGroups = navigationForPermissions(person.permissionIds)
+    .map((group) => ({
+      ...group,
+      items: group.items.filter((item) => item.href !== "/" && item.href !== "/my-access"),
+    }))
+    .filter((group) => group.items.length > 0);
+  const activeAssignments = person.assignments.filter((view) => view.status === "active");
+
+  return (
+    <>
+      <PageHeader
+        eyebrow="Assigned work"
+        title={`Welcome, ${person.displayName}`}
+        description="Only the workspaces granted by your current roles, delegations and approved emergency access are shown here."
+        actions={
+          <Button asChild variant="outline">
+            <Link href="/my-access">Review my access</Link>
+          </Button>
+        }
+      />
+
+      <Section
+        title="Your current roles"
+        description="An additional approved role automatically adds its permitted workspaces; it does not replace your existing assignment."
+      >
+        <div className="flex flex-wrap gap-3">
+          {activeAssignments.map((view) => (
+            <div key={view.assignment.id} className="min-w-64 flex-1 rounded-xl border bg-muted/30 p-4">
+              <div className="flex items-start gap-3">
+                <BriefcaseBusiness className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden />
+                <div>
+                  <p className="font-semibold">{view.role?.name ?? "Assigned role"}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{view.scopeLabel}</p>
+                  {view.role?.description ? (
+                    <p className="mt-2 text-xs leading-5 text-muted-foreground">{view.role.description}</p>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <section aria-labelledby="assigned-workspaces-heading">
+        <div className="mb-4">
+          <h2 id="assigned-workspaces-heading" className="text-xl font-bold">Your workspaces</h2>
+          <p className="mt-1 text-sm text-muted-foreground">Open a workspace to carry out the duties assigned to you.</p>
+        </div>
+        {assignedGroups.length === 0 ? (
+          <EmptyState message="No operational workspace is assigned. Review your access or contact an access approver." />
+        ) : (
+          <div className="space-y-6">
+            {assignedGroups.map((group) => (
+              <div key={group.label}>
+                <h3 className="mb-2 text-xs font-bold tracking-[0.12em] text-muted-foreground uppercase">{group.label}</h3>
+                <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                  {group.items.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <Link key={item.href} href={item.href} className="group flex min-h-32 items-start gap-4 rounded-xl border bg-card p-5 shadow-sm transition hover:border-primary/40 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                        <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-primary/10 text-primary"><Icon className="size-5" aria-hidden /></span>
+                        <span className="min-w-0 flex-1">
+                          <span className="font-semibold">{item.label}</span>
+                          <span className="mt-1 block text-sm leading-5 text-muted-foreground">{item.description}</span>
+                        </span>
+                        <ArrowRight className="mt-1 size-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-primary" aria-hidden />
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+    </>
+  );
+}
+
+function AccessPositionDashboard() {
   const { data: overview, isPending } = useAccessOverview();
   const { data: conflicts } = useConflicts();
   const { data: delegations } = useDelegations();
@@ -40,16 +155,14 @@ export default function AccessPositionPage() {
 
   return (
     <>
-      <PageHeader
-        eyebrow="Overview"
-        title="Access position"
-        description="Review access, risks, and pending decisions."
-        actions={
-          <Button asChild variant="outline">
-            <Link href="/audit">Open audit trail</Link>
-          </Button>
-        }
-      />
+      <div className="flex flex-wrap items-end justify-between gap-4 border-t pt-7">
+        <div>
+          <p className="text-xs font-bold tracking-[0.12em] text-primary uppercase">Identity controls</p>
+          <h2 className="mt-1 text-2xl font-bold">Access position</h2>
+          <p className="mt-1 text-sm text-muted-foreground">Review access risks and pending identity decisions relevant to your role.</p>
+        </div>
+        <Button asChild variant="outline"><Link href="/audit">Open audit trail</Link></Button>
+      </div>
 
       {isPending || !overview ? (
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
