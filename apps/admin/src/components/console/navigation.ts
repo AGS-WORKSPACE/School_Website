@@ -61,8 +61,8 @@ export const navigation: NavGroup[] = [
     items: [
       {
         href: "/",
-        label: "Access position",
-        description: "Where access stands across the institution right now.",
+        label: "My workspace",
+        description: "Workspaces and tasks assigned through your current roles.",
         icon: GaugeCircle,
       },
       {
@@ -597,3 +597,103 @@ export const navigation: NavGroup[] = [
 ];
 
 export const navItems = navigation.flatMap((group) => group.items);
+
+/**
+ * Navigation is derived from the same permission ids used by the policy engine.
+ * This keeps additional roles and time-bounded delegations additive without
+ * teaching the shell about job titles.
+ */
+const routePermissions: Record<string, readonly string[]> = {
+  "/people": ["identity:person:write", "identity:account:disable"],
+  "/roles": ["identity:role-assignment:prepare", "identity:role-assignment:approve", "identity:access-review:conduct"],
+  "/role-assignments": ["identity:role-assignment:prepare", "identity:role-assignment:approve"],
+  "/access-review": ["identity:access-review:conduct"],
+
+  "/admissions": ["admissions:application:read"],
+  "/admissions/applications": ["admissions:application:read"],
+  "/admissions/screening": ["admissions:application:read", "admissions:screening:score"],
+  "/admissions/screening/caps-import": ["admissions:screening:score"],
+  "/admissions/screening/rules": ["admissions:config:manage"],
+  "/admissions/screening/appointments": ["admissions:screening:score"],
+  "/admissions/ranking": ["admissions:batch:prepare", "admissions:batch:approve"],
+  "/admissions/batches": ["admissions:batch:prepare", "admissions:batch:approve"],
+  "/admissions/jupeb": ["admissions:application:read"],
+  "/admissions/postgraduate": ["admissions:application:read"],
+  "/admissions/compliance": ["admissions:application:read", "admissions:batch:approve"],
+  "/admissions/assisted-intake": ["admissions:assisted:intake"],
+  "/admissions/deduplication": ["admissions:case:resolve"],
+  "/admissions/routes": ["admissions:config:manage"],
+  "/admissions/reconciliation": ["admissions:application:read"],
+  "/admissions/onboarding": ["admissions:batch:prepare", "admissions:batch:approve"],
+
+  "/students": ["records:student-record:amend", "records:student-record:approve", "records:hold:manage"],
+  "/students/approvals": ["records:student-record:approve"],
+  "/students/transfers": ["records:student-record:amend", "records:student-record:approve"],
+  "/students/holds": ["records:hold:manage"],
+  "/registration/offerings": ["academics:offering:manage"],
+  "/registration/advising": ["academics:registration:advise"],
+  "/registration/statements": ["records:registration:freeze"],
+
+  "/graduation": ["records:graduation:audit", "records:graduation:approve"],
+  "/graduation/clearance": ["records:clearance:decide", "records:graduation:approve"],
+  "/graduation/lists": ["records:graduation:audit", "records:graduation:approve"],
+  "/graduation/transcripts": ["records:transcript:prepare", "records:transcript:issue"],
+  "/graduation/certificates": ["records:certificate:manage", "records:transcript:issue"],
+  "/finance": ["finance:invoice:raise", "finance:payment:receipt", "finance:refund:prepare", "finance:refund:authorise"],
+
+  "/lms": ["lms:course:teach", "lms:course:design", "lms:grade:finalise", "lms:integration:request"],
+  "/lms/templates": ["lms:course:design"],
+  "/lms/integrations": ["lms:integration:request", "lms:integration:approve"],
+  "/online-learning/engagement": ["lms:engagement:respond"],
+  "/online-learning/caseload": ["lms:caseload:export"],
+  "/online-learning/integrity": ["lms:integrity:configure", "lms:integrity:dpia-approve"],
+  "/online-learning/evaluation": ["lms:evaluation:read"],
+  "/online-learning/evidence": ["lms:evidence:grant"],
+
+  "/curriculum": ["academics:curriculum:propose", "academics:curriculum:review", "academics:curriculum:approve"],
+  "/curriculum/programmes": ["academics:curriculum:propose", "academics:curriculum:review", "academics:curriculum:approve"],
+  "/curriculum/courses": ["academics:curriculum:propose", "academics:curriculum:review", "academics:curriculum:approve"],
+  "/curriculum/assessment": ["academics:curriculum:propose", "academics:curriculum:review", "academics:curriculum:approve"],
+  "/curriculum/ccmas": ["academics:curriculum:review", "academics:curriculum:approve"],
+  "/curriculum/proposals": ["academics:curriculum:propose", "academics:curriculum:review", "academics:curriculum:approve"],
+  "/curriculum/capacity": ["academics:curriculum:review", "academics:curriculum:approve"],
+  "/curriculum/equivalencies": ["academics:curriculum:propose", "academics:curriculum:review", "academics:curriculum:approve"],
+  "/scheduling": ["academics:timetable:publish"],
+  "/scheduling/my-timetable": ["academics:timetable:publish", "lms:course:teach"],
+  "/examinations": ["records:result:enter", "records:result:approve", "academics:timetable:publish"],
+
+  "/configuration/academic-calendar": ["academics:timetable:publish"],
+  "/configuration/rules": ["academics:curriculum:approve"],
+  "/content": ["content:page:draft", "content:page:publish"],
+  "/delegations": ["identity:delegation:manage"],
+  "/duties": ["identity:sod-exception:request", "identity:sod-exception:approve"],
+  "/break-glass": ["identity:break-glass:request", "identity:break-glass:approve", "identity:break-glass:review"],
+  "/audit": ["identity:audit:read"],
+
+  "/results/entry": ["records:result:enter"],
+  "/results/moderation": ["records:result:approve", "academics:curriculum:review"],
+  "/results/batches": ["records:result:enter", "records:result:approve"],
+  "/results/corrections": ["records:result:enter", "records:result:approve"],
+  "/results/reconciliation": ["records:result:approve"],
+};
+
+export function canAccessNavItem(item: NavItem, permissionIds: readonly string[]): boolean {
+  if (item.href === "/" || item.href === "/my-access") return true;
+  const required = routePermissions[item.href];
+  return Boolean(required?.some((permissionId) => permissionIds.includes(permissionId)));
+}
+
+export function navigationForPermissions(permissionIds: readonly string[]): NavGroup[] {
+  return navigation
+    .map((group) => ({
+      ...group,
+      items: group.items.filter((item) => canAccessNavItem(item, permissionIds)),
+    }))
+    .filter((group) => group.items.length > 0);
+}
+
+export function navItemForPath(pathname: string): NavItem | undefined {
+  return [...navItems]
+    .sort((left, right) => right.href.length - left.href.length)
+    .find((item) => item.href === "/" ? pathname === "/" : pathname === item.href || pathname.startsWith(`${item.href}/`));
+}

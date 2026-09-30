@@ -18,9 +18,14 @@ import { cn } from "@tau/ui/lib/utils";
 import { Badge } from "@tau/ui/badge";
 import { Button } from "@tau/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@tau/ui/sheet";
-import { useBreakGlassGrants } from "@tau/identity/react";
+import { useBreakGlassGrants, usePerson } from "@tau/identity/react";
 import { useSession } from "@/providers/session-provider";
-import { navigation, navItems } from "./navigation";
+import {
+  canAccessNavItem,
+  navigationForPermissions,
+  navItemForPath,
+  type NavGroup,
+} from "./navigation";
 
 function Brand({ compact = false }: { compact?: boolean }) {
   return (
@@ -38,20 +43,22 @@ function Brand({ compact = false }: { compact?: boolean }) {
 }
 
 function NavLinks({
+  groups,
   compact = false,
   onNavigate,
 }: {
+  groups: NavGroup[];
   compact?: boolean;
   onNavigate?: () => void;
 }) {
   const pathname = usePathname();
-  const activeHref = [...navItems]
+  const activeHref = groups.flatMap((group) => group.items)
     .sort((left, right) => right.href.length - left.href.length)
     .find((item) => isRouteActive(pathname, item.href))?.href;
 
   return (
     <nav className="space-y-5" aria-label="Console sections">
-      {navigation.map((group) => (
+      {groups.map((group) => (
         <div key={group.label} className="space-y-1">
           {!compact ? (
             <p className="px-3 pb-1 text-[0.68rem] font-bold tracking-[0.14em] text-white/45 uppercase">
@@ -113,18 +120,25 @@ function BreakGlassStrip() {
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const { session, signOut } = useSession();
+  const { data: person, isPending: personPending } = usePerson(session?.personId ?? "");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+  const permissionIds = person?.permissionIds ?? [];
+  const visibleNavigation = navigationForPermissions(permissionIds);
+  const requestedItem = navItemForPath(pathname);
+  const restricted = Boolean(
+    !personPending && requestedItem && !canAccessNavItem(requestedItem, permissionIds),
+  );
+  const breakGlassItem = navItemForPath("/break-glass");
+  const maySeeBreakGlass = Boolean(
+    breakGlassItem && canAccessNavItem(breakGlassItem, permissionIds),
+  );
 
-  const current =
-    [...navItems]
-      .sort((a, b) => b.href.length - a.href.length)
-      .find((item) => (item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)))
-      ?.label ?? "Identity and Access";
+  const current = requestedItem?.label ?? "Administration";
 
   return (
     <div className="flex min-h-full flex-col bg-background">
-      <BreakGlassStrip />
+      {maySeeBreakGlass ? <BreakGlassStrip /> : null}
 
       <div className="flex flex-1">
         <aside
@@ -138,14 +152,14 @@ export function AppShell({ children }: { children: ReactNode }) {
           {!collapsed ? (
             <div className="px-5 pt-5 pb-3">
               <p className="text-xs font-bold tracking-[0.12em] text-white uppercase">Administration</p>
-              <p className="mt-1 text-xs text-[#78767c]">Institution-wide access</p>
+              <p className="mt-1 text-xs text-[#96949c]">Your assigned workspaces</p>
             </div>
           ) : (
             <div className="h-5" />
           )}
 
           <div className="no-scrollbar flex-1 overflow-y-auto px-2 pb-5">
-            <NavLinks compact={collapsed} />
+            <NavLinks groups={visibleNavigation} compact={collapsed} />
           </div>
 
           <div className="border-t border-white/10 p-3">
@@ -208,7 +222,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                   <p className="mb-4 px-3 text-xs font-bold tracking-[0.12em] text-white uppercase">
                     Administration
                   </p>
-                  <NavLinks onNavigate={() => setMobileOpen(false)} />
+                  <NavLinks groups={visibleNavigation} onNavigate={() => setMobileOpen(false)} />
                 </div>
               </SheetContent>
             </Sheet>
@@ -255,7 +269,26 @@ export function AppShell({ children }: { children: ReactNode }) {
           </header>
 
           <main className="mx-auto w-full max-w-[1540px] flex-1 space-y-7 px-4 py-7 sm:px-6 lg:px-8">
-            {children}
+            {personPending ? (
+              <div className="grid min-h-[50vh] place-items-center">
+                <p className="text-sm text-muted-foreground">Loading your assigned workspaces…</p>
+              </div>
+            ) : restricted ? (
+              <section className="mx-auto mt-12 max-w-2xl rounded-2xl border bg-card p-8 text-center shadow-sm" aria-labelledby="workspace-not-assigned">
+                <ShieldAlert className="mx-auto size-10 text-amber-600" aria-hidden />
+                <h1 id="workspace-not-assigned" className="mt-4 text-2xl font-bold">Workspace not assigned</h1>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  {requestedItem?.label ?? "This workspace"} is not included in your current roles or delegated duties.
+                  If this is part of your job, ask an access approver to assign the appropriate role.
+                </p>
+                <div className="mt-6 flex flex-wrap justify-center gap-3">
+                  <Button asChild><Link href="/">Open my workspace</Link></Button>
+                  <Button asChild variant="outline"><Link href="/my-access">Review my access</Link></Button>
+                </div>
+              </section>
+            ) : (
+              children
+            )}
           </main>
 
           <footer className="border-border bg-card/70 border-t px-4 py-4 text-center text-xs text-muted-foreground sm:px-6">
